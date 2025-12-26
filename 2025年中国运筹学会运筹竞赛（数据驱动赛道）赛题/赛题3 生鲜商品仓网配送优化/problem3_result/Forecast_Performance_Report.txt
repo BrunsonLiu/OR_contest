@@ -1,0 +1,21 @@
+Order Demand Forecast Performance Report
+==================================================
+
+Forecast Method: Gradient Boosting Regression + Feature Engineering
+Features: Time Index, Day of Week, Weekend Indicator, Periodic Features, City
+Historical Data Date Range: 2016-06-01 to 2016-06-23
+Forecast Date Range: 2016-06-24 to 2016-06-30
+Total Forecast Entries: 204
+Validation Method: Last 7 days vs Forecast 7 days
+Average RMSE: 6.5686
+Average MAPE: 10.25%
+
+Model Features:
+1. Different parameters for SKU types (dm/im)
+2. Feature normalization
+3. Weekend effect adjustment
+4. Smoothing to avoid excessive forecast volatility
+5. Non-negative forecast values guarantee
+6. Enhanced weekly periodicity handling
+7. Sin/Cos transformed monthly features for periodicity
+==================================================
