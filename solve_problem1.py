@@ -191,10 +191,13 @@ for wh in df_wh['Name']:
     
     model += out_i <= cap[wh] * y[wh], f'capacity_{wh}'
     
-    # 5. 线性化约束
-    model += w[wh] <= M * z[wh], f'linear1_{wh}'
-    model += w[wh] <= out_i, f'linear2_{wh}'
-    model += w[wh] >= out_i - M * (1 - z[wh]), f'linear3_{wh}'
+# 5. 线性化约束 (修正版)
+    # 使用仓库容量作为大 M，增加数值稳定性
+    wh_cap = cap.get(wh, 1000000)
+    # 约束 A: 如果不买系统 (z=0)，则折扣量 w 强制为 0
+    model += w[wh] <= wh_cap * z[wh], f'linear_z_lock_{wh}'
+    # 约束 B: 折扣量 w 不能超过实际出库量
+    model += w[wh] <= out_i, f'linear_qty_limit_{wh}'
 
 # 6. 时效约束
 for (store, sku) in v.keys():
@@ -247,39 +250,35 @@ opening_cost = lpSum(open_cost[wh] * y[wh] for wh in df_wh['Name'] if wh in cap)
 
 # 处置成本（已线性化） - 只包含RDC和CDC类型
 # 注意：这里需要根据仓库类型区分处理：CDC的处置量为出库量的2倍，RDC的处置量为调拨入+直配
+# 只处理RDC和CDC类型的仓库
+valid_whs = [wh for wh in df_wh['Name'] if wh in cap]
+
 processing_cost_terms = []
-for wh in df_wh['Name']:
-    if wh in cap:
-        if df_wh[df_wh['Name'] == wh]['Type'].values[0] == 'CDC':
-            # CDC的处置量为出库量的2倍
-            outbound_cdc = lpSum(
-                f[(wh, rdc, sku)] 
-                for rdc in rdc_names 
-                for sku in ['im', 'dm']
-                if (wh, rdc, sku) in f
-            ) + lpSum(
-                demand[(store, sku)] * u[(wh, store, sku)]
-                for store in df_order['Name'].unique()
-                for sku in ['im', 'dm']
-                if (wh, store, sku) in u
-            )
-            total_processing = 2 * outbound_cdc - 0.4 * proc_cost[wh] * w[wh]
-        else:
-            # RDC的处置量为调拨入+直配
-            inbound_rdc = lpSum(
-                f[(inland_cdc, wh, sku)]
-                for inland_cdc in cdc_names
-                for sku in ['im', 'dm']
-                if (inland_cdc, wh, sku) in f
-            )
-            outbound_rdc = lpSum(
-                demand[(store, sku)] * u[(wh, store, sku)]
-                for store in df_order['Name'].unique()
-                for sku in ['im', 'dm']
-                if (wh, store, sku) in u
-            )
-            total_processing = (inbound_rdc + outbound_rdc) - 0.4 * proc_cost[wh] * w[wh]
-        processing_cost_terms.append(proc_cost[wh] * total_processing)
+for wh in valid_whs:
+    # 统一逻辑：无论是CDC还是RDC，入库量在流量平衡下都等于出库量
+    # 所以总处置量 = 2.0 * 出库量
+    
+    # 重新计算该仓库的出库量表达式 (out_qty)
+    # 1. 直接配送到门店的量
+    direct_out = lpSum(demand[(store, sku)] * u[(wh, store, sku)]
+                       for store in df_order['Name'].unique()
+                       for sku in ['im', 'dm']
+                       if (wh, store, sku) in u)
+    
+    # 2. 调拨发出的量 (仅CDC有)
+    transfer_out = 0
+    if wh in cdc_names:
+        transfer_out = lpSum(f[(wh, rdc, sku)]
+                            for rdc in rdc_names
+                            for sku in ['im', 'dm']
+                            if (wh, rdc, sku) in f)
+    
+    total_out = direct_out + transfer_out
+    
+    # 核心计算：总处置费 = 单价 * (2倍出库量 - 折扣项)
+    # 这里 0.8 代表：2倍出库量 * 40% 的减免额
+    total_processing_val = (2.0 * total_out) - (0.8 * w[wh])
+    processing_cost_terms.append(proc_cost[wh] * total_processing_val)
 
 processing_cost = lpSum(processing_cost_terms)
 
@@ -304,57 +303,45 @@ if model.status == LpStatusOptimal:
     # 附件9: 仓网业务表现文件
     # 计算各指标
     # 只处理RDC和CDC类型的仓库
+# ========== 附件9: 仓网业务表现文件 (修正版) ==========
+    # 1. 重新定义有效仓库列表（防止报错）
     valid_whs = [wh for wh in df_wh['Name'] if wh in cap]
     
+    # 2. 统计各项指标
     open_wh_count = sum(1 for wh in valid_whs if value(y[wh]) > 0.5)
     satisfied_rate = value(satisfied_demand) / total_demand
     
-    # 运输成本 - CDC到RDC
+    # 3. 运输成本
     transport_wh = 0.9/10000 * sum(dist.get((cdc, rdc), 0) * value(f[(cdc, rdc, sku)]) 
-                                  for cdc in cdc_names
-                                  for rdc in rdc_names
-                                  for sku in ['im', 'dm']
-                                  if (cdc, rdc, sku) in f)
+                                  for (cdc, rdc, sku) in f.keys())
     
-    # 运输成本 - 仓库到门店
     transport_cust = 1.45/10000 * sum(dist.get((wh, store), 0) * demand[(store, sku)] * value(u[(wh, store, sku)])
-                                     for wh in valid_whs
-                                     for store in df_order['Name'].unique()
-                                     for sku in ['im', 'dm']
-                                     if (wh, store, sku) in u)
+                                     for (wh, store, sku) in u.keys())
     
-    # 开仓成本
+    # 4. 开仓成本
     opening = sum(open_cost[wh] * value(y[wh]) for wh in valid_whs)
-    
-    # 处置成本
-    processing_total_cost = sum(proc_cost[wh] * (
-                                                   2 * (
-                                                       sum(value(f[(wh, rdc, sku)])
-                                                           for rdc in rdc_names
-                                                           for sku in ['im', 'dm']
-                                                           if (wh, rdc, sku) in f) +
-                                                       sum(demand[(store, sku)] * value(u[(wh, store, sku)])
-                                                           for store in df_order['Name'].unique()
-                                                           for sku in ['im', 'dm']
-                                                           if (wh, store, sku) in u)
-                                                   ) if df_wh[df_wh['Name'] == wh]['Type'].values[0] == 'CDC' else
-                                                   (
-                                                       sum(value(f[(inland_cdc, wh, sku)])
-                                                           for inland_cdc in cdc_names
-                                                           for sku in ['im', 'dm']
-                                                           if (inland_cdc, wh, sku) in f) +
-                                                       sum(demand[(store, sku)] * value(u[(wh, store, sku)])
-                                                           for store in df_order['Name'].unique()
-                                                           for sku in ['im', 'dm']
-                                                           if (wh, store, sku) in u)
-                                                   )
-                                               ) - 0.4 * proc_cost[wh] * value(w[wh])
-                               for wh in valid_whs)
-    
-    # 智能调度系统成本
-    smart_system = sum(1.5 * value(z[wh]) for wh in valid_whs)
-    
-    # 创建仓网业务表现文件
+
+    # 5. 智能系统采购成本
+    smart_system = sum(1.5 * value(z[wh]) for wh in valid_whs if wh in z)
+
+    # 6. 处置成本 (这里要和目标函数逻辑完全一致：2.0*出库量 - 0.8*w)
+    processing_total_cost = 0.0
+    for wh in valid_whs:
+        if value(y[wh]) > 0.5:
+            # 计算出库量
+            d_out = sum(demand[(store, sku)] * value(u[(wh, store, sku)])
+                        for store in df_order['Name'].unique()
+                        for sku in ['im', 'dm'] if (wh, store, sku) in u)
+            t_out = 0
+            if wh in cdc_names:
+                t_out = sum(value(f[(wh, rdc, sku)]) 
+                            for rdc in rdc_names for sku in ['im', 'dm'] if (wh, rdc, sku) in f)
+            
+            # 计算该仓实际处置费
+            actual_wh_cost = proc_cost[wh] * (2.0 * (d_out + t_out) - 0.8 * value(w[wh]))
+            processing_total_cost += actual_wh_cost
+
+    # 写入 CSV
     business_performance = pd.DataFrame({
         '开仓数量': [open_wh_count],
         '时效满足率': [satisfied_rate],
@@ -365,8 +352,7 @@ if model.status == LpStatusOptimal:
         '出入仓处置总成本（单位：万元）': [processing_total_cost],
         '智能调度系统采购总成本（单位：万元）': [smart_system]
     })
-    
-    business_performance.to_csv(os.path.join(output_dir, '仓网业务表现文件.csv'), index=False)
+    business_performance.to_csv(os.path.join(output_dir, '仓网业务表现文件_pulp.csv'), index=False)
     print(f"仓网业务表现文件已保存")
     
     # 附件10: 仓库处置订单量文件
