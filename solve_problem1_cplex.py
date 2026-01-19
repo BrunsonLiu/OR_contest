@@ -311,8 +311,8 @@ for wh in df_wh['Name']:
             problem.linear_constraints.add(lin_expr=[row2], senses=['L'], rhs=[0.0], 
                                          names=[f'w_limit_by_z_{wh}'])
 
-# 6. 时效约束
-total_demand = df_order['qty'].sum()
+# 6. 时效约束（只对海鲜dm应用95%时效满足率要求）
+total_dm_demand = sum(demand.get((store, 'dm'), 0.0) for store in df_order['Name'].unique())
 satisfied_demand_indices = []
 satisfied_demand_values = []
 
@@ -334,13 +334,14 @@ for (store, sku) in v_indices.keys():
                 problem.linear_constraints.add(lin_expr=[row], senses=['L'], rhs=[1.0], names=[f'time2_{constraint_count}'])
                 constraint_count += 1
     
-    # 收集满意需求用于整体时效约束
-    satisfied_demand_indices.append(v_indices[(store, sku)])
-    satisfied_demand_values.append(demand.get((store, sku), 0.0))
+    # 只收集海鲜（dm）的满意需求用于整体时效约束
+    if sku == 'dm':
+        satisfied_demand_indices.append(v_indices[(store, sku)])
+        satisfied_demand_values.append(demand.get((store, sku), 0.0))
 
-# 整体时效约束
+# 整体时效约束：95%的海鲜需求满足时效
 satisfied_demand = [[satisfied_demand_indices, satisfied_demand_values]]
-problem.linear_constraints.add(lin_expr=satisfied_demand, senses=['G'], rhs=[0.95 * total_demand], names=[f'overall_time_window_{constraint_count}'])
+problem.linear_constraints.add(lin_expr=satisfied_demand, senses=['G'], rhs=[0.95 * total_dm_demand], names=[f'overall_time_window_{constraint_count}'])
 constraint_count += 1
 
 # 7. 智能系统采购约束 - 只包含RDC和CDC类型
@@ -373,14 +374,15 @@ if "optimal" in status_string.lower():
     # 基础数据准备
     valid_whs = [wh for wh in df_wh['Name'] if wh in cap]
     total_demand = sum(demand.values())
+    total_dm_demand = sum(demand.get((store, 'dm'), 0.0) for store in df_order['Name'].unique())
 
     # 1. 统计开仓数量
     open_wh_count = sum(1 for wh in valid_whs if problem.solution.get_values(y_indices[wh]) > 0.5)
     
-    # 2. 计算时效满足率
-    satisfied_demand_val = sum(demand.get((store, sku), 0.0) * problem.solution.get_values(v_indices[(store, sku)])
-                               for (store, sku) in v_indices.keys())
-    satisfied_rate = satisfied_demand_val / total_demand
+    # 2. 计算时效满足率（只计算海鲜dm）
+    satisfied_dm_demand_val = sum(demand.get((store, 'dm'), 0.0) * problem.solution.get_values(v_indices[(store, 'dm')])
+                                   for store in df_order['Name'].unique())
+    satisfied_rate = satisfied_dm_demand_val / total_dm_demand
     
     # 3. 运输成本：仓库间调拨
     transport_wh = sum(0.9e-4 * dist.get((cdc, rdc), 0) * problem.solution.get_values(f_indices[(cdc, rdc, sku)]) 
