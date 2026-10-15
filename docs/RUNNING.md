@@ -48,6 +48,8 @@ python run.py --script src/visualization/visualize_problem1_images.py --experime
 
 ## 验证与历史追溯
 
+问题一历史 Excel 与当前 CSV 的字段、数量口径及地图坐标核查可运行 `python tools/audit_question1_workbooks.py`，需要 openpyxl。该工具只读 Excel，不导出或改写工作簿；其固定审计对象及绘图验收条件见 [说明](audits/2026-10-15/QUESTION1_FIELDS_AND_MAPS.md)。
+
 ```powershell
 python tools/check_repository.py
 python -m unittest discover -s tests -v

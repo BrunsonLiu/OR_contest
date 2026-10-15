@@ -51,7 +51,7 @@ def check():
                     if value.startswith("data/raw/") and "\n" not in value:
                         if not (ROOT / value).exists():
                             errors.append(f"输入引用不存在：{path.relative_to(ROOT)} → {value}")
-            if folder == "src" and path.name not in ("runtime.py", "forecasting.py", "robust_support.py", "backtesting.py", "timeliness.py"):
+            if folder == "src" and path.name not in ("runtime.py", "forecasting.py", "robust_support.py", "backtesting.py", "timeliness.py", "geography.py"):
                 for node in tree.body:
                     if isinstance(node, ast.Assign) and any(
                         isinstance(target, ast.Name) and target.id == "_REPO_ROOT"

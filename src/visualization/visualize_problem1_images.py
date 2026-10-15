@@ -47,30 +47,8 @@ except Exception as e:
     sys.exit(1)
 
 # ==================== 仓库地理坐标映射 ====================
-warehouse_coords = {
-    # CDC（2个）
-    'gang-kou-CDC': [113.8, 22.9],  # 广州
-    'nei-lu-CDC': [116.4, 39.9],    # 北京
-    
-    # RDC（16个）
-    'dong-guan-DC': [113.7, 23.1],  # 东莞
-    'nan-jing-DC': [118.8, 32.0],   # 南京
-    'wu-han-DC': [114.3, 30.6],     # 武汉
-    'ha-er-bin-DC': [126.6, 45.8],  # 哈尔滨
-    'bei-jing-DC': [116.4, 39.9],   # 北京
-    'ning-bo-DC': [121.6, 29.9],    # 宁波
-    'chong-qing-DC': [106.5, 29.6], # 重庆
-    'shanghai-DC': [121.5, 31.2],   # 上海
-    'shenzhen-DC': [114.1, 22.5],   # 深圳
-    'guangzhou-DC': [113.3, 23.1],  # 广州
-    'tianjin-DC': [117.2, 39.1],    # 天津
-    'chengdu-DC': [104.1, 30.7],    # 成都
-    'hangzhou-DC': [120.2, 30.3],   # 杭州
-    'xi-an-DC': [108.9, 34.3],      # 西安
-    'suzhou-DC': [120.6, 31.3],     # 苏州
-    'qing-dao-DC': [120.4, 36.1],   # 青岛
-    'xiamen-DC': [118.1, 24.5],     # 厦门
-}
+from src.geography import warehouse_coordinates
+warehouse_coords = warehouse_coordinates()
 
 # ==================== 数据预处理 ====================
 print("\n【数据预处理】")
@@ -114,7 +92,7 @@ fig, ax = plt.subplots(figsize=(12, 10))
 # 绘制散点图
 for wh, coords in warehouse_coords.items():
     qty = wh_qty.get(wh, 0)
-    size = 100 + qty * 2  # 根据数量调整大小
+    size = 80 + 400 * qty / max(max(wh_qty.values(), default=0), 1)  # 根据数量调整大小
     color = 'red' if qty > 0 else 'blue'
     alpha = 0.7 if qty > 0 else 0.5
     
@@ -296,7 +274,7 @@ fig.suptitle('问题1：仓网配送优化结果综合报告', fontsize=16, font
 ax1 = fig.add_subplot(2, 3, 1)
 for wh, coords in warehouse_coords.items():
     qty = wh_qty.get(wh, 0)
-    size = 100 + qty * 2
+    size = 80 + 400 * qty / max(max(wh_qty.values(), default=0), 1)
     color = 'red' if qty > 0 else 'blue'
     ax1.scatter(coords[0], coords[1], s=size, c=color, alpha=0.7)
     ax1.text(coords[0] + 0.2, coords[1], wh, fontsize=7)

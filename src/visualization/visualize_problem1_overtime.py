@@ -257,7 +257,7 @@ try:
         from_coords = warehouse_coords[link['from']]
         
         # 使用城市坐标
-        to_coords = city_coords.get(link['to'], [from_coords[0] + 0.5, from_coords[1] + 0.5])
+        to_coords = city_coords[link['to']]
         
         linewidth = min(3, max(0.5, link['qty'] / 150))
         
@@ -271,7 +271,7 @@ try:
         from_coords = warehouse_coords[link['from']]
         
         # 使用城市坐标
-        to_coords = city_coords.get(link['to'], [from_coords[0] + 0.5, from_coords[1] + 0.5])
+        to_coords = city_coords[link['to']]
         
         linewidth = min(4, max(1.0, link['qty'] / 100))
         

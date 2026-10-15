@@ -28,7 +28,7 @@ from pyecharts.charts import Geo, Page, Bar, Line
 from pyecharts.globals import ChartType, SymbolType, CurrentConfig
 
 # 设置本地资源（避免网络问题）
-CurrentConfig.ONLINE_HOST = "D:/Python3.12/Lib/site-packages/pyecharts/assets/"
+# Use the library asset host instead of a machine-specific filesystem path.
 
 print("="*80)
 print("问题1结果可视化")
@@ -53,30 +53,8 @@ except Exception as e:
 
 # ==================== 仓库地理坐标映射 ====================
 # 仓库名称到经纬度的映射（基于中国主要城市）
-warehouse_coords = {
-    # CDC（2个）
-    'gang-kou-CDC': [113.8, 22.9],  # 广州
-    'nei-lu-CDC': [116.4, 39.9],    # 北京
-    
-    # RDC（16个）
-    'dong-guan-DC': [113.7, 23.1],  # 东莞
-    'nan-jing-DC': [118.8, 32.0],   # 南京
-    'wu-han-DC': [114.3, 30.6],     # 武汉
-    'ha-er-bin-DC': [126.6, 45.8],  # 哈尔滨
-    'bei-jing-DC': [116.4, 39.9],   # 北京
-    'ning-bo-DC': [121.6, 29.9],    # 宁波
-    'chong-qing-DC': [106.5, 29.6], # 重庆
-    'shanghai-DC': [121.5, 31.2],   # 上海
-    'shenzhen-DC': [114.1, 22.5],   # 深圳
-    'guangzhou-DC': [113.3, 23.1],  # 广州
-    'tianjin-DC': [117.2, 39.1],    # 天津
-    'chengdu-DC': [104.1, 30.7],    # 成都
-    'hangzhou-DC': [120.2, 30.3],   # 杭州
-    'xi-an-DC': [108.9, 34.3],      # 西安
-    'suzhou-DC': [120.6, 31.3],     # 苏州
-    'qing-dao-DC': [120.4, 36.1],   # 青岛
-    'xiamen-DC': [118.1, 24.5],     # 厦门
-}
+from src.geography import warehouse_coordinates
+warehouse_coords = warehouse_coordinates()
 
 # ==================== 数据预处理 ====================
 print("\n【数据预处理】")
@@ -215,7 +193,7 @@ bar = (
     Bar()
     .add_xaxis(periods)
     .add_yaxis("总物流成本（万元）", costs, itemstyle_opts=opts.ItemStyleOpts(color="blue"))
-    .add_yaxis("开仓数量", open_counts, itemstyle_opts=opts.ItemStyleOpts(color="green"))
+    .add_yaxis("开仓数量", open_counts, yaxis_index=1, itemstyle_opts=opts.ItemStyleOpts(color="green"))
     .set_global_opts(
         title_opts=opts.TitleOpts(
             title="问题1：业务指标趋势",
@@ -227,13 +205,16 @@ bar = (
     )
 )
 
+bar.extend_axis(yaxis=opts.AxisOpts(name="开仓数量", position="right", min_=0))
+bar.extend_axis(yaxis=opts.AxisOpts(name="时效满足率（%）", position="right", offset=60, min_=0, max_=100))
+
 line = (
     Line()
     .add_xaxis(periods)
     .add_yaxis(
         "时效满足率（%）",
         time_rates,
-        yaxis_index=1,
+        yaxis_index=2,
         label_opts=opts.LabelOpts(is_show=True),
         linestyle_opts=opts.LineStyleOpts(color="red", width=3),
     )
@@ -243,7 +224,7 @@ line = (
 bar.overlap(line)
 bar.set_global_opts(
     yaxis_opts=opts.AxisOpts(
-        name="成本（万元）/数量",
+        name="成本（万元）",
         axislabel_opts=opts.LabelOpts(color="blue"),
     ),
 )

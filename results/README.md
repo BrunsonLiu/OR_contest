@@ -25,6 +25,8 @@
 
 ## 已保存文件
 
+`experiments/q1-mapping-final-20261015/`：问题一字段核查后的最终绘图实验，使用修正 CSV；包含 10 张 PNG、5 份 HTML 和四个入口运行记录，见 [核查报告](../docs/audits/2026-10-15/QUESTION1_FIELDS_AND_MAPS.md)。
+
 版本核查与选择方式见 [第五轮报告](../docs/audits/2026-10-15/LOSS_VERSIONS.md)。`experiments/rolling-20261015/` 保存第四轮四窗口预测回测结果。
 
 ### question1
@@ -32,7 +34,7 @@
 - [Q1-result1.xlsx](question1/Q1-result1.xlsx)
 - [Q1-result2.xlsx](question1/Q1-result2.xlsx)
 - [Q1-result3.xlsx](question1/Q1-result3.xlsx)
-- [Q3-result.xlsx](question1/Q3-result.xlsx)
+- [Q3-result.xlsx](question1/Q3-result.xlsx)：实际为问题三的历史预测交付表，保留旧位置，不是问题一输入。
 - [问题1_仓库分布_地图.png](question1/问题1_仓库分布_地图.png)
 - [问题1_所有备选仓库位置.png](question1/问题1_所有备选仓库位置.png)
 - [问题1_综合报告_地图.png](question1/问题1_综合报告_地图.png)

@@ -1,0 +1,485 @@
+{
+  "workbooks": [
+    {
+      "file": "results/question1/Q1-result1.xlsx",
+      "sha256": "f64990b11710e4dfee3a1bffebafc6bca67f2901c362caa19e9098a616a18494",
+      "sheets": [
+        {
+          "sheet": "(第一问结果)仓网业务表现文件",
+          "rows": 2,
+          "columns": 8,
+          "first_rows": [
+            [
+              "开仓数量",
+              "时效满足率",
+              "总物流成本",
+              "仓库之间的运输总成本",
+              "仓库到门店的运输总成本",
+              "开仓总成本",
+              "出入仓处置总成本",
+              "智能调度系统采购总成本"
+            ],
+            [
+              9,
+              0.9507,
+              1728.19456500013,
+              914.232807000057,
+              474.338558000059,
+              175,
+              151.123200000012,
+              13.5
+            ]
+          ],
+          "formula_count": 0
+        }
+      ]
+    },
+    {
+      "file": "results/question1/Q1-result2.xlsx",
+      "sha256": "f04533ee5c0218a414bd91a5032875938cbcb6768cd7668f152d233065d7ba40",
+      "sheets": [
+        {
+          "sheet": "第一问结果_仓库处置订单量文件",
+          "rows": 17,
+          "columns": 3,
+          "first_rows": [
+            [
+              "Name",
+              "SKU",
+              "Qty"
+            ],
+            [
+              "dong-guan-DC",
+              "dm",
+              1698.6
+            ],
+            [
+              "dong-guan-DC",
+              "im",
+              833.2
+            ],
+            [
+              "nei-lu-CDC",
+              "dm",
+              12084.6
+            ]
+          ],
+          "formula_count": 0
+        }
+      ]
+    },
+    {
+      "file": "results/question1/Q1-result3.xlsx",
+      "sha256": "226659f61666b90ff24f55189551f8d72d4bff886396ef6a3b205e158dc6872f",
+      "sheets": [
+        {
+          "sheet": "第一问结果_仓网供应关系文件",
+          "rows": 219,
+          "columns": 4,
+          "first_rows": [
+            [
+              "Name",
+              "Customer",
+              "SKU",
+              "Qty"
+            ],
+            [
+              "nei-lu-CDC",
+              "dong-guan-DC",
+              "dm",
+              849.3
+            ],
+            [
+              "nei-lu-CDC",
+              "nan-jing-DC",
+              "dm",
+              1155.1
+            ],
+            [
+              "nei-lu-CDC",
+              "wu-han-DC",
+              "dm",
+              392
+            ]
+          ],
+          "formula_count": 0
+        }
+      ]
+    },
+    {
+      "file": "results/question1/Q3-result.xlsx",
+      "sha256": "388e3442cd987f87111cbcf863a3605da39048e232833e86585680be0c4b86df",
+      "sheets": [
+        {
+          "sheet": "第三问结果_订单需求量预测结果文件",
+          "rows": 205,
+          "columns": 16,
+          "first_rows": [
+            [
+              "Customer",
+              "SKU",
+              "2016-06-24 00:00:00",
+              "2016-06-25 00:00:00",
+              "2016-06-26 00:00:00",
+              "2016-06-27 00:00:00",
+              "2016-06-28 00:00:00",
+              "2016-06-29 00:00:00",
+              "2016-06-30 00:00:00",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "an-shan-shi",
+              "dm",
+              35.5,
+              45.2,
+              58.8,
+              47.8,
+              36.1,
+              36.1,
+              35,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "an-shan-shi",
+              "im",
+              13.9,
+              18.1,
+              23.5,
+              26.5,
+              18.6,
+              14.7,
+              14.3,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "bao-ding-shi",
+              "dm",
+              52.5,
+              68.3,
+              88.8,
+              71.5,
+              57.2,
+              57.3,
+              59.3,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          ],
+          "formula_count": 0
+        }
+      ]
+    }
+  ],
+  "historical_quantity_comparison": [
+    {
+      "warehouse": "dong-guan-DC",
+      "sku": "dm",
+      "workbook_qty": 1698.6,
+      "supply_outbound_qty": 849.3,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "dong-guan-DC",
+      "sku": "im",
+      "workbook_qty": 833.2,
+      "supply_outbound_qty": 416.59999999999997,
+      "qty_to_outbound_ratio": 2.0000000000000004
+    },
+    {
+      "warehouse": "nei-lu-CDC",
+      "sku": "dm",
+      "workbook_qty": 12084.6,
+      "supply_outbound_qty": 6042.300000000001,
+      "qty_to_outbound_ratio": 1.9999999999999998
+    },
+    {
+      "warehouse": "nan-jing-DC",
+      "sku": "dm",
+      "workbook_qty": 2310.2,
+      "supply_outbound_qty": 1155.1,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "nan-jing-DC",
+      "sku": "im",
+      "workbook_qty": 1380.6,
+      "supply_outbound_qty": 690.2999999999998,
+      "qty_to_outbound_ratio": 2.0000000000000004
+    },
+    {
+      "warehouse": "gang-kou-CDC",
+      "sku": "im",
+      "workbook_qty": 8650,
+      "supply_outbound_qty": 4324.999999999999,
+      "qty_to_outbound_ratio": 2.0000000000000004
+    },
+    {
+      "warehouse": "wu-han-DC",
+      "sku": "dm",
+      "workbook_qty": 784,
+      "supply_outbound_qty": 392.0,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "wu-han-DC",
+      "sku": "im",
+      "workbook_qty": 807,
+      "supply_outbound_qty": 403.49999999999994,
+      "qty_to_outbound_ratio": 2.0000000000000004
+    },
+    {
+      "warehouse": "ha-er-bin-DC",
+      "sku": "dm",
+      "workbook_qty": 466.6,
+      "supply_outbound_qty": 233.3,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "ha-er-bin-DC",
+      "sku": "im",
+      "workbook_qty": 263.4,
+      "supply_outbound_qty": 131.7,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "bei-jing-DC",
+      "sku": "dm",
+      "workbook_qty": 130.4,
+      "supply_outbound_qty": 65.2,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "bei-jing-DC",
+      "sku": "im",
+      "workbook_qty": 1526.8,
+      "supply_outbound_qty": 763.4,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "ning-bo-DC",
+      "sku": "dm",
+      "workbook_qty": 950.2,
+      "supply_outbound_qty": 475.1,
+      "qty_to_outbound_ratio": 2.0
+    },
+    {
+      "warehouse": "ning-bo-DC",
+      "sku": "im",
+      "workbook_qty": 2629.4,
+      "supply_outbound_qty": 1314.7000000000003,
+      "qty_to_outbound_ratio": 1.9999999999999996
+    },
+    {
+      "warehouse": "chong-qing-DC",
+      "sku": "dm",
+      "workbook_qty": 845.4,
+      "supply_outbound_qty": 422.70000000000005,
+      "qty_to_outbound_ratio": 1.9999999999999998
+    },
+    {
+      "warehouse": "chong-qing-DC",
+      "sku": "im",
+      "workbook_qty": 550.4,
+      "supply_outbound_qty": 275.2,
+      "qty_to_outbound_ratio": 2.0
+    }
+  ],
+  "coordinate_coverage": {
+    "old_coordinate_keys": 19,
+    "actual_warehouse_keys": 20,
+    "missing_actual_warehouses": [
+      "chang-sha-DC",
+      "cheng-du-DC",
+      "da-lian-DC",
+      "guang-zhou-DC",
+      "hang-zhou-DC",
+      "shang-hai-DC",
+      "shen-zhen-DC",
+      "tian-jin-DC",
+      "zheng-zhou-DC"
+    ],
+    "nonexistent_warehouse_keys": [
+      "chengdu-DC",
+      "guangzhou-DC",
+      "hangzhou-DC",
+      "shanghai-DC",
+      "shenzhen-DC",
+      "suzhou-DC",
+      "tianjin-DC",
+      "xiamen-DC"
+    ],
+    "active_warehouses_missing_before": [
+      "zheng-zhou-DC"
+    ],
+    "outbound_tons_omitted_before": 1150.3999999996986,
+    "coordinates": {
+      "cheng-du-DC": [
+        104.066143,
+        30.573095
+      ],
+      "dong-guan-DC": [
+        113.746262,
+        23.046237
+      ],
+      "guang-zhou-DC": [
+        113.264385,
+        23.129112
+      ],
+      "nei-lu-CDC": [
+        116.704441,
+        39.523927
+      ],
+      "nan-jing-DC": [
+        118.796623,
+        32.059352
+      ],
+      "qing-dao-DC": [
+        120.382665,
+        36.066938
+      ],
+      "gang-kou-CDC": [
+        118.110221,
+        24.490474
+      ],
+      "shang-hai-DC": [
+        121.473658,
+        31.230378
+      ],
+      "shen-zhen-DC": [
+        114.085947,
+        22.547
+      ],
+      "tian-jin-DC": [
+        117.201538,
+        39.085294
+      ],
+      "xi-an-DC": [
+        108.939621,
+        34.343147
+      ],
+      "chang-sha-DC": [
+        112.938888,
+        28.228272
+      ],
+      "zheng-zhou-DC": [
+        113.665412,
+        34.757975
+      ],
+      "hang-zhou-DC": [
+        120.209947,
+        30.245853
+      ],
+      "wu-han-DC": [
+        114.305215,
+        30.592935
+      ],
+      "da-lian-DC": [
+        121.618622,
+        38.91459
+      ],
+      "ha-er-bin-DC": [
+        126.535319,
+        45.803131
+      ],
+      "bei-jing-DC": [
+        116.407387,
+        39.904179
+      ],
+      "ning-bo-DC": [
+        121.6216,
+        29.859515
+      ],
+      "chong-qing-DC": [
+        106.550464,
+        29.563761
+      ]
+    }
+  },
+  "current_csv_schemas": {
+    "仓库处置订单量文件_cplex.csv": {
+      "columns": [
+        "Name",
+        "SKU",
+        "Qty（单位：吨）"
+      ],
+      "rows": 16
+    },
+    "仓网业务表现文件_cplex.csv": {
+      "columns": [
+        "开仓数量",
+        "时效满足率",
+        "总物流成本（单位：万元）",
+        "仓库之间的运输总成本（单位：万元）",
+        "仓库到门店的运输总成本（单位：万元）",
+        "开仓总成本（单位：万元）",
+        "出入仓处置总成本（单位：万元）",
+        "智能调度系统采购总成本（单位：万元）"
+      ],
+      "rows": 1
+    },
+    "仓网供应关系文件_cplex.csv": {
+      "columns": [
+        "Name",
+        "Customer",
+        "SKU",
+        "Qty（单位：吨）"
+      ],
+      "rows": 218
+    }
+  },
+  "current_outbound_reconciled_rows": 16,
+  "plot_evidence": {
+    "runs": {
+      "visualize_problem1": "completed",
+      "visualize_problem1_images": "completed",
+      "visualize_problem1_map": "completed",
+      "visualize_problem1_overtime": "completed"
+    },
+    "files_sha256": {
+      "仓库处置订单量文件_cplex.csv": "0ddb8ac17d2cc1aa14473fa98f9e32f24faca14bf0f382c3d747ffc3a84d8e1b",
+      "仓网业务表现文件_cplex.csv": "36f056defb8c181d77e5d42fddecf9c563393ce33e1aed7ad06a48e3febcb9a6",
+      "仓网供应关系文件_cplex.csv": "1e9869b73bb7098dd06ba5a4b6e5b69854d8a32df1325439514c2e9c51868f08",
+      "问题1_业务指标.html": "89fb3471b4b2eefc6f0f8a6e93824464c2f1e388d26676618f4df5fba12cbfe2",
+      "问题1_业务指标.png": "b2d3a215eb8e8fbeff40c9f293d9dff38ad95e5b329a6dc92207dc21f178a05e",
+      "问题1_仓库分布.html": "349773f9e82f4c2db5f8ffd10b4d971d568cf09bc7fd8f37ede0c44f8027b613",
+      "问题1_仓库分布.png": "3bc1ea420ec1e1f757134d100d6210fce28846f7f4bf64495adda5cf8fe035c7",
+      "问题1_仓库分布_地图.png": "0fa1754003ec09976bc575c1927292ddb5ac4c661134fffe2d657f55a4e8246d",
+      "问题1_仓库订单量.png": "b72b9b5398a27f7784be09adc59d514918405e1888976f4848c6befdc293a98b",
+      "问题1_成本构成.html": "bc5a448e19ca7bd4a5fb518abfae07918eb4ef5263c6447fb7140cfb231a0a50",
+      "问题1_成本构成.png": "554bacab78dd5230f6a9647455373eb960b354d607660f31249a88fce7c941dc",
+      "问题1_综合可视化.html": "4bb4fdbbbb5871610f64b5b1013eeaac7d945429c3181a035afb0f424b2b2d24",
+      "问题1_综合报告.png": "d259c508b436f9da9c9e952f3590930ae632c5d9b56e6ecd738063892d55b8f0",
+      "问题1_综合报告_地图.png": "754ec4abeb9dce5dd3d82d75f962523978d0240ba560221bfcb6a9f12090808b",
+      "问题1_运输网络.html": "6d9fb31d8fcadd82235fea14408178fcbdb4c8118f7b5ed9ec1862f04f626071",
+      "问题1_运输网络.png": "08bf5e6826590c8e1995c5313b18d6ce46315a6fb3c882786f4e482f4dae6ba1",
+      "问题1_运输网络_地图.png": "3794e4e1a9a047133279edcee1a31ea269326c7fdf0e1abf9ff6fbf7955a3f04",
+      "问题1_运输网络_超时路径.png": "4ff4a30657c3d469497c933d662ecd46813f2caf8cb6243db4265723d618b616"
+    },
+    "csv_identical_to_corrected_experiment": true,
+    "interactive_html": "Generated and axis references checked; browser/network rendering not certified."
+  },
+  "scope": "Read-only workbook inspection; no recalculation or source-file edits."
+}
