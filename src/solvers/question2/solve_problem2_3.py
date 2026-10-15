@@ -11,6 +11,10 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 
 import pandas as pd
 import cplex
@@ -144,8 +148,8 @@ def solve_with_transportation_loss():
             p_cost = proc_cost.get(wh, 0)
             travel_time = time_matrix.get((wh, store), 0)
             
-            # 基本运输成本：运输费 + 2.0倍处置费
-            base_cost = (1.45e-4 * dist_val * qty_val) + (2.0 * p_cost * qty_val)
+            # 基本运输成本：运输费 + 处置费（单价已合并入库与出库）
+            base_cost = (1.45e-4 * dist_val * qty_val) + (p_cost * qty_val)
             
             # 运输损耗成本
             loss_cost_per_ton = loss_cost_matrix.get((wh, store), 0.0)
@@ -188,7 +192,7 @@ def solve_with_transportation_loss():
                     travel_time = time_matrix.get((cdc, rdc), 0)
                     
                     # 基本运输成本：运输费 + CDC的处置费(2倍)
-                    base_cost = (0.9e-4 * dist_val) + (2.0 * p_cost_cdc)
+                    base_cost = (0.9e-4 * dist_val) + (p_cost_cdc)
                     
                     # 运输损耗成本（每吨）
                     loss_cost_per_ton = loss_cost_matrix.get((cdc, rdc), 0.0)
@@ -208,7 +212,7 @@ def solve_with_transportation_loss():
         if wh_type in ['RDC', 'CDC']:
             var_name = f'w_{wh}'
             p_cost = proc_cost.get(wh, 0)
-            discount_coeff = -0.8 * p_cost 
+            discount_coeff = -0.4 * p_cost
             problem.variables.add(obj=[discount_coeff], lb=[0.0], ub=[cplex.infinity], types=[problem.variables.type.continuous], names=[var_name])
             w_indices[wh] = w_vars_start_idx + w_count
             w_count += 1
@@ -373,8 +377,9 @@ def solve_with_transportation_loss():
 
     # ========== 求解 ==========
     print("求解模型...")
+    _configure_solver(problem)
     problem.solve()
-
+    _record_solver(problem)
     # 输出求解状态
     status_string = problem.solution.get_status_string()
     print(f"求解状态: {status_string}")
@@ -384,7 +389,7 @@ def solve_with_transportation_loss():
         print(f'最优总成本: {problem.solution.get_objective_value():.2f} 万元')
         
         # ========== 结果提取与附件生成 ==========
-        output_dir = str(_REPO_ROOT / 'results/question2')
+        output_dir = str(_RESULTS_ROOT / 'question2')
         os.makedirs(output_dir, exist_ok=True)
         
         # 基础数据准备
@@ -472,11 +477,11 @@ def solve_with_transportation_loss():
                         out_qty_im += problem.solution.get_values(f_indices[(wh, rdc, 'im')])
             
             # 记录附件10数据
-            qty_total_wh = 2.0 * (out_qty_dm + out_qty_im)
+            qty_total_wh = (out_qty_dm + out_qty_im)
             if out_qty_dm > 0: 
-                warehouse_stats.append({'Name': wh, 'SKU': 'dm', 'Qty（单位：吨）': 2.0 * out_qty_dm})
+                warehouse_stats.append({'Name': wh, 'SKU': 'dm', 'Qty（单位：吨）': out_qty_dm})
             if out_qty_im > 0: 
-                warehouse_stats.append({'Name': wh, 'SKU': 'im', 'Qty（单位：吨）': 2.0 * out_qty_im})
+                warehouse_stats.append({'Name': wh, 'SKU': 'im', 'Qty（单位：吨）': out_qty_im})
             
             # 计算该仓处置费（扣除系统折扣）
             z_val = problem.solution.get_values(z_indices[wh])
@@ -630,7 +635,7 @@ if result_loss:
     print("="*120)
 
     # 输出文件位置
-    output_dir = str(_REPO_ROOT / 'results/question2')
+    output_dir = str(_RESULTS_ROOT / 'question2')
     print(f"\n结果文件已保存到 {output_dir} 目录:")
     print("1. 仓网业务表现文件_运输损耗_cplex.csv")
     print("2. 仓库处置订单量文件_运输损耗_cplex.csv")

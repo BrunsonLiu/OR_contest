@@ -1,0 +1,9 @@
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 56489, "constraints": 55197, "objective": 233345.30526687874, "best_bound": 232188.83298429608, "relative_gap": 0.004956055495781219}
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 56489, "constraints": 82329, "objective": 242453.66833634133, "best_bound": 241886.04617077063, "relative_gap": 0.0023411572588923537}
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 56489, "constraints": 82329, "objective": 251964.44965810672, "best_bound": 251402.65400016186, "relative_gap": 0.002229662393671694}
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 56489, "constraints": 82329, "objective": 259079.01676995313, "best_bound": 258742.3444331932, "relative_gap": 0.0012994967363909053}
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 56489, "constraints": 82329, "objective": 266733.17782478465, "best_bound": 265984.7437643624, "relative_gap": 0.0028059278809098105}
+{"status_code": 107, "status": "time limit exceeded", "has_incumbent": true, "variables": 56489, "constraints": 82329, "objective": 451901.138972899, "best_bound": 272843.131381537, "relative_gap": 0.3962326981479466}
+{"status_code": 107, "status": "time limit exceeded", "has_incumbent": true, "variables": 56489, "constraints": 82329, "objective": 280928.1901423707, "best_bound": 279145.5307743932, "relative_gap": 0.006345605142275313}
+{"status_code": 103, "status": "integer infeasible", "has_incumbent": false, "variables": 56489, "constraints": 82329, "best_bound": -39410.0, "relative_gap": null}
+{"status_code": 103, "status": "integer infeasible", "has_incumbent": false, "variables": 56489, "constraints": 82329, "best_bound": -39410.0, "relative_gap": null}

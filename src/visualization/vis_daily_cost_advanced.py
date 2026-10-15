@@ -1,5 +1,9 @@
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
@@ -9,10 +13,10 @@ from matplotlib.gridspec import GridSpec
 plt.rcParams['font.sans-serif'] = ['SimHei', 'Arial Unicode MS', 'DejaVu Sans']
 plt.rcParams['axes.unicode_minus'] = False
 
-output_dir = str(_REPO_ROOT / 'results/question4/problem4_noloss/output_result')
-input_dir = str(_REPO_ROOT / 'results/question3')
+output_dir = str(_RESULTS_ROOT / 'question4/problem4_noloss/output_result')
+input_dir = str(_RESULTS_ROOT / 'question3')
 
-df_demand = pd.read_csv(os.path.join(input_dir, '订单需求量预测结果文件.csv'))
+df_demand = _read_forecast()
 
 days = []
 trans_wh = []

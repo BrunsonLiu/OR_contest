@@ -11,6 +11,10 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 
 import pandas as pd
 import cplex
@@ -132,7 +136,7 @@ def solve_model_with_subsidy(apply_subsidy=False):
             qty_val = demand.get((store, sku), 0)
             p_cost = proc_cost.get(wh, 0)
 
-            cost = (1.45e-4 * dist_val * qty_val) + (2.0 * p_cost * qty_val)
+            cost = (1.45e-4 * dist_val * qty_val) + (p_cost * qty_val)
 
             problem.variables.add(
                 obj=[cost], 
@@ -165,7 +169,7 @@ def solve_model_with_subsidy(apply_subsidy=False):
                     var_name = f'f_{cdc}_{rdc}_{sku}'
                     dist_val = dist.get((cdc, rdc), 0)
                     p_cost_cdc = proc_cost.get(cdc, 0)
-                    cost = (0.9e-4 * dist_val) + (2.0 * p_cost_cdc)
+                    cost = (0.9e-4 * dist_val) + (p_cost_cdc)
                     problem.variables.add(obj=[cost], lb=[0.0], ub=[cplex.infinity], types=[problem.variables.type.continuous], names=[var_name])
                     f_indices[(cdc, rdc, sku)] = f_vars_start_idx + f_count
                     f_count += 1
@@ -178,7 +182,7 @@ def solve_model_with_subsidy(apply_subsidy=False):
         if wh_type in ['RDC', 'CDC']:
             var_name = f'w_{wh}'
             p_cost = proc_cost.get(wh, 0)
-            discount_coeff = -0.8 * p_cost 
+            discount_coeff = -0.4 * p_cost
             problem.variables.add(obj=[discount_coeff], lb=[0.0], ub=[cplex.infinity], types=[problem.variables.type.continuous], names=[var_name])
             w_indices[wh] = w_vars_start_idx + w_count
             w_count += 1
@@ -412,8 +416,9 @@ def solve_model_with_subsidy(apply_subsidy=False):
 
     # ========== 求解 ==========
     print("求解模型...")
+    _configure_solver(problem)
     problem.solve()
-
+    _record_solver(problem)
     # 输出求解状态
     status_string = problem.solution.get_status_string()
     print(f"求解状态: {status_string}")
@@ -476,11 +481,11 @@ def solve_model_with_subsidy(apply_subsidy=False):
                         out_qty_im += problem.solution.get_values(f_indices[(wh, rdc, 'im')])
             
             # 记录附件10数据
-            qty_total_wh = 2.0 * (out_qty_dm + out_qty_im)
+            qty_total_wh = (out_qty_dm + out_qty_im)
             if out_qty_dm > 0: 
-                warehouse_stats.append({'Name': wh, 'SKU': 'dm', 'Qty（单位：吨）': 2.0 * out_qty_dm})
+                warehouse_stats.append({'Name': wh, 'SKU': 'dm', 'Qty（单位：吨）': out_qty_dm})
             if out_qty_im > 0: 
-                warehouse_stats.append({'Name': wh, 'SKU': 'im', 'Qty（单位：吨）': 2.0 * out_qty_im})
+                warehouse_stats.append({'Name': wh, 'SKU': 'im', 'Qty（单位：吨）': out_qty_im})
             
             # 计算该仓处置费（扣除系统折扣）
             z_val = problem.solution.get_values(z_indices[wh])
@@ -562,7 +567,7 @@ print("="*60)
 result_with_subsidy, attachment_data_with_subsidy = solve_model_with_subsidy(apply_subsidy=True)
 
 # ========== 输出结果表格 ==========
-output_dir = str(_REPO_ROOT / 'results/question2')
+output_dir = str(_RESULTS_ROOT / 'question2')
 os.makedirs(output_dir, exist_ok=True)
 
 # 创建包含两个方案结果的DataFrame

@@ -1,0 +1,162 @@
+[
+  {
+    "case": "q1",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0,
+    "timeliness_ratio": 0.9506139496300864,
+    "flow_rounding_tolerance_tonnes": 1e-06,
+    "cost_component_residual": -4.547473508864641e-13
+  },
+  {
+    "case": "problem4_noloss/2016-06-24",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0049959367875160865,
+    "timeliness_ratio": 0.9511589198282555,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_noloss/2016-06-25",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0049973623754198115,
+    "timeliness_ratio": 0.9509841338968649,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_noloss/2016-06-26",
+    "issues": [],
+    "max_demand_error_tonnes": 0.004986396022339079,
+    "timeliness_ratio": 0.950210740871473,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_noloss/2016-06-27",
+    "issues": [],
+    "max_demand_error_tonnes": 0.004989857798349817,
+    "timeliness_ratio": 0.9525218673273749,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_noloss/2016-06-28",
+    "issues": [],
+    "max_demand_error_tonnes": 0.004999596352966762,
+    "timeliness_ratio": 0.9508496977181551,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_noloss/2016-06-29",
+    "issues": [],
+    "max_demand_error_tonnes": 0.00496254799469753,
+    "timeliness_ratio": 0.9516449618100136,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_noloss/2016-06-30",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0049651518291256025,
+    "timeliness_ratio": 0.9514765988583918,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_loss_v2/2016-06-24",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0049959367875160865,
+    "timeliness_ratio": 0.9507123970119152,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_loss_v2/2016-06-25",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0049973623754198115,
+    "timeliness_ratio": 0.9514646630076893,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_loss_v2/2016-06-26",
+    "issues": [],
+    "max_demand_error_tonnes": 0.004986396022339079,
+    "timeliness_ratio": 0.9509854747092303,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_loss_v2/2016-06-27",
+    "issues": [],
+    "max_demand_error_tonnes": 0.004989857798349817,
+    "timeliness_ratio": 0.9511127559187271,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_loss_v2/2016-06-28",
+    "issues": [],
+    "max_demand_error_tonnes": 0.004999596352966762,
+    "timeliness_ratio": 0.9501914155969995,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_loss_v2/2016-06-29",
+    "issues": [],
+    "max_demand_error_tonnes": 0.00496254799469753,
+    "timeliness_ratio": 0.9509358186025517,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "problem4_loss_v2/2016-06-30",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0049651518291256025,
+    "timeliness_ratio": 0.9503897946059197,
+    "flow_rounding_tolerance_tonnes": 0.6
+  },
+  {
+    "case": "robust/gamma=0.0",
+    "issues": [],
+    "solver_status": "integer optimal, tolerance",
+    "accounting_residual": -2.9103830456733704e-11
+  },
+  {
+    "case": "robust/gamma=0.005",
+    "issues": [],
+    "solver_status": "integer optimal, tolerance",
+    "accounting_residual": 0.0
+  },
+  {
+    "case": "robust/gamma=0.01",
+    "issues": [],
+    "solver_status": "integer optimal, tolerance",
+    "accounting_residual": 0.0
+  },
+  {
+    "case": "robust/gamma=0.015",
+    "issues": [],
+    "solver_status": "integer optimal, tolerance",
+    "accounting_residual": 0.0
+  },
+  {
+    "case": "robust/gamma=0.02",
+    "issues": [],
+    "solver_status": "integer optimal, tolerance",
+    "accounting_residual": 0.0
+  },
+  {
+    "case": "robust/gamma=0.025",
+    "issues": [],
+    "solver_status": "time limit exceeded",
+    "accounting_residual": 0.0
+  },
+  {
+    "case": "robust/gamma=0.03",
+    "issues": [],
+    "solver_status": "time limit exceeded",
+    "accounting_residual": 0.0
+  },
+  {
+    "case": "robust/gamma=0.04",
+    "issues": [],
+    "solver_status": "integer infeasible",
+    "has_incumbent": false
+  },
+  {
+    "case": "robust/gamma=0.05",
+    "issues": [],
+    "solver_status": "integer infeasible",
+    "has_incumbent": false
+  }
+]

@@ -6,6 +6,12 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
+_PLOT_DIR = _RESULTS_ROOT / 'question2'
+_PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
 import sys
 import io
@@ -38,7 +44,7 @@ print("="*80)
 print("补贴政策影响可视化（差值图版本）")
 print("="*80)
 
-output_dir = str(_REPO_ROOT / 'results/question2')
+output_dir = str(_RESULTS_ROOT / 'question2')
 
 print("\n【数据加载】")
 try:
@@ -108,7 +114,7 @@ try:
     ax1.tick_params(axis='x', pad=10)
     
     plt.tight_layout(rect=[0, 0, 1, 0.97])
-    plt.savefig('补贴政策影响分析_差值图.png', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.savefig(str(_PLOT_DIR / '补贴政策影响分析_差值图.png'), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     print("\n  ✓ 已保存: 补贴政策影响分析_差值图.png")
     plt.close()
     
@@ -142,7 +148,7 @@ try:
     ax5.grid(True, axis='y', alpha=0.4, linewidth=1.0)
     
     plt.tight_layout(rect=[0, 0, 1, 0.93])
-    plt.savefig('补贴政策_成本构成差值图.png', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.savefig(str(_PLOT_DIR / '补贴政策_成本构成差值图.png'), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     print("  ✓ 已保存: 补贴政策_成本构成差值图.png")
     plt.close()
     

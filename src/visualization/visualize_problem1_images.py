@@ -6,6 +6,12 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
+_PLOT_DIR = _RESULTS_ROOT / 'question1'
+_PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
 import sys
 import io
@@ -24,17 +30,17 @@ print("问题1结果可视化（生成PNG图片）")
 print("="*80)
 
 # ==================== 数据加载 ====================
-output_dir = str(_REPO_ROOT / 'results/question1')
+output_dir = str(_RESULTS_ROOT / 'question1')
 
 print("\n【数据加载】")
 try:
-    df_business = pd.read_csv(os.path.join(output_dir, '仓网业务表现文件.csv'))
+    df_business = pd.read_csv(os.path.join(output_dir, '仓网业务表现文件_cplex.csv'))
     print("  ✓ 仓网业务表现文件")
     
-    df_supply = pd.read_csv(os.path.join(output_dir, '仓网供应关系文件.csv'))
+    df_supply = pd.read_csv(os.path.join(output_dir, '仓网供应关系文件_cplex.csv'))
     print("  ✓ 仓网供应关系文件")
     
-    df_wh = pd.read_csv(os.path.join(output_dir, '仓库处置订单量文件.csv'))
+    df_wh = pd.read_csv(os.path.join(output_dir, '仓库处置订单量文件_cplex.csv'))
     print("  ✓ 仓库处置订单量文件")
 except Exception as e:
     print(f"  ✗ 加载失败: {e}")
@@ -134,7 +140,7 @@ legend_elements = [
 ax.legend(handles=legend_elements, prop={'family': 'SimHei'})
 
 plt.tight_layout()
-plt.savefig('问题1_仓库分布.png', dpi=300, bbox_inches='tight')
+plt.savefig(str(_PLOT_DIR / '问题1_仓库分布.png'), dpi=300, bbox_inches='tight')
 print("  ✓ 已保存: 问题1_仓库分布.png")
 plt.close()
 
@@ -176,7 +182,7 @@ labels = [l.get_label() for l in lines]
 ax2.legend(lines, labels, prop={'family': 'SimHei'})
 
 plt.tight_layout()
-plt.savefig('问题1_业务指标.png', dpi=300, bbox_inches='tight')
+plt.savefig(str(_PLOT_DIR / '问题1_业务指标.png'), dpi=300, bbox_inches='tight')
 print("  ✓ 已保存: 问题1_业务指标.png")
 plt.close()
 
@@ -204,7 +210,7 @@ ax.set_title(f'问题1：成本构成（总成本: {total_cost:.2f}万元）',
              fontsize=14, fontproperties='SimHei', fontweight='bold')
 
 plt.tight_layout()
-plt.savefig('问题1_成本构成.png', dpi=300, bbox_inches='tight')
+plt.savefig(str(_PLOT_DIR / '问题1_成本构成.png'), dpi=300, bbox_inches='tight')
 print("  ✓ 已保存: 问题1_成本构成.png")
 plt.close()
 
@@ -235,7 +241,7 @@ for bar, value in zip(bars, wh_values):
             f'{value:.1f}', ha='center', va='bottom', fontsize=8)
 
 plt.tight_layout()
-plt.savefig('问题1_仓库订单量.png', dpi=300, bbox_inches='tight')
+plt.savefig(str(_PLOT_DIR / '问题1_仓库订单量.png'), dpi=300, bbox_inches='tight')
 print("  ✓ 已保存: 问题1_仓库订单量.png")
 plt.close()
 
@@ -276,7 +282,7 @@ ax.set_title('问题1：运输网络图', fontsize=14, fontproperties='SimHei', 
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('问题1_运输网络.png', dpi=300, bbox_inches='tight')
+plt.savefig(str(_PLOT_DIR / '问题1_运输网络.png'), dpi=300, bbox_inches='tight')
 print("  ✓ 已保存: 问题1_运输网络.png")
 plt.close()
 
@@ -343,7 +349,7 @@ ax6.text(0.1, 0.5, stats_text, fontsize=12, verticalalignment='center',
          fontproperties='SimHei')
 
 plt.tight_layout()
-plt.savefig('问题1_综合报告.png', dpi=300, bbox_inches='tight')
+plt.savefig(str(_PLOT_DIR / '问题1_综合报告.png'), dpi=300, bbox_inches='tight')
 print("  ✓ 已保存: 问题1_综合报告.png")
 plt.close()
 

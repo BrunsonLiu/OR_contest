@@ -1,0 +1,14 @@
+{
+  "task": "q2-loss",
+  "script": "src/solvers/question2/solve_problem2_3.py",
+  "script_sha256": "8570751620d8e37fdc8a7fa6bc01ba73cfa20a43a9d0533fa42ded78b3f2080b",
+  "started_at_utc": "2026-10-15T03:10:24.794360+00:00",
+  "results_root": "D:\\desktop2\\or__contest\\results\\experiments\\audit-20261015",
+  "forecast_file": "D:\\desktop2\\or__contest\\results\\question3\\订单需求量预测结果文件_sota.csv",
+  "forecast_sha256": "3e627aa4f9bb469880fc1ce87d8b263e7f41c3ea589d101a7aa9d41c31ea939a",
+  "python": "3.12.9 (tags/v3.12.9:fdb8142, Feb  4 2025, 15:27:58) [MSC v.1942 64 bit (AMD64)]",
+  "solver_time_limit": 20.0,
+  "status": "completed",
+  "exit_code": 0,
+  "elapsed_seconds": 1.906
+}

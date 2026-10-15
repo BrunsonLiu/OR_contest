@@ -1,0 +1,14 @@
+{
+  "task": "q3",
+  "script": "src/solvers/question3/solve_problem3.py",
+  "script_sha256": "7f139f2ce35a55fc337f543a85813b5bde15ac486f8b9be12fbfd1265a1fb711",
+  "started_at_utc": "2026-10-15T03:15:00.457582+00:00",
+  "results_root": "D:\\desktop2\\or__contest\\results\\experiments\\audit-fixed-20261015",
+  "forecast_file": "D:\\desktop2\\or__contest\\results\\question3\\订单需求量预测结果文件_sota.csv",
+  "forecast_sha256": "3e627aa4f9bb469880fc1ce87d8b263e7f41c3ea589d101a7aa9d41c31ea939a",
+  "python": "3.12.9 (tags/v3.12.9:fdb8142, Feb  4 2025, 15:27:58) [MSC v.1942 64 bit (AMD64)]",
+  "solver_time_limit": null,
+  "status": "completed",
+  "exit_code": 0,
+  "elapsed_seconds": 47.297
+}

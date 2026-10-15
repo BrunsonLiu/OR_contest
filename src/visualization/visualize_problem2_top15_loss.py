@@ -6,6 +6,12 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
+_PLOT_DIR = _RESULTS_ROOT / 'question2'
+_PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
 import sys
 import io
@@ -24,7 +30,7 @@ print("问题2结果可视化（最高的15条损失路径）")
 print("="*80)
 
 # ==================== 数据加载 ====================
-output_dir = str(_REPO_ROOT / 'results/question2')
+output_dir = str(_RESULTS_ROOT / 'question2')
 input_dir = str(_REPO_ROOT / 'data/raw')
 
 print("\n【数据加载】")
@@ -268,7 +274,7 @@ try:
     ax.legend(handles=legend_elements, loc='upper right', prop={'family': 'SimHei', 'size': 11})
     
     plt.tight_layout()
-    plt.savefig('问题2_损耗成本最高的15条路径.png', dpi=150, bbox_inches='tight')
+    plt.savefig(str(_PLOT_DIR / '问题2_损耗成本最高的15条路径.png'), dpi=150, bbox_inches='tight')
     print("\n  ✓ 已保存: 问题2_损耗成本最高的15条路径.png")
     plt.close()
     

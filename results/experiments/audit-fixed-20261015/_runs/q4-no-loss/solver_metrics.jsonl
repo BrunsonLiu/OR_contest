@@ -1,0 +1,1 @@
+{"status_code": 101, "status": "integer optimal solution", "has_incumbent": true, "variables": 29238, "constraints": 56859, "objective": 11793.035924668908, "best_bound": 11793.035924668908, "relative_gap": 0.0}

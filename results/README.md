@@ -12,6 +12,13 @@
 | `question4/problem4_loss_v2/` | 当前有损耗入口输出 |
 | `question4/problem4_robust/` | 鲁棒优化、JSON 结果和图表 |
 
+## 新审计实验
+
+- `experiments/audit-20261015/`：本轮成本修正前的运行证据，预测评估已使用新流程。
+- `experiments/audit-fixed-20261015/`：修正后的四题运行结果、验证误差、旧预测重建及逐次求解状态。
+- `experiments/audit-cleanenv-20261015/`：独立环境完整问题一的许可限制复现记录。
+- 原目录下的历史结果没有被覆盖，不代表已按修正模型通过验证。
+
 ## 已保存文件
 
 ### question1

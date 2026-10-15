@@ -37,6 +37,11 @@ def check():
                 continue
             checked += 1
             for node in ast.walk(tree):
+                if (folder == "src" and isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                        and node.func.attr in ("savefig", "render") and node.args
+                        and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str)
+                        and not Path(node.args[0].value).is_absolute()):
+                    errors.append(f"图表输出未使用实验目录：{path.relative_to(ROOT)}:{node.lineno}")
                 # Source-file references must follow the directory migration.
                 if isinstance(node, ast.Constant) and isinstance(node.value, str):
                     value = node.value
@@ -46,7 +51,7 @@ def check():
                     if value.startswith("data/raw/") and "\n" not in value:
                         if not (ROOT / value).exists():
                             errors.append(f"输入引用不存在：{path.relative_to(ROOT)} → {value}")
-            if folder == "src":
+            if folder == "src" and path.name not in ("runtime.py", "forecasting.py"):
                 for node in tree.body:
                     if isinstance(node, ast.Assign) and any(
                         isinstance(target, ast.Name) and target.id == "_REPO_ROOT"

@@ -1,0 +1,20 @@
+{
+  "python": "3.12.9 (tags/v3.12.9:fdb8142, Feb  4 2025, 15:27:58) [MSC v.1942 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "packages": {
+    "numpy": "2.5.3",
+    "pandas": "2.2.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.5.2",
+    "matplotlib": "3.9.2",
+    "lightgbm": "4.6.0",
+    "cplex": "22.1.2.0",
+    "openpyxl": "3.1.5"
+  },
+  "solver_smoke": {
+    "cplex_version": "22.1.2.0",
+    "status": "integer optimal solution",
+    "objective": 9.0,
+    "scope": "Small-model check only; full project models may require a separate CPLEX license."
+  }
+}

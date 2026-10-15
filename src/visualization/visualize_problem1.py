@@ -9,6 +9,12 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
+_PLOT_DIR = _RESULTS_ROOT / 'question1'
+_PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
 import sys
 import io
@@ -29,17 +35,17 @@ print("问题1结果可视化")
 print("="*80)
 
 # ==================== 数据加载 ====================
-output_dir = str(_REPO_ROOT / 'results/question1')
+output_dir = str(_RESULTS_ROOT / 'question1')
 
 print("\n【数据加载】")
 try:
-    df_business = pd.read_csv(os.path.join(output_dir, '仓网业务表现文件.csv'))
+    df_business = pd.read_csv(os.path.join(output_dir, '仓网业务表现文件_cplex.csv'))
     print("  ✓ 仓网业务表现文件")
     
-    df_supply = pd.read_csv(os.path.join(output_dir, '仓网供应关系文件.csv'))
+    df_supply = pd.read_csv(os.path.join(output_dir, '仓网供应关系文件_cplex.csv'))
     print("  ✓ 仓网供应关系文件")
     
-    df_wh = pd.read_csv(os.path.join(output_dir, '仓库处置订单量文件.csv'))
+    df_wh = pd.read_csv(os.path.join(output_dir, '仓库处置订单量文件_cplex.csv'))
     print("  ✓ 仓库处置订单量文件")
 except Exception as e:
     print(f"  ✗ 加载失败: {e}")
@@ -146,7 +152,7 @@ geo.set_global_opts(
     ),
 )
 
-geo.render("问题1_仓库分布.html")
+geo.render(str(_PLOT_DIR / '问题1_仓库分布.html'))
 print("  ✓ 已保存: 问题1_仓库分布.html")
 
 # ==================== 可视化2：运输网络 ====================
@@ -193,7 +199,7 @@ geo2.set_global_opts(
     ),
 )
 
-geo2.render("问题1_运输网络.html")
+geo2.render(str(_PLOT_DIR / '问题1_运输网络.html'))
 print("  ✓ 已保存: 问题1_运输网络.html")
 
 # ==================== 可视化3：业务指标对比 ====================
@@ -242,7 +248,7 @@ bar.set_global_opts(
     ),
 )
 
-bar.render("问题1_业务指标.html")
+bar.render(str(_PLOT_DIR / '问题1_业务指标.html'))
 print("  ✓ 已保存: 问题1_业务指标.html")
 
 # ==================== 可视化4：成本构成 ====================
@@ -291,7 +297,7 @@ pie = (
     )
 )
 
-pie.render("问题1_成本构成.html")
+pie.render(str(_PLOT_DIR / '问题1_成本构成.html'))
 print("  ✓ 已保存: 问题1_成本构成.html")
 
 # ==================== 生成综合页面 ====================
@@ -304,7 +310,7 @@ page.add(
     bar,
     pie,
 )
-page.render("问题1_综合可视化.html")
+page.render(str(_PLOT_DIR / '问题1_综合可视化.html'))
 print("  ✓ 已保存: 问题1_综合可视化.html")
 
 print("\n" + "="*80)

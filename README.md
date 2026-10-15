@@ -19,7 +19,8 @@ or__contest/
 │   ├── methodology/        # 鲁棒优化方法说明
 │   └── maintenance/        # 整理清单与验证记录
 ├── archive/diagnostics/    # 历史排查：检查、对比、调查、未完成脚本
-├── requirements/           # 基础与可选绘图依赖
+├── requirements/           # 基础、可选绘图依赖和版本锁
+├── tests/                  # 预测、输入契约与入口回归检查
 └── tools/                  # 仓库结构与路径检查
 ```
 
@@ -29,26 +30,27 @@ or__contest/
 - [结果导航](results/README.md)
 - [已知问题](docs/KNOWN_ISSUES.md)
 - [后续待办清单](docs/TODO.md)
+- [历史代码检查与修复报告](docs/audits/2026-10-15/REPORT.md)
 - [整理与验证记录](docs/maintenance/VALIDATION.md)
 
 ## 快速开始
 
-在项目根目录安装依赖并查看任务：
+Windows / Python 3.12 可在项目根目录安装验证过的依赖并查看任务：
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements/base.txt
+python -m pip install -r requirements/lock-py312-windows.txt
 python run.py --list
 ```
 
 ```powershell
-python run.py q1
-python run.py q3
-python run.py q4-robust
+python run.py q1 --experiment my-run
+python run.py q3 --experiment my-run
+python run.py q4-robust --experiment my-run
 ```
 
-运行求解会更新相应结果；需要保留的实验请先备份。问题四默认使用已保存的 SOTA 预测，而非自动使用刚生成的基线预测。CPLEX 完整模型需要相应许可。
+使用 `--experiment` 可隔离保存结果，并阻止同一任务重复覆盖。问题四默认使用已保存的 SOTA 预测，而非自动使用刚生成的基线预测。CPLEX 完整模型需要相应许可。
 
 ## 文件放置约定
 

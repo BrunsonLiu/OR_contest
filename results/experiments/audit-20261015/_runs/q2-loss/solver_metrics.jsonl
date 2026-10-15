@@ -1,0 +1,1 @@
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 4176, "constraints": 8073, "objective": 27684.0356405, "best_bound": 27682.88215168583, "relative_gap": 4.166620897139658e-05}

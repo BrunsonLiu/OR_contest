@@ -6,6 +6,12 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
+_PLOT_DIR = _RESULTS_ROOT / 'question1'
+_PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
 import sys
 import io
@@ -24,12 +30,12 @@ print("问题1结果可视化（仓库到门店的运输网络+超时路径）")
 print("="*80)
 
 # ==================== 数据加载 ====================
-output_dir = str(_REPO_ROOT / 'results/question1')
+output_dir = str(_RESULTS_ROOT / 'question1')
 input_dir = str(_REPO_ROOT / 'data/raw')
 
 print("\n【数据加载】")
 try:
-    df_supply = pd.read_csv(os.path.join(output_dir, '仓网供应关系文件.csv'))
+    df_supply = pd.read_csv(os.path.join(output_dir, '仓网供应关系文件_cplex.csv'))
     print("  ✓ 仓网供应关系文件")
     
     df_matrix = pd.read_csv(os.path.join(input_dir, 'df_matrix.csv'))
@@ -299,7 +305,7 @@ try:
     ax.legend(handles=legend_elements, loc='upper right', prop={'family': 'SimHei'})
     
     plt.tight_layout()
-    plt.savefig('问题1_运输网络_超时路径.png', dpi=300, bbox_inches='tight')
+    plt.savefig(str(_PLOT_DIR / '问题1_运输网络_超时路径.png'), dpi=300, bbox_inches='tight')
     print("  ✓ 已保存: 问题1_运输网络_超时路径.png")
     plt.close()
     

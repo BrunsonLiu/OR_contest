@@ -5,6 +5,10 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 
 import pandas as pd
 import os
@@ -21,7 +25,7 @@ print("="*80)
 print("问题4路线变化地图可视化")
 print("="*80)
 
-output_dir = str(_REPO_ROOT / 'results/question4/problem4_noloss/output_result')
+output_dir = str(_RESULTS_ROOT / 'question4/problem4_noloss/output_result')
 input_dir = str(_REPO_ROOT / 'data/raw')
 
 print("\n【数据加载】")

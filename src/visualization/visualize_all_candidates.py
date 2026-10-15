@@ -6,6 +6,12 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
+_PLOT_DIR = _RESULTS_ROOT / 'question1'
+_PLOT_DIR.mkdir(parents=True, exist_ok=True)
 
 import sys
 import io
@@ -147,7 +153,7 @@ try:
     ax.legend(handles=legend_elements, loc='upper right', prop={'family': 'SimHei', 'size': 12})
     
     plt.tight_layout()
-    plt.savefig('问题1_所有备选仓库位置.png', dpi=300, bbox_inches='tight')
+    plt.savefig(str(_PLOT_DIR / '问题1_所有备选仓库位置.png'), dpi=300, bbox_inches='tight')
     print("  ✓ 已保存: 问题1_所有备选仓库位置.png")
     plt.close()
     

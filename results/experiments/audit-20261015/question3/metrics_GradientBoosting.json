@@ -1,0 +1,57 @@
+{
+  "method": "GradientBoosting",
+  "validation": {
+    "rmse": 12.360517301834012,
+    "mean_series_rmse": 7.255775441887785,
+    "mae": 5.940509596879818,
+    "mape_percent_nonzero": 10.264288460556038,
+    "mape_excluded_zero_points": 0
+  },
+  "validation_by_sku": {
+    "dm": {
+      "rmse": 11.33541493351248,
+      "mean_series_rmse": 8.470755063651875,
+      "mae": 6.92141701006535,
+      "mape_percent_nonzero": 10.759033289230114,
+      "mape_excluded_zero_points": 0
+    },
+    "im": {
+      "rmse": 13.30688333994772,
+      "mean_series_rmse": 6.040795820123696,
+      "mae": 4.959602183694288,
+      "mape_percent_nonzero": 9.769543631881964,
+      "mape_excluded_zero_points": 0
+    }
+  },
+  "seasonal_naive_validation": {
+    "rmse": 11.06599695081316,
+    "mean_series_rmse": 6.647875232544816,
+    "mae": 5.455042016806723,
+    "mape_percent_nonzero": 9.490317791986548,
+    "mape_excluded_zero_points": 0
+  },
+  "validation_train_end": "2016-06-16",
+  "validation_dates": [
+    "2016-06-17",
+    "2016-06-18",
+    "2016-06-19",
+    "2016-06-20",
+    "2016-06-21",
+    "2016-06-22",
+    "2016-06-23"
+  ],
+  "forecast_train_end": "2016-06-23",
+  "forecast_dates": [
+    "2016-06-24",
+    "2016-06-25",
+    "2016-06-26",
+    "2016-06-27",
+    "2016-06-28",
+    "2016-06-29",
+    "2016-06-30"
+  ],
+  "history_sha256": "85acd2b6017e16dfe7514d465313ffea48637861c36a61d5a45d5f1028bd21ab",
+  "random_state": 42,
+  "hyperparameter_search": false,
+  "future_accuracy": "unknown: no actual observations for the forecast week are provided"
+}

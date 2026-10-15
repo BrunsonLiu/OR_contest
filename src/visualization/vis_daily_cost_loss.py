@@ -4,6 +4,10 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 
 import pandas as pd
 import os
@@ -14,7 +18,7 @@ import numpy as np
 matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
-output_dir = str(_REPO_ROOT / 'results/question4/problem4_loss/output_result')
+output_dir = str(_RESULTS_ROOT / 'question4/problem4_loss/output_result')
 
 days = ['06-24', '06-25', '06-26', '06-27', '06-28', '06-29', '06-30']
 day_labels = ['24日\n周五', '25日\n周六', '26日\n周日', '27日\n周一', '28日\n周二', '29日\n周三', '30日\n周四']

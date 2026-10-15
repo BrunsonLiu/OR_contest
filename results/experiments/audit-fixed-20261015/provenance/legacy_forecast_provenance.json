@@ -1,0 +1,11 @@
+{
+  "source_git_ref": "bf0f2065b2cc150cca548d9c841a8735e79b4bb4:src/solvers/question3/solve_problem3.py",
+  "historical_source_sha256": "a6da036ee36af0ddc6a2bc7c817599d01f735b1f5a70cc214ad901c946fb6928",
+  "history_sha256": "85acd2b6017e16dfe7514d465313ffea48637861c36a61d5a45d5f1028bd21ab",
+  "forecast_sha256": "3e627aa4f9bb469880fc1ce87d8b263e7f41c3ea589d101a7aa9d41c31ea939a",
+  "series": 204,
+  "points": 1428,
+  "max_absolute_difference": 5.684341886080802e-14,
+  "all_points_match_atol_1e-9": true,
+  "caveat": "Numerical reconstruction does not validate historical accuracy. Legacy evaluation compares different weeks and is invalid."
+}

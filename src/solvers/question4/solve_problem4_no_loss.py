@@ -1,5 +1,9 @@
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 import pandas as pd
 import cplex
 import os
@@ -12,14 +16,14 @@ if sys.platform == 'win32':
 
 # 基础数据读取（同前序题目，CDC/RDC识别、距离/时效矩阵、仓库参数等）
 input_dir = str(_REPO_ROOT / 'data/raw')
-output_dir = str(_REPO_ROOT / 'results/question4/problem4_noloss/output_result')
+output_dir = str(_RESULTS_ROOT / 'question4/problem4_noloss/output_result')
 os.makedirs(output_dir, exist_ok=True)
 
 df_customer = pd.read_csv(os.path.join(input_dir, 'df_customer.csv'))
 df_wh = pd.read_csv(os.path.join(input_dir, 'df_wh.csv'))
 df_matrix = pd.read_csv(os.path.join(input_dir, 'df_matrix.csv'))
 df_proc = pd.read_csv(os.path.join(input_dir, 'df_proc.csv'))
-df_demand_multi = pd.read_csv(str(_REPO_ROOT / 'results/question3/订单需求量预测结果文件_sota.csv'))  # 第三题预测结果
+df_demand_multi = _read_forecast()  # 第三题预测结果
 
 # 关键参数整理（复用前序逻辑）
 cdc_names = df_wh[df_wh['Type'] == 'CDC']['Name'].tolist()
@@ -124,7 +128,7 @@ def solve_multi_period_no_loss():
                 # 目标函数系数：运输成本 + 处置成本（不含损耗成本）
                 dist_val = dist.get((wh, store), 0)
                 trans_cost = 1.45e-4 * dist_val * qty  # 仓库→门店运输成本（元→万元）
-                proc_cost_val = 2.0 * proc_cost.get(wh, 0.0) * qty  # 处置成本（入库+出库）
+                proc_cost_val = proc_cost.get(wh, 0.0) * qty  # 处置成本（入库+出库）
                 obj = trans_cost + proc_cost_val  # 不含损耗成本
                 problem.variables.add(obj=[obj], lb=[0.0], ub=[1.0], types=[problem.variables.type.binary], names=[var_name])
                 var_indices[var_name] = var_count
@@ -140,7 +144,7 @@ def solve_multi_period_no_loss():
                         # 目标函数系数：调拨运输成本 + CDC处置成本（不含损耗成本）
                         dist_val = dist.get((cdc, rdc), 0)
                         trans_cost = 0.9e-4 * dist_val  # 元→万元（每吨成本，后续乘以调拨量）
-                        proc_cost_cdc = 2.0 * proc_cost.get(cdc, 0.0)  # CDC处置成本（每吨）
+                        proc_cost_cdc = proc_cost.get(cdc, 0.0)  # CDC处置成本（每吨）
                         obj = trans_cost + proc_cost_cdc  # 不含损耗成本
                         problem.variables.add(obj=[obj], lb=[0.0], ub=[cplex.infinity], types=[problem.variables.type.continuous], names=[var_name])
                         var_indices[var_name] = var_count
@@ -161,8 +165,8 @@ def solve_multi_period_no_loss():
             wh_type = df_wh[df_wh['Name'] == wh]['Type'].values[0]
             if wh_type in ['RDC', 'CDC']:
                 var_name = f'w_{t}_{wh}'
-                # 目标函数系数：-0.8*proc_cost[wh]（折扣部分，减少总成本）
-                obj = -0.8 * proc_cost.get(wh, 0.0)
+                # 目标函数系数：-0.4*proc_cost[wh]（折扣部分，减少总成本）
+                obj = -0.4 * proc_cost.get(wh, 0.0)
                 problem.variables.add(obj=[obj], lb=[0.0], ub=[cplex.infinity], types=[problem.variables.type.continuous], names=[var_name])
                 var_indices[var_name] = var_count
                 var_count += 1
@@ -381,8 +385,9 @@ def solve_multi_period_no_loss():
     
     # ===================== 求解与结果输出 =====================
     print("求解多周期模型（不考虑损耗成本）...")
+    _configure_solver(problem)
     problem.solve()
-    
+    _record_solver(problem)
     # 输出求解状态
     status_string = problem.solution.get_status_string()
     print(f"求解状态: {status_string}")
@@ -440,7 +445,7 @@ def solve_multi_period_no_loss():
                     if var_u in var_indices and problem.solution.get_values(var_indices[var_u]) > 0.5:
                         dist_val = dist.get((wh, store), 0)
                         transport_cust_t += 1.45e-4 * dist_val * qty
-                        proc_cost_t += 2.0 * proc_cost.get(wh, 0.0) * qty
+                        proc_cost_t += proc_cost.get(wh, 0.0) * qty
 
             # CDC到RDC调拨成本
             for cdc in cdc_names:
@@ -453,7 +458,7 @@ def solve_multi_period_no_loss():
                                 if qty > 0.01:
                                     dist_val = dist.get((cdc, rdc), 0)
                                     transport_wh_t += 0.9e-4 * dist_val * qty
-                                    proc_cost_t += 2.0 * proc_cost.get(cdc, 0.0) * qty
+                                    proc_cost_t += proc_cost.get(cdc, 0.0) * qty
 
             # 智能系统折扣（w变量）
             for wh in df_wh['Name']:
@@ -463,7 +468,7 @@ def solve_multi_period_no_loss():
                     if var_w in var_indices:
                         w_val = problem.solution.get_values(var_indices[var_w])
                         if w_val > 0.01:
-                            discount_t += 0.8 * proc_cost.get(wh, 0.0) * w_val
+                            discount_t += 0.4 * proc_cost.get(wh, 0.0) * w_val
 
             # 处置成本（扣折扣后）
             actual_proc_t = proc_cost_t - discount_t
@@ -544,7 +549,7 @@ def solve_multi_period_no_loss():
                         warehouse_stats.append({
                             'Name': wh,
                             'SKU': sku,
-                            'Qty（单位：吨）': round(out_qty * 2.0, 2)  # 入库+出库
+                            'Qty（单位：吨）': round(out_qty, 2)  # 入库+出库
                         })
             pd.DataFrame(warehouse_stats).to_csv(os.path.join(output_dir, f'仓库处置订单量文件_{period}.csv'), index=False, encoding='utf-8-sig')
 
@@ -561,7 +566,7 @@ def solve_multi_period_no_loss():
                     if var_u in var_indices and problem.solution.get_values(var_indices[var_u]) > 0.5:
                         dist_val = dist.get((wh, store), 0)
                         total_trans_cust += 1.45e-4 * dist_val * qty
-                        total_proc += 2.0 * proc_cost.get(wh, 0.0) * qty
+                        total_proc += proc_cost.get(wh, 0.0) * qty
             for cdc in cdc_names:
                 for rdc in rdc_names:
                     for sku in ['im', 'dm']:
@@ -572,7 +577,7 @@ def solve_multi_period_no_loss():
                                 if qty > 0.01:
                                     dist_val = dist.get((cdc, rdc), 0)
                                     total_trans_wh += 0.9e-4 * dist_val * qty
-                                    total_proc += 2.0 * proc_cost.get(cdc, 0.0) * qty
+                                    total_proc += proc_cost.get(cdc, 0.0) * qty
             for wh in df_wh['Name']:
                 wh_type = df_wh[df_wh['Name'] == wh]['Type'].values[0]
                 if wh_type in ['RDC', 'CDC']:
@@ -580,7 +585,7 @@ def solve_multi_period_no_loss():
                     if var_w in var_indices:
                         w_val = problem.solution.get_values(var_indices[var_w])
                         if w_val > 0.01:
-                            total_discount += 0.8 * proc_cost.get(wh, 0.0) * w_val
+                            total_discount += 0.4 * proc_cost.get(wh, 0.0) * w_val
 
         summary_perf = pd.DataFrame([{
             '指标': '汇总（7天）',

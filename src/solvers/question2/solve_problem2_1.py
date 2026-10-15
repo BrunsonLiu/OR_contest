@@ -12,6 +12,10 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 
 import pandas as pd
 import cplex
@@ -141,7 +145,7 @@ def solve_with_parameters(time_limit_minutes, satisfaction_rate):
             qty_val = demand.get((store, sku), 0)
             p_cost = proc_cost.get(wh, 0)
 
-            cost = (1.45e-4 * dist_val * qty_val) + (2.0 * p_cost * qty_val)
+            cost = (1.45e-4 * dist_val * qty_val) + (p_cost * qty_val)
 
             problem.variables.add(
                 obj=[cost], 
@@ -174,7 +178,7 @@ def solve_with_parameters(time_limit_minutes, satisfaction_rate):
                     var_name = f'f_{cdc}_{rdc}_{sku}'
                     dist_val = dist.get((cdc, rdc), 0)
                     p_cost_cdc = proc_cost.get(cdc, 0)
-                    cost = (0.9e-4 * dist_val) + (2.0 * p_cost_cdc)
+                    cost = (0.9e-4 * dist_val) + (p_cost_cdc)
                     problem.variables.add(obj=[cost], lb=[0.0], ub=[cplex.infinity], types=[problem.variables.type.continuous], names=[var_name])
                     f_indices[(cdc, rdc, sku)] = f_vars_start_idx + f_count
                     f_count += 1
@@ -187,7 +191,7 @@ def solve_with_parameters(time_limit_minutes, satisfaction_rate):
         if wh_type in ['RDC', 'CDC']:
             var_name = f'w_{wh}'
             p_cost = proc_cost.get(wh, 0)
-            discount_coeff = -0.8 * p_cost 
+            discount_coeff = -0.4 * p_cost
             problem.variables.add(obj=[discount_coeff], lb=[0.0], ub=[cplex.infinity], types=[problem.variables.type.continuous], names=[var_name])
             w_indices[wh] = w_vars_start_idx + w_count
             w_count += 1
@@ -345,8 +349,9 @@ def solve_with_parameters(time_limit_minutes, satisfaction_rate):
             constraint_count += 1
 
     # ========== 求解 ==========
+    _configure_solver(problem)
     problem.solve()
-    
+    _record_solver(problem)
     # 检查求解状态
     status_string = problem.solution.get_status_string()
     
@@ -402,7 +407,7 @@ def solve_with_parameters(time_limit_minutes, satisfaction_rate):
                     if (wh, rdc, 'im') in f_indices:
                         out_qty_im += problem.solution.get_values(f_indices[(wh, rdc, 'im')])
             
-            qty_total_wh = 2.0 * (out_qty_dm + out_qty_im)
+            qty_total_wh = (out_qty_dm + out_qty_im)
             z_val = problem.solution.get_values(z_indices[wh])
             actual_proc = proc_cost[wh] * qty_total_wh * (1 - 0.4 * z_val) 
             processing_total_cost += actual_proc
@@ -460,7 +465,7 @@ column_order = ['时效要求(h)', '时效满足率要求', '实际时效满足�
 results_df = results_df[column_order]
 
 # 保存结果到CSV文件
-output_dir = str(_REPO_ROOT / 'results/question2')
+output_dir = str(_RESULTS_ROOT / 'question2')
 os.makedirs(output_dir, exist_ok=True)
 output_file = os.path.join(output_dir, '时效与成本关系分析.csv')
 results_df.to_csv(output_file, index=False, encoding='utf-8-sig')

@@ -1,19 +1,23 @@
 # ===========================================================================
-# 问题4: 基于预算不确定集的两阶段自适应鲁棒仓网优化
-# Two-Stage Adaptive Robust Warehouse Network Optimization
+# 问题4: 基于预算不确定集的静态鲁棒仓网优化
+# Static Robust Warehouse Network Optimization
 # with Bertsimas-Sim Budget-of-Uncertainty
 #
 # 技术路线:
 #   1. 从历史数据计算各城市-SKU的需求变异系数(CV),构建不确定集半径 δ
-#   2. 建立两阶段鲁棒优化模型:
-#      第一阶段: 仓库开设(y) + 智能系统采购(z)
-#      第二阶段: 配送关系(u) + 调拨量(f) + 时效(v) → 需求揭示后调整
+#   2. 建立静态鲁棒优化模型:
+#      仓库开设(y)、系统采购(z)、配送(u)、调拨(f)和时效(v)均预先决定。
+#      当前没有需求情景对应的可调整策略，不能直接解释为两阶段自适应模型。
 #   3. Bertsimas-Sim对偶变换 → 等价单层MILP
 #   4. CPLEX求解 + Γ参数扫描 → Price of Robustness分析
 # ===========================================================================
 
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, forecast_path as _forecast_path, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 import cplex
 import pandas as pd
 import numpy as np
@@ -34,10 +38,8 @@ warnings.filterwarnings('ignore')
 
 BASE_DIR = str(_REPO_ROOT)
 INPUT_DIR = os.path.join(BASE_DIR, 'data/raw')
-OUTPUT_BASE = os.path.join(BASE_DIR, 'results/question4', 'problem4_robust')
-FORECAST_DIR = os.path.join(BASE_DIR, 'results/question3')
-
-FORECAST_FILE = os.path.join(FORECAST_DIR, '订单需求量预测结果文件_sota.csv')
+OUTPUT_BASE = os.path.join(str(_RESULTS_ROOT), 'question4', 'problem4_robust')
+FORECAST_FILE = str(_forecast_path())
 PAST_ORDER_FILE = os.path.join(INPUT_DIR, 'df_past_order.csv')
 WH_FILE = os.path.join(INPUT_DIR, 'df_wh.csv')
 PROC_FILE = os.path.join(INPUT_DIR, 'df_proc.csv')
@@ -69,7 +71,7 @@ df_matrix = pd.read_csv(MATRIX_FILE)
 df_customer = pd.read_csv(CUSTOMER_FILE)
 df_loc = pd.read_csv(LOC_FILE)
 df_past_order = pd.read_csv(PAST_ORDER_FILE)
-df_forecast = pd.read_csv(FORECAST_FILE)
+df_forecast = _read_forecast(FORECAST_FILE)
 
 # --- 仓库信息 ---
 cdc_names = list(df_wh[df_wh['Type'] == 'CDC']['Name'])
@@ -737,7 +739,7 @@ def build_robust_model(gamma_fraction):
                 rhs=[rhs]
             )
         except Exception as e:
-            print(f"    Warning: constraint {i}: {e}")
+            raise RuntimeError(f"基础约束 {i} 添加失败，停止求解") from e
 
     # 清空暂存列表，为后续鲁棒约束重新使用
     lin_exprs.clear()
@@ -760,7 +762,7 @@ def build_robust_model(gamma_fraction):
                     dist_val = dist_matrix.get((wh, c), 99999)
                     trans_cost = 1.45e-4 * dist_val * qty
                     loss_cost = loss_cost_matrix.get((wh, c), 0.0) * qty
-                    proc_val = 2.0 * proc_cost.get(wh, 0.0) * qty
+                    proc_val = proc_cost.get(wh, 0.0) * qty
                     obj_val = trans_cost + loss_cost + proc_val
 
                     obj_contributions[u_var] = obj_contributions.get(u_var, 0) + obj_val
@@ -775,7 +777,7 @@ def build_robust_model(gamma_fraction):
                 dist_val = dist_matrix.get((cdc, rdc), 99999)
                 trans_cost = 0.9e-4 * dist_val
                 loss_cost = loss_cost_matrix.get((cdc, rdc), 0.0)
-                proc_val = 2.0 * proc_cost.get(cdc, 0.0)
+                proc_val = proc_cost.get(cdc, 0.0)
                 obj_val = trans_cost + loss_cost + proc_val
                 obj_contributions[f_var] = obj_contributions.get(f_var, 0) + obj_val
 
@@ -783,12 +785,12 @@ def build_robust_model(gamma_fraction):
         for wh in rdc_names:
             w_var = f'w_{t}_{wh}'
             if w_var in var_indices:
-                obj_contributions[w_var] = obj_contributions.get(w_var, 0) - 0.8 * proc_cost.get(wh, 0.0)
+                obj_contributions[w_var] = obj_contributions.get(w_var, 0) - 0.4 * proc_cost.get(wh, 0.0)
         # [FIX] 添加CDC的w折扣
         for cdc in cdc_names:
             w_var = f'w_{t}_{cdc}'
             if w_var in var_indices:
-                obj_contributions[w_var] = obj_contributions.get(w_var, 0) - 0.8 * proc_cost.get(cdc, 0.0)
+                obj_contributions[w_var] = obj_contributions.get(w_var, 0) - 0.4 * proc_cost.get(cdc, 0.0)
 
     # 应用基础目标系数
     for var_name, coeff in obj_contributions.items():
@@ -843,7 +845,7 @@ def build_robust_model(gamma_fraction):
                     dist_val = dist_matrix.get((wh, c), 99999)
                     trans_cost = 1.45e-4 * dist_val
                     loss_cost = loss_cost_matrix.get((wh, c), 0.0)
-                    proc_val = 2.0 * proc_cost.get(wh, 0.0)
+                    proc_val = proc_cost.get(wh, 0.0)
                     k_wc = trans_cost + loss_cost + proc_val
 
                     if wh in rdc_names and s in sku_cdc:
@@ -851,7 +853,7 @@ def build_robust_model(gamma_fraction):
                         f_dist = dist_matrix.get((cdc_name, wh), 99999)
                         f_trans = 0.9e-4 * f_dist
                         f_loss = loss_cost_matrix.get((cdc_name, wh), 0.0)
-                        f_proc = 2.0 * proc_cost.get(cdc_name, 0.0)
+                        f_proc = proc_cost.get(cdc_name, 0.0)
                         k_wc += f_trans + f_loss + f_proc
 
                     indices_rob.append(var_indices[u_var])
@@ -871,7 +873,7 @@ def build_robust_model(gamma_fraction):
                 rhs=[rhs]
             )
         except Exception as e:
-            print(f"    Warning: robust constraint {i}: {e}")
+            raise RuntimeError(f"鲁棒约束 {i} 添加失败，停止求解") from e
 
     # ---- 设置求解参数 ----
     problem.parameters.timelimit.set(CPLEX_TIME_LIMIT)
@@ -891,28 +893,19 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
     print(f"  [Solving] gamma = {gamma_fraction:.2%} ...")
 
     try:
+        _configure_solver(problem)
         problem.solve()
+        evidence = _record_solver(problem)
     except Exception as e:
-        print(f"  [ERROR] CPLEX solve failed: {e}")
-        return None
+        raise RuntimeError("CPLEX 求解失败") from e
 
     status = problem.solution.get_status()
-    status_str = {
-        1: 'OPTIMAL', 2: 'UNBOUNDED', 3: 'INFEASIBLE',
-        101: 'MIP_OPTIMAL', 102: 'MIP_OPTIMAL_TOL',
-        103: 'MIP_INFEASIBLE', 104: 'MIP_UNBOUNDED',
-        105: 'MIP_OPTIMAL_INFEAS', 106: 'MIP_FEASIBLE',
-        107: 'MIP_TIME_LIMIT_FEAS', 108: 'MIP_TIME_LIMIT_INFEAS',
-        109: 'MIP_FAIL_FEAS', 110: 'MIP_FAIL_INFEAS',
-        111: 'MIP_MEM_LIM_FEAS', 112: 'MIP_MEM_LIM_INFEAS',
-    }.get(status, f'STATUS_{status}')
-
-    is_infeasible = status in [3, 103, 105, 110, 112]
-    has_solution = status in [1, 101, 102, 104, 106, 107, 109, 111]
-
-    if is_infeasible or not has_solution:
-        print(f"  Status: {status_str}, 无可行解")
-        return {'gamma': gamma_fraction, 'status': 'INFEASIBLE', 'total_cost': float('inf')}
+    status_str = problem.solution.get_status_string()
+    has_solution = bool(problem.solution.is_primal_feasible())
+    if not has_solution:
+        print(f"  Status: {status_str}, 无可用可行解")
+        return {'gamma': gamma_fraction, 'status': status_str, 'total_cost': None,
+                'has_incumbent': False, 'status_code': status}
 
     print(f"  Status: {status_str}, Objective: {problem.solution.get_objective_value():.4f}")
 
@@ -920,6 +913,7 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
 
     # ---- 提取结果 ----
     results = {
+        **evidence,
         'gamma': gamma_fraction,
         'status': status_str,
         'objective': problem.solution.get_objective_value(),
@@ -967,7 +961,7 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
                     dist_val = dist_matrix.get((wh, c), 99999)
                     transport_cust_t += 1.45e-4 * dist_val * qty
                     loss_t += loss_cost_matrix.get((wh, c), 0.0) * qty
-                    proc_t += 2.0 * proc_cost.get(wh, 0.0) * qty
+                    proc_t += proc_cost.get(wh, 0.0) * qty
 
         for cdc in cdc_names:
             s = cdc_sku[cdc]
@@ -981,13 +975,13 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
                 dist_val = dist_matrix.get((cdc, rdc), 99999)
                 transport_wh_t += 0.9e-4 * dist_val * flow
                 loss_t += loss_cost_matrix.get((cdc, rdc), 0.0) * flow
-                proc_t += 2.0 * proc_cost.get(cdc, 0.0) * flow
+                proc_t += proc_cost.get(cdc, 0.0) * flow
 
         # 智能系统折扣
-        for wh in rdc_names:
+        for wh in all_wh_names:
             w_key = f'w_{t}_{wh}'
             if w_key in var_indices and sol[var_indices[w_key]] > 1e-6:
-                discount_t += 0.8 * proc_cost.get(wh, 0.0) * sol[var_indices[w_key]]
+                discount_t += 0.4 * proc_cost.get(wh, 0.0) * sol[var_indices[w_key]]
 
         actual_proc_t = proc_t - discount_t
 
@@ -1008,14 +1002,14 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
         })
 
     # 开仓成本
-    for wh in rdc_names:
+    for wh in all_wh_names:
         for t in range(T):
             key = f'open_new_{t}_{wh}'
             if key in var_indices and sol[var_indices[key]] > 0.5:
                 total_open += open_cost.get(wh, 0.0)
 
     # 智能系统成本
-    for wh in rdc_names:
+    for wh in all_wh_names:
         key = f'z_{wh}'
         if key in var_indices and sol[var_indices[key]] > 0.5:
             total_smart += SMART_COST
@@ -1055,7 +1049,7 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
 
 def main():
     print("=" * 70)
-    print("问题4: 两阶段自适应鲁棒仓网优化 (Bertsimas-Sim Budget-of-Uncertainty)")
+    print("问题4: 静态鲁棒仓网优化 (Bertsimas-Sim Budget-of-Uncertainty)")
     print("=" * 70)
 
     all_results = []
@@ -1073,8 +1067,8 @@ def main():
 
         result = solve_and_extract(problem, var_indices, gamma)
 
-        if result.get('status') == 'INFEASIBLE':
-            print(f"  [INFEASIBLE] gamma={gamma:.2%} 无可行解 (不确定集过大)")
+        if result.get('total_cost') is None:
+            print(f"  [NO INCUMBENT] gamma={gamma:.2%}, status={result.get('status')}")
             all_results.append(result)
             continue
 
@@ -1094,7 +1088,7 @@ def main():
             all_results.append({
                 'gamma': gamma,
                 'status': 'INFEASIBLE',
-                'total_cost': float('inf'),
+                'total_cost': None,
             })
 
     # ---- 输出结果汇总 ----
@@ -1103,7 +1097,7 @@ def main():
     print("=" * 70)
 
     base_cost = None
-    if all_results and all_results[0].get('total_cost', float('inf')) < float('inf'):
+    if all_results and all_results[0].get('total_cost') is not None:
         base_cost = all_results[0]['total_cost']
 
     print(f"{'Gamma':>8s}  {'开仓数':>6s}  {'运输(门)':>10s}  {'运输(仓)':>10s}  "
@@ -1112,8 +1106,8 @@ def main():
     print("-" * 110)
 
     for r in all_results:
-        if r.get('status') == 'INFEASIBLE':
-            print(f"  {r['gamma']:.2%}  INFEASIBLE")
+        if r.get('total_cost') is None:
+            print(f"  {r['gamma']:.2%}  {r.get('status')}")
             continue
 
         tc = r.get('total_cost', 0)
@@ -1134,13 +1128,13 @@ def main():
     # ---- 保存结果 ----
     output_file = os.path.join(OUTPUT_BASE, 'robust_results.json')
     with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(all_results, f, ensure_ascii=False, indent=2, default=str)
+        json.dump(all_results, f, ensure_ascii=False, indent=2, default=str, allow_nan=False)
     print(f"\n  结果已保存: {output_file}")
 
     # ---- 保存汇总CSV ----
     summary_rows = []
     for r in all_results:
-        if r.get('status') == 'INFEASIBLE':
+        if r.get('total_cost') is None:
             continue
         summary_rows.append({
             'Gamma': f"{r['gamma']:.2%}",
@@ -1167,9 +1161,9 @@ def main():
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
 
-        gammas = [r['gamma'] for r in all_results if r.get('status') != 'INFEASIBLE']
-        costs = [r['total_cost'] for r in all_results if r.get('status') != 'INFEASIBLE']
-        open_nums = [r.get('num_open', 0) for r in all_results if r.get('status') != 'INFEASIBLE']
+        gammas = [r['gamma'] for r in all_results if r.get('total_cost') is not None]
+        costs = [r['total_cost'] for r in all_results if r.get('total_cost') is not None]
+        open_nums = [r.get('num_open', 0) for r in all_results if r.get('total_cost') is not None]
 
         if gammas:
             fig, ax1 = plt.subplots(figsize=(10, 6))
@@ -1183,7 +1177,7 @@ def main():
             ax2.set_ylabel('Number of Open RDCs', fontsize=14, color='r')
             ax2.tick_params(axis='y', labelcolor='r')
 
-            plt.title('Price of Robustness: Cost & Warehouse Count vs Γ', fontsize=16)
+            plt.title('Feasible Incumbent Cost & Warehouse Count vs Γ', fontsize=16)
             plt.grid(True, alpha=0.3)
             plt.tight_layout()
             fig_path = os.path.join(OUTPUT_BASE, 'price_of_robustness.png')

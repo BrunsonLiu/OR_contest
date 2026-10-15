@@ -1,0 +1,25 @@
+{
+  "deterministic_source": "D:\\desktop2\\or__contest\\results\\experiments\\audit-fixed-20261015\\question4\\problem4_loss_v2\\output_result\\仓网业务表现文件_汇总.csv",
+  "robust_gamma": 0,
+  "deterministic_components": {
+    "Delivery": 5699.78,
+    "Transfer": 6621.65,
+    "Handling": 666.25,
+    "Loss": 219748.14,
+    "Opening": 400.0,
+    "Smart systems": 27.0
+  },
+  "robust_components": {
+    "Delivery": 5698.600964011919,
+    "Transfer": 6622.120068140348,
+    "Handling": 666.2495822138936,
+    "Loss": 219931.33465251254,
+    "Opening": 400.0,
+    "Smart systems": 27.0
+  },
+  "caveats": [
+    "Components come from exported solutions, not sums over all candidate routes.",
+    "Formulation equivalence requires separate review.",
+    "Incumbents are not exact optimal costs."
+  ]
+}

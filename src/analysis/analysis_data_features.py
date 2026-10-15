@@ -8,6 +8,10 @@
 """
 from pathlib import Path as _RepoPath
 _REPO_ROOT = next(p for p in _RepoPath(__file__).resolve().parents if (p / "run.py").is_file())
+import sys as _runtime_sys
+_runtime_sys.path.insert(0, str(_REPO_ROOT))
+from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
+_RESULTS_ROOT = _results_root()
 import pandas as pd
 import numpy as np
 import matplotlib
@@ -27,7 +31,7 @@ plt.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']
 plt.rcParams['axes.unicode_minus'] = False
 
 BASE_DIR = str(_REPO_ROOT)
-OUTPUT_DIR = os.path.join(BASE_DIR, 'results/question3', 'data_feature_analysis')
+OUTPUT_DIR = os.path.join(str(_RESULTS_ROOT), 'question3', 'data_feature_analysis')
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 print("=" * 80)
@@ -42,8 +46,7 @@ print("1. 数据加载与基础统计")
 print("=" * 80)
 
 df_past = pd.read_csv(os.path.join(BASE_DIR, 'data/raw', 'df_past_order.csv'))
-df_sota = pd.read_csv(os.path.join(BASE_DIR, 'results/question3', 
-                                    '订单需求量预测结果文件_sota.csv'))
+df_sota = _read_forecast()
 
 # 解析日期
 historical_cols = [c for c in df_past.columns if c not in ['Name', 'SKU']]
@@ -451,7 +454,7 @@ method_files = {
 
 method_forecasts = {}
 for method_name, fname in method_files.items():
-    fpath = os.path.join(BASE_DIR, 'results/question3', fname)
+    fpath = os.path.join(str(_RESULTS_ROOT), 'question3', fname)
     if os.path.exists(fpath):
         df = pd.read_csv(fpath)
         fc_cols = [c for c in df.columns if c not in ['Customer', 'SKU']]
