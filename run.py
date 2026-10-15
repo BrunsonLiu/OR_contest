@@ -37,6 +37,8 @@ def main():
     parser.add_argument("--forecast-file", type=Path, help="显式指定问题四预测输入")
     parser.add_argument("--solver-time-limit", type=float, help="每次 CPLEX 求解的秒数上限")
     parser.add_argument("--solver-threads", type=int, default=2, help="CPLEX 线程数，默认 2")
+    parser.add_argument("--solver-gap", type=float, help="CPLEX 相对 gap 上限，0 至 1")
+    parser.add_argument("--gamma-values", help="鲁棒模型预算比例列表，如 0,0.025,0.05")
     parser.add_argument("--timeout", type=float, help="整个任务的运行秒数上限")
     args = parser.parse_args()
     if args.task and args.script:
@@ -47,6 +49,15 @@ def main():
         parser.error("实验名称仅允许字母、数字、短横线和下划线")
     if args.solver_threads <= 0 or any(v is not None and v <= 0 for v in (args.solver_time_limit, args.timeout)):
         parser.error("线程数、时间限制必须大于零")
+    if args.solver_gap is not None and not 0 <= args.solver_gap <= 1:
+        parser.error("--solver-gap 必须介于 0 与 1")
+    if args.gamma_values:
+        try:
+            gammas = [float(value) for value in args.gamma_values.split(",")]
+            if not gammas or any(not 0 <= value <= 1 for value in gammas):
+                raise ValueError()
+        except ValueError:
+            parser.error("--gamma-values 必须是介于 0 与 1 的逗号分隔数值")
     if args.list or (not args.task and not args.script):
         for name, path in TASKS.items():
             print(f"{name:20} {path}")
@@ -83,6 +94,10 @@ def main():
                PYTHONIOENCODING="utf-8", MPLBACKEND="Agg")
     if args.solver_time_limit:
         env["OR_SOLVER_TIME_LIMIT"] = str(args.solver_time_limit)
+    if args.solver_gap is not None:
+        env["OR_SOLVER_GAP"] = str(args.solver_gap)
+    if args.gamma_values:
+        env["OR_GAMMA_VALUES"] = args.gamma_values
     manifest = {
         "task": task, "script": target.relative_to(ROOT).as_posix(),
         "script_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
@@ -90,6 +105,7 @@ def main():
         "results_root": str(result_root), "forecast_file": str(forecast),
         "forecast_sha256": hashlib.sha256(forecast.read_bytes()).hexdigest() if forecast.is_file() else None,
         "python": sys.version, "solver_time_limit": args.solver_time_limit,
+        "solver_gap": args.solver_gap, "gamma_values": args.gamma_values,
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in (ROOT / "src").rglob("*.py")},
     }

@@ -18,6 +18,7 @@ import sys as _runtime_sys
 _runtime_sys.path.insert(0, str(_REPO_ROOT))
 from src.runtime import results_root as _results_root, read_forecast as _read_forecast, forecast_path as _forecast_path, configure_solver as _configure_solver, record_solver as _record_solver
 _RESULTS_ROOT = _results_root()
+from src.robust_support import budget_support, service_ratio_rows
 import cplex
 import pandas as pd
 import numpy as np
@@ -53,7 +54,7 @@ TIMELINESS_RATIO = 0.95
 SMART_COST = 1.5
 SMART_DISCOUNT = 0.4
 
-GAMMA_VALUES = [0.0, 0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04, 0.05]
+GAMMA_VALUES = [float(value) for value in os.environ.get("OR_GAMMA_VALUES", "0,0.005,0.01,0.015,0.02,0.025,0.03,0.04,0.05").split(",")]
 DELTA_SCALE = 0.3
 
 CPLEX_TIME_LIMIT = 1800
@@ -260,17 +261,10 @@ def compute_worst_case_total_demand(t, gamma_fraction, sku_filter=None):
 
     nominal_sum = sum(demand_nominal[t][k] for k in keys)
     deltas = [demand_delta[t][k] for k in keys]
-    deltas.sort(reverse=True)
+    # One daily budget covers all customer/SKU entries, including a filtered CDC row.
+    budget = gamma_fraction * len(all_demand_keys_period[t])
+    return nominal_sum + budget_support(deltas, budget)
 
-    n_total = len(deltas)
-    gamma_int = min(int(gamma_fraction * n_total), n_total)
-    gamma_frac = (gamma_fraction * n_total) - gamma_int
-
-    robust_extra = sum(deltas[:gamma_int])
-    if gamma_int < n_total and gamma_frac > 0:
-        robust_extra += gamma_frac * deltas[gamma_int]
-
-    return nominal_sum + robust_extra
 
 # ===========================================================================
 # 5. 构建鲁棒MIP模型
@@ -417,6 +411,14 @@ def build_robust_model(gamma_fraction):
                 var_indices[f'q_obj_{t}_{c}_{s}'] = idx
                 q_obj_vars[(t, c, s)] = idx
 
+    # Exact robust service-ratio duals for the same daily one-sided uncertainty set.
+    p_time_vars, q_time_vars = {}, {}
+    if gamma_fraction > 0:
+        for t in range(T):
+            p_time_vars[t] = add_var(f'p_time_{t}', 'C', 0, cplex.infinity, 0)
+            for c, sku in all_demand_keys_period[t]:
+                q_time_vars[t, c, sku] = add_var(f'q_time_{t}_{c}_{sku}', 'C', 0, cplex.infinity, 0)
+
     # ---- 应用变量定义 ----
     problem.variables.add(
         obj=var_obj_coeffs,
@@ -458,7 +460,8 @@ def build_robust_model(gamma_fraction):
     for t in range(T):
         for c in customer_cities:
             for s in skus:
-                u_key = f'u_{t}_'
+                if (c, s) not in demand_nominal[t]:
+                    continue
                 indices = []
                 coeffs = []
                 for wh in all_wh_names:
@@ -466,8 +469,8 @@ def build_robust_model(gamma_fraction):
                     if var_name in var_indices:
                         indices.append(var_indices[var_name])
                         coeffs.append(1)
-                if indices:
-                    add_constraint(indices, coeffs, 'E', 1)
+                # An empty set of candidate routes must be infeasible, not silently skipped.
+                add_constraint(indices, coeffs, 'E', 1)
 
     # ---- (4) u ≤ y (服务-开设约束) ----
     for t in range(T):
@@ -584,32 +587,12 @@ def build_robust_model(gamma_fraction):
                             [1, 1, -delta_val], 'G', 0
                         )
 
-    # ---- (8) CDC容量约束（预计算最坏总需求） ----
+    # ---- (8) CDC capacity: every unit of its SKU passes through the mandatory CDC.
+    # Transfers are accounting flows at nominal demand; actual transfers follow fixed assignments.
     for t in range(T):
         for cdc in cdc_names:
-            s = cdc_sku[cdc]
-            idx_y = 0
-            cap_cdc = cap.get(cdc, 100000)
-            worst_total = compute_worst_case_total_demand(t, gamma_fraction, sku_filter=s)
-
-            indices_cdc = []
-            coeffs_cdc = []
-
-            for c in customer_cities:
-                u_var = f'u_{t}_{cdc}_{c}_{s}'
-                if u_var in var_indices and (c, s) in demand_nominal[t]:
-                    qty = demand_nominal[t][(c, s)]
-                    indices_cdc.append(var_indices[u_var])
-                    coeffs_cdc.append(qty)
-
-            for rdc in rdc_names:
-                f_var = f'f_{t}_{cdc}_{rdc}_{s}'
-                if f_var in var_indices:
-                    indices_cdc.append(var_indices[f_var])
-                    coeffs_cdc.append(1.0)
-
-            if indices_cdc:
-                add_constraint(indices_cdc, coeffs_cdc, 'L', cap_cdc)
+            worst_total = compute_worst_case_total_demand(t, gamma_fraction, cdc_sku[cdc])
+            add_constraint([], [], 'L', cap[cdc] - worst_total)
 
     # ---- (9) 时效满足 v 约束: 与确定性模型等价 ----
     # [FIX] 修改为与确定性模型相同的约束形式
@@ -636,21 +619,19 @@ def build_robust_model(gamma_fraction):
                         # 慢速仓库: v + u <= 1
                         add_constraint([var_indices[v_var], var_indices[u_var]], [1, 1], 'L', 1)
 
-    # ---- (10) 时效满足鲁棒约束 ----
+    # ---- (10) Exact robust ratio under d=nominal+delta*z, 0<=z<=1, sum(z)<=Gamma.
     for t in range(T):
-        worst_total = compute_worst_case_total_demand(t, gamma_fraction)
-        required_tonnage = TIMELINESS_RATIO * worst_total
-
-        indices_time = []
-        coeffs_time = []
-        for c, s in all_demand_keys_period[t]:
-            v_var = f'v_{t}_{c}_{s}'
-            qty = demand_nominal[t][(c, s)]
-            if v_var in var_indices:
-                indices_time.append(var_indices[v_var])
-                coeffs_time.append(qty)
-        if indices_time:
-            add_constraint(indices_time, coeffs_time, 'G', required_tonnage)
+        keys = all_demand_keys_period[t]
+        rows = service_ratio_rows(
+            [demand_nominal[t][key] for key in keys],
+            [demand_delta[t][key] for key in keys],
+            [var_indices[f'v_{t}_{c}_{sku}'] for c, sku in keys],
+            TIMELINESS_RATIO, gamma_fraction * len(keys),
+            p_time_vars.get(t),
+            [q_time_vars[t, c, sku] for c, sku in keys] if gamma_fraction > 0 else None,
+        )
+        for indices, coefficients, sense, rhs in rows:
+            add_constraint(indices, coefficients, sense, rhs)
 
     # ---- (11) 智能系统采购 z^w ≤ Σ_t y_t^w (包括CDC和RDC) ----
     for wh in rdc_names:
@@ -915,6 +896,8 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
     results = {
         **evidence,
         'gamma': gamma_fraction,
+        'uncertainty_set': 'per-day shared budget; d=nominal+delta*z, 0<=z<=1',
+        'service_ratio_formulation': 'exact_one_sided_budget_dual',
         'status': status_str,
         'objective': problem.solution.get_objective_value(),
     }
@@ -1023,6 +1006,8 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
 
     results.update({
         'gamma': gamma_fraction,
+        'uncertainty_set': 'per-day shared budget; d=nominal+delta*z, 0<=z<=1',
+        'service_ratio_formulation': 'exact_one_sided_budget_dual',
         'status': status_str,
         'objective': total_all,
         'robust_premium': robust_premium,
@@ -1096,13 +1081,12 @@ def main():
     print("  结果汇总: Price of Robustness")
     print("=" * 70)
 
-    base_cost = None
-    if all_results and all_results[0].get('total_cost') is not None:
-        base_cost = all_results[0]['total_cost']
+    base_cost = next((result['total_cost'] for result in all_results
+                      if result['gamma'] == 0 and result.get('total_cost') is not None), None)
 
     print(f"{'Gamma':>8s}  {'开仓数':>6s}  {'运输(门)':>10s}  {'运输(仓)':>10s}  "
           f"{'处置':>10s}  {'损耗':>10s}  {'开仓':>10s}  {'智能':>8s}  "
-          f"{'总成本':>12s}  {'PoR':>8s}")
+          f"{'总成本':>12s}  {'vs Gamma0':>10s}")
     print("-" * 110)
 
     for r in all_results:
@@ -1112,9 +1096,9 @@ def main():
 
         tc = r.get('total_cost', 0)
         if base_cost and base_cost > 0:
-            por = (tc - base_cost) / base_cost * 100
+            por = f"{(tc - base_cost) / base_cost * 100:.2f}%"
         else:
-            por = 0
+            por = 'n/a'
 
         print(f"  {r['gamma']:7.1%}  {r.get('num_open', 0):6d}  "
               f"{r.get('transport_cost_customer', 0):10.4f}  "
@@ -1123,7 +1107,7 @@ def main():
               f"{r.get('loss_cost', 0):10.4f}  "
               f"{r.get('open_cost', 0):10.4f}  "
               f"{r.get('smart_cost', 0):8.4f}  "
-              f"{tc:12.4f}  {por:7.2f}%")
+              f"{tc:12.4f}  {por:>10s}")
 
     # ---- 保存结果 ----
     output_file = os.path.join(OUTPUT_BASE, 'robust_results.json')

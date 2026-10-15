@@ -1,0 +1,32 @@
+[
+  {
+    "case": "robust/gamma=0.0",
+    "issues": [],
+    "solver_status": "integer optimal, tolerance",
+    "accounting_residual": 0.0
+  },
+  {
+    "case": "robust/gamma=0.025",
+    "issues": [],
+    "solver_status": "time limit exceeded, no integer solution",
+    "has_incumbent": false
+  },
+  {
+    "case": "robust/gamma=0.03",
+    "issues": [],
+    "solver_status": "time limit exceeded, no integer solution",
+    "has_incumbent": false
+  },
+  {
+    "case": "robust/gamma=0.04",
+    "issues": [],
+    "solver_status": "time limit exceeded, no integer solution",
+    "has_incumbent": false
+  },
+  {
+    "case": "robust/gamma=0.05",
+    "issues": [],
+    "solver_status": "time limit exceeded",
+    "accounting_residual": 0.0
+  }
+]

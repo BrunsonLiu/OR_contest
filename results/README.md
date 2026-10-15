@@ -19,6 +19,8 @@
 - `experiments/audit-cleanenv-20261015/`：独立环境完整问题一的许可限制复现记录。
 - 原目录下的历史结果没有被覆盖，不代表已按修正模型通过验证。
 
+- `experiments/robust-ratio-20261015/`：第二轮时效比例与 CDC 容量修正后的预算扫描，包含真实状态和 gap。
+
 ## 已保存文件
 
 ### question1

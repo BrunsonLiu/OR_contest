@@ -30,4 +30,6 @@ jobs:
       - run: python tools/check_repository.py
       - run: python -m unittest discover -s tests -v
       - if: ${{ github.event_name == 'workflow_dispatch' && inputs.solver_smoke }}
-        run: python tools/check_environment.py --solver-smoke --report environment.json
+        run: |
+          python tools/check_environment.py --solver-smoke --report environment.json
+          python tools/verify_small_robust_model.py --report robust-small-models.json

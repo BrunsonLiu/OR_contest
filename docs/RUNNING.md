@@ -57,3 +57,7 @@ python tools/verify_legacy_forecast.py --output-dir results/experiments/legacy-c
 ```
 
 修正后的预测统一使用时间留出验证；不会用未来预测与不同日期的历史真实值比较。每种方法另存验证预测和 `metrics_*.json`，生产预测与验证预测分别训练。城市特征对比改为按 SKU 跨城市联合训练，不再沿用旧单序列实验中的“静态特征改善精度”解释。
+
+## 鲁棒预算与求解精度
+
+`--gamma-values 0,0.025,0.05` 可选择要扫描的预算比例，`--solver-gap 0.001` 可覆盖相对 gap 目标。预算比例乘以每天所有门店/SKU 的条目数得到共享预算，并不是需求吨数的上浮百分比。当前集合仅允许需求向上波动。小模型集成检查可用 `python tools/verify_small_robust_model.py --report results/robust-small.json`，在新安装的 Community Edition 环境中已验证通过。

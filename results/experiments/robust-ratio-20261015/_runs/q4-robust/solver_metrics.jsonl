@@ -1,0 +1,5 @@
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 56489, "constraints": 55197, "objective": 232588.44362547447, "best_bound": 232399.26442018544, "relative_gap": 0.0008133645951629865}
+{"status_code": 108, "status": "time limit exceeded, no integer solution", "has_incumbent": false, "variables": 57924, "constraints": 83757, "best_bound": 247298.9475259305, "relative_gap": null}
+{"status_code": 108, "status": "time limit exceeded, no integer solution", "has_incumbent": false, "variables": 57924, "constraints": 83757, "best_bound": 248879.34730747278, "relative_gap": null}
+{"status_code": 108, "status": "time limit exceeded, no integer solution", "has_incumbent": false, "variables": 57924, "constraints": 83757, "best_bound": 251316.60444786702, "relative_gap": null}
+{"status_code": 107, "status": "time limit exceeded", "has_incumbent": true, "variables": 57924, "constraints": 83757, "objective": 257108.85965913982, "best_bound": 253423.9656676399, "relative_gap": 0.014332038173967072}

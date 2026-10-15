@@ -1,0 +1,42 @@
+[
+  {
+    "case": "all_deliveries_timely",
+    "expected_feasible": true,
+    "actual_feasible": true,
+    "status": "integer optimal solution",
+    "variables": 25,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "RDC_insufficient_under_growth",
+    "expected_feasible": false,
+    "actual_feasible": false,
+    "status": "integer infeasible",
+    "variables": 25,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "CDC_shared_budget_exceeds_capacity",
+    "expected_feasible": false,
+    "actual_feasible": false,
+    "status": "integer infeasible",
+    "variables": 25,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "no_eligible_route_cannot_drop_demand",
+    "expected_feasible": false,
+    "actual_feasible": false,
+    "status": "integer infeasible",
+    "variables": 19,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  }
+]

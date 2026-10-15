@@ -42,6 +42,8 @@ def read_forecast(path=None):
 
 
 def configure_solver(problem):
+    if os.environ.get("OR_SOLVER_GAP"):
+        problem.parameters.mip.tolerances.mipgap.set(float(os.environ["OR_SOLVER_GAP"]))
     if os.environ.get("OR_SOLVER_TIME_LIMIT"):
         problem.parameters.timelimit.set(float(os.environ["OR_SOLVER_TIME_LIMIT"]))
     # Keep runs predictable on workstations; configurable through the launcher.
