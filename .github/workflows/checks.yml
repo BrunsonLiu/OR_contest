@@ -32,8 +32,17 @@ jobs:
           cache-dependency-path: requirements/lock-py312-windows.txt
       - name: Configure Git line endings
         run: git config --global core.autocrlf true
-      - run: python -m pip install -r requirements/lock-py312-windows.txt
-      - run: python -m pip check
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements/lock-py312-windows.txt
+      # Run the dependency check against the locked closure in an isolated
+      # virtual environment. The runner's toolcache Python ships an extra
+      # setuptools, which makes `pip check` fail on the shared interpreter
+      # before any project check can run.
+      - name: Verify dependency closure in isolation
+        run: |
+          python -m venv .ci-venv --clear
+          .ci-venv\Scripts\python.exe -m pip install -q -r requirements/lock-py312-windows.txt
+          .ci-venv\Scripts\python.exe -m pip check
       - run: python tools/check_repository.py
       - run: python tools/check_line_endings.py
       - run: python -m unittest discover -s tests -v

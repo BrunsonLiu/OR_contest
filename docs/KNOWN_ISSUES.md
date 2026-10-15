@@ -38,3 +38,7 @@
 6. **维护债务**：部分求解/绘图模块导入即运行；历史诊断依赖源码行号。`archive/diagnostics/incomplete/diagnose_det_cdc.py:143` 保留原语法错误，明确排除，不计入通过。
 
 历史 `first_principles_analysis.png` 将候选路线损耗率求和，不能解释为每吨平均损耗。当前比较图读取导出成本与求解证据；旧图只留追溯。按用户要求，不新增 HTML、额外模型或无关图表。
+
+## CI 状态（2026-10-16）
+
+历次 `Repository checks` 运行（含最新 `8b7ab6d`）都在第 5 步 `python -m pip check` 失败，第 6—8 步（结构检查、回归测试、可选小模型）从未执行，因此远程 CI 尚未验证过任何工程检查。原因不在固定版本清单本身：在独立的 3.12 虚拟环境中按 `requirements/lock-py312-windows.txt` 全新安装后 `pip check` 输出 “No broken requirements found”。失败来自 runner 工具缓存 Python 预装的额外包与共享解释器环境的交互。工作流已改为在隔离虚拟环境中执行依赖闭包检查，使结构检查与测试得以运行；下一次推送后应核对结果，不再由本地结果推定远程通过。
