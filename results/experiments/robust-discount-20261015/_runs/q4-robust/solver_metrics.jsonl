@@ -1,0 +1,2 @@
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 56489, "constraints": 55337, "objective": 232637.17801033735, "best_bound": 232413.14841133374, "relative_gap": 0.0009629999852975144}
+{"status_code": 107, "status": "time limit exceeded", "has_incumbent": true, "variables": 57924, "constraints": 109601, "objective": 254726.58845815668, "best_bound": 253554.28791252724, "relative_gap": 0.004602191521212182}

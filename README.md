@@ -32,6 +32,7 @@ or__contest/
 - [后续待办清单](docs/TODO.md)
 - [历史代码检查与修复报告](docs/audits/2026-10-15/REPORT.md)
 - [第二轮：鲁棒时效与容量约束](docs/audits/2026-10-15/ROBUST_CONSTRAINTS.md)
+- [第三轮：折扣与最坏净成本](docs/audits/2026-10-15/ROBUST_OBJECTIVE.md)
 - [整理与验证记录](docs/maintenance/VALIDATION.md)
 
 ## 快速开始

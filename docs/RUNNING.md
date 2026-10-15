@@ -61,3 +61,7 @@ python tools/verify_legacy_forecast.py --output-dir results/experiments/legacy-c
 ## 鲁棒预算与求解精度
 
 `--gamma-values 0,0.025,0.05` 可选择要扫描的预算比例，`--solver-gap 0.001` 可覆盖相对 gap 目标。预算比例乘以每天所有门店/SKU 的条目数得到共享预算，并不是需求吨数的上浮百分比。当前集合仅允许需求向上波动。小模型集成检查可用 `python tools/verify_small_robust_model.py --report results/robust-small.json`，在新安装的 Community Edition 环境中已验证通过。
+
+## 配送策略独立核算
+
+新鲁棒结果保存 `assignment_policy`、`smart_warehouses` 和 `policy_worst_case_cost`。审计工具根据各任务 `run.json` 定位并核对预测输入指纹，从原始数据独立重算偏差半径、真实净单价，以及容量、时效和成本的最坏情景 LP。若原路径在另一台电脑不存在，可用 `--forecast-file` 指定指纹一致的预测文件。旧结果没有逐路线策略时，只能执行其具备证据的成本分解检查，不会标记为策略核查已完成。

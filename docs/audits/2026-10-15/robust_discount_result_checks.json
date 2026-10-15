@@ -1,0 +1,26 @@
+[
+  {
+    "case": "robust/gamma=0.0",
+    "issues": [],
+    "solver_status": "integer optimal, tolerance",
+    "accounting_residual": 0.0,
+    "policy_checked": true,
+    "policy_issues": [],
+    "independent_worst_case_cost": 232637.17801032736,
+    "model_policy_residual": 9.98261384665966e-09,
+    "minimum_capacity_slack": 0.31840549487287717,
+    "maximum_service_deficit": -0.08367092761443917
+  },
+  {
+    "case": "robust/gamma=0.05",
+    "issues": [],
+    "solver_status": "time limit exceeded",
+    "accounting_residual": 2.9103830456733704e-11,
+    "policy_checked": true,
+    "policy_issues": [],
+    "independent_worst_case_cost": 254726.5884581571,
+    "model_policy_residual": -4.0745362639427185e-10,
+    "minimum_capacity_slack": 0.08445077137548651,
+    "maximum_service_deficit": -0.43155007985271965
+  }
+]

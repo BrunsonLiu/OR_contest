@@ -18,7 +18,7 @@ import sys as _runtime_sys
 _runtime_sys.path.insert(0, str(_REPO_ROOT))
 from src.runtime import results_root as _results_root, read_forecast as _read_forecast, forecast_path as _forecast_path, configure_solver as _configure_solver, record_solver as _record_solver
 _RESULTS_ROOT = _results_root()
-from src.robust_support import budget_support, service_ratio_rows
+from src.robust_support import budget_support, service_ratio_rows, discounted_route_row
 import cplex
 import pandas as pd
 import numpy as np
@@ -335,6 +335,8 @@ def build_robust_model(gamma_fraction):
                     continue
                 eligible_whs = [sku_cdc[s]] + rdc_names
                 for wh in eligible_whs:
+                    if wh in rdc_names and dist_matrix.get((sku_cdc[s], wh), 99999) > 5000:
+                        continue
                     dist_km = dist_matrix.get((wh, c), 99999)
                     if dist_km > 5000:
                         continue
@@ -396,7 +398,7 @@ def build_robust_model(gamma_fraction):
     # p_obj_t: 目标函数鲁棒保护的Gamma乘子
     p_obj_vars = {}
     for t in range(T):
-        idx = add_var(f'p_obj_{t}', 'C', 0, 100000, 0)
+        idx = add_var(f'p_obj_{t}', 'C', 0, cplex.infinity, 0)
         var_indices[f'p_obj_{t}'] = idx
         p_obj_vars[t] = idx
 
@@ -407,7 +409,7 @@ def build_robust_model(gamma_fraction):
             for s in skus:
                 if (c, s) not in demand_nominal[t]:
                     continue
-                idx = add_var(f'q_obj_{t}_{c}_{s}', 'C', 0, 100000, 0)
+                idx = add_var(f'q_obj_{t}_{c}_{s}', 'C', 0, cplex.infinity, 0)
                 var_indices[f'q_obj_{t}_{c}_{s}'] = idx
                 q_obj_vars[(t, c, s)] = idx
 
@@ -675,6 +677,7 @@ def build_robust_model(gamma_fraction):
                 [var_indices[w_var], idx_z],
                 [1, -cap.get(wh, 100000)], 'L', 0
             )
+            add_constraint(indices_w + [idx_z], coeffs_w + [-cap[wh]], 'G', -cap[wh])
 
     # [FIX] 添加CDC的w约束 (与RDC类似，但包括调拨量)
     for t in range(T):
@@ -706,6 +709,7 @@ def build_robust_model(gamma_fraction):
                 [var_indices[w_var], idx_z],
                 [1, -cap.get(cdc, 100000)], 'L', 0
             )
+            add_constraint(indices_w + [idx_z], coeffs_w + [-cap[cdc]], 'G', -cap[cdc])
 
     # ---- 应用所有基础约束 ----
     existing_count = len(lin_exprs)
@@ -804,43 +808,30 @@ def build_robust_model(gamma_fraction):
                     except Exception:
                         problem.objective.set_linear(q_idx, 1.0)
 
-    # ---- (16) 鲁棒目标辅助约束: p_obj + q_obj_c ≥ Σ_w u_wc·K_wc·δ_c (仅 Γ>0) ----
+    # ---- (16) Net marginal cost of actual demand growth, including both systems.
+    # Each row is active only for its selected route. Unselected rows are redundant.
     if gamma_fraction > 1e-8:
         for t in range(T):
-            p_idx = p_obj_vars.get(t)
-            if p_idx is None:
-                continue
-            for c, s in all_demand_keys_period[t]:
-                q_idx = q_obj_vars.get((t, c, s))
-                if q_idx is None:
-                    continue
-                delta_val = demand_delta[t][(c, s)]
-
-                indices_rob = [p_idx, q_idx]
-                coeffs_rob = [1.0, 1.0]
-
+            for c, sku in all_demand_keys_period[t]:
+                cdc = sku_cdc[sku]
                 for wh in all_wh_names:
-                    u_var = f'u_{t}_{wh}_{c}_{s}'
-                    if u_var not in var_indices:
+                    u_name = f'u_{t}_{wh}_{c}_{sku}'
+                    if u_name not in var_indices:
                         continue
-                    dist_val = dist_matrix.get((wh, c), 99999)
-                    trans_cost = 1.45e-4 * dist_val
-                    loss_cost = loss_cost_matrix.get((wh, c), 0.0)
-                    proc_val = proc_cost.get(wh, 0.0)
-                    k_wc = trans_cost + loss_cost + proc_val
-
-                    if wh in rdc_names and s in sku_cdc:
-                        cdc_name = sku_cdc[s]
-                        f_dist = dist_matrix.get((cdc_name, wh), 99999)
-                        f_trans = 0.9e-4 * f_dist
-                        f_loss = loss_cost_matrix.get((cdc_name, wh), 0.0)
-                        f_proc = proc_cost.get(cdc_name, 0.0)
-                        k_wc += f_trans + f_loss + f_proc
-
-                    indices_rob.append(var_indices[u_var])
-                    coeffs_rob.append(-k_wc * delta_val)
-
-                add_constraint(indices_rob, coeffs_rob, 'G', 0)
+                    gross = (1.45e-4 * dist_matrix.get((wh, c), 99999)
+                             + loss_cost_matrix.get((wh, c), 0.0) + proc_cost[wh])
+                    rdc_smart = None
+                    rdc_discount = 0.0
+                    if wh in rdc_names:
+                        gross += (0.9e-4 * dist_matrix.get((cdc, wh), 99999)
+                                  + loss_cost_matrix.get((cdc, wh), 0.0) + proc_cost[cdc])
+                        rdc_smart = var_indices[f'z_{wh}']
+                        rdc_discount = 0.4 * proc_cost[wh]
+                    row = discounted_route_row(
+                        p_obj_vars[t], q_obj_vars[t, c, sku], var_indices[u_name],
+                        var_indices[f'z_{cdc}'], rdc_smart, gross,
+                        0.4 * proc_cost[cdc], rdc_discount, demand_delta[t][c, sku])
+                    add_constraint(*row)
 
     # ---- 应用鲁棒约束（新添加的） ----
     for i in range(len(lin_exprs)):
@@ -1004,6 +995,42 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
         + total_loss + total_open + total_smart
     )
 
+    # Independently recompute the selected policy's actual net worst-case cost.
+    smart_warehouses = [wh for wh in all_wh_names if sol[var_indices[f'z_{wh}']] > 0.5]
+    smart_set = set(smart_warehouses)
+    assignment_policy = []
+    policy_nominal = 0.0
+    policy_extra = 0.0
+    for t in range(T):
+        deviations = []
+        for c, sku in all_demand_keys_period[t]:
+            selected = [wh for wh in all_wh_names
+                        if f'u_{t}_{wh}_{c}_{sku}' in var_indices
+                        and sol[var_indices[f'u_{t}_{wh}_{c}_{sku}']] > 0.5]
+            if len(selected) != 1:
+                raise RuntimeError(f'Invalid selected route for day {t}: {c}/{sku}')
+            wh = selected[0]
+            cdc = sku_cdc[sku]
+            unit_cost = (1.45e-4 * dist_matrix[wh, c] + loss_cost_matrix[wh, c]
+                         + proc_cost[wh] * (0.6 if wh in smart_set else 1.0))
+            if wh in rdc_names:
+                unit_cost += (0.9e-4 * dist_matrix[cdc, wh] + loss_cost_matrix[cdc, wh]
+                              + proc_cost[cdc] * (0.6 if cdc in smart_set else 1.0))
+            qty, delta = demand_nominal[t][c, sku], demand_delta[t][c, sku]
+            policy_nominal += qty * unit_cost
+            deviations.append(delta * unit_cost)
+            assignment_policy.append({'day': t, 'customer': c, 'sku': sku, 'warehouse': wh,
+                                      'nominal': qty, 'delta': delta,
+                                      'on_time': travel_time_matrix[wh, c] <= TIMELINESS_THRESHOLD})
+        policy_extra += budget_support(deviations, gamma_fraction * len(all_demand_keys_period[t]))
+    policy_cost = policy_nominal + policy_extra + total_open + total_smart
+    nominal_components = (total_transport_cust + total_transport_wh + total_proc + total_loss)
+    tolerance = max(1e-5, 1e-8 * max(1.0, abs(policy_cost)))
+    if abs(policy_nominal - nominal_components) > tolerance:
+        raise RuntimeError('Nominal discount accounting does not match the selected policy')
+    if total_all < policy_cost - tolerance:
+        raise RuntimeError('Model objective understates the selected policy worst-case cost')
+
     results.update({
         'gamma': gamma_fraction,
         'uncertainty_set': 'per-day shared budget; d=nominal+delta*z, 0<=z<=1',
@@ -1011,6 +1038,13 @@ def solve_and_extract(problem, var_indices, gamma_fraction):
         'status': status_str,
         'objective': total_all,
         'robust_premium': robust_premium,
+        'objective_formulation': 'exact_discounted_selected_route_support',
+        'policy_worst_case_cost': policy_cost,
+        'policy_nominal_variable_cost': policy_nominal,
+        'policy_robust_extra': policy_extra,
+        'objective_policy_residual': total_all - policy_cost,
+        'smart_warehouses': smart_warehouses,
+        'assignment_policy': assignment_policy,
         'open_warehouses': sorted(open_warehouses),
         'num_open': len(open_warehouses),
         'open_by_day': open_by_day,

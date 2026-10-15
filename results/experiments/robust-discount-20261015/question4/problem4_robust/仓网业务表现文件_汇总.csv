@@ -1,0 +1,3 @@
+﻿Gamma,开仓数量,仓库列表,运输成本_门,运输成本_仓,处置成本,损耗成本,开仓成本,智能系统成本,总成本,求解状态
+0.00%,16,bei-jing-DC;chang-sha-DC;chong-qing-DC;da-lian-DC;dong-guan-DC;guang-zhou-DC;ha-er-bin-DC;hang-zhou-DC;nan-jing-DC;ning-bo-DC;qing-dao-DC;shang-hai-DC;tian-jin-DC;wu-han-DC;xi-an-DC;zheng-zhou-DC,5705.6307,6615.6658,666.5955,219222.2861,400.0000,27.0000,232637.1780,"integer optimal, tolerance"
+5.00%,16,bei-jing-DC;chang-sha-DC;chong-qing-DC;da-lian-DC;dong-guan-DC;guang-zhou-DC;ha-er-bin-DC;hang-zhou-DC;nan-jing-DC;ning-bo-DC;qing-dao-DC;shang-hai-DC;tian-jin-DC;wu-han-DC;xi-an-DC;zheng-zhou-DC,5708.3396,6631.7255,664.2975,226344.8299,400.0000,27.0000,254726.5885,time limit exceeded

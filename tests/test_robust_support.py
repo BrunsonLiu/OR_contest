@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 from scipy.optimize import linprog
-from src.robust_support import budget_support, service_ratio_rows
+from src.robust_support import budget_support, service_ratio_rows, discounted_route_row
 
 
 def vertices(n, budget):
@@ -25,6 +25,51 @@ def vertices(n, budget):
 
 
 class RobustBudgetTests(unittest.TestCase):
+    def test_discounted_cost_dual_matches_selected_route_cost_for_all_binary_choices(self):
+        gross = np.array([[8.0, 10.0], [9.0, 7.0]])
+        deltas = [2.0, 3.0]
+        for choices in itertools.product((0, 1), repeat=2):
+            for systems in itertools.product((0, 1), repeat=3):
+                for budget in (0, 0.5, 1, 2):
+                    rows = []
+                    for customer in range(2):
+                        for route in range(2):
+                            rows.append(discounted_route_row(0, 1+customer, 3+2*customer+route,
+                                        7, 8+route, gross[customer, route], 2.0, 3.0, deltas[customer]))
+                    matrix, rhs = [], []
+                    for indices, coefficients, sense, bound in rows:
+                        row = np.zeros(10)
+                        row[indices] = coefficients
+                        matrix.append(-row)
+                        rhs.append(-bound)
+                    bounds = [(0, None)]*3
+                    for choice in choices:
+                        bounds += [(int(choice == route), int(choice == route)) for route in range(2)]
+                    bounds += [(state, state) for state in systems]
+                    objective = np.zeros(10)
+                    objective[:3] = [budget, 1, 1]
+                    solution = linprog(objective, A_ub=matrix, b_ub=rhs, bounds=bounds, method="highs")
+                    self.assertTrue(solution.success)
+                    coefficients = [deltas[i]*(gross[i, choice]-2*systems[0]-3*systems[1+choice])
+                                    for i, choice in enumerate(choices)]
+                    expected = max(float(np.dot(coefficients, z)) for z in vertices(2, budget))
+                    self.assertAlmostEqual(solution.fun, expected, places=8)
+
+    def test_discount_cannot_exceed_gross_cost(self):
+        with self.assertRaises(ValueError):
+            discounted_route_row(0, 1, 2, 3, 4, 1, 0.8, 0.8, 5)
+
+    def test_direct_CDC_route_discounts_handling_once(self):
+        for smart in (0, 1):
+            for budget in (0, 0.5, 1):
+                indices, coefficients, _, _ = discounted_route_row(0, 1, 2, 3, None, 7, 2.8, 0, 10)
+                row = np.zeros(4)
+                row[indices] = coefficients
+                solution = linprog([budget, 1, 0, 0], A_ub=[-row], b_ub=[0],
+                                   bounds=[(0, None), (0, None), (1, 1), (smart, smart)], method="highs")
+                self.assertTrue(solution.success)
+                self.assertAlmostEqual(solution.fun, budget*10*(7-2.8*smart))
+
     def test_support_matches_all_vertices_including_negative_coefficients(self):
         for coefficients in ((3, -5, 2), (-1, -2, -3), (1, 9, 4)):
             for budget in (0, 0.4, 1, 1.7, 3, 4):

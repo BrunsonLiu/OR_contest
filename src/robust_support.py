@@ -42,3 +42,25 @@ def service_ratio_rows(nominal, deltas, v_indices, ratio, budget, p_index=None, 
             rows.append(([p_index, q, v], [1.0, 1.0, float(delta)], "G", ratio*delta))
     rows.append((indices, coefficients, "L", -ratio*sum(nominal)))
     return rows
+
+
+def discounted_route_row(p_index, q_index, u_index, cdc_smart_index, rdc_smart_index,
+                         gross_cost, cdc_discount, rdc_discount, delta):
+    """Exact selected-route deviation cost without binary product variables.
+
+    p+q >= delta*(gross-cdc_discount*z_cdc-rdc_discount*z_rdc)
+    when u=1. For u=0 the row is redundant because all terms on the left
+    are nonnegative. Exactly one route must be selected for each demand.
+    """
+    if not all(math.isfinite(x) and x >= 0 for x in (gross_cost, cdc_discount, rdc_discount, delta)):
+        raise ValueError("costs, savings and deviations must be finite and nonnegative")
+    if gross_cost + 1e-10 < cdc_discount + rdc_discount:
+        raise ValueError("discount exceeds gross route cost")
+    indices = [p_index, q_index, u_index, cdc_smart_index]
+    coefficients = [1.0, 1.0, -delta*gross_cost, delta*cdc_discount]
+    if rdc_smart_index is not None:
+        indices.append(rdc_smart_index)
+        coefficients.append(delta*rdc_discount)
+    elif rdc_discount:
+        raise ValueError("RDC discount requires an RDC smart variable")
+    return indices, coefficients, "G", 0.0

@@ -21,6 +21,8 @@
 
 - `experiments/robust-ratio-20261015/`：第二轮时效比例与 CDC 容量修正后的预算扫描，包含真实状态和 gap。
 
+- `experiments/robust-discount-20261015/`：第三轮净成本保护修正后的 0%/5% 预算结果，保存逐日配送策略、系统采购和可独立复核的最坏净成本。
+
 ## 已保存文件
 
 ### question1

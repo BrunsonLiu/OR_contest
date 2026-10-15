@@ -1,0 +1,17 @@
+[
+  {
+    "mutation": "wrong_nominal",
+    "detected": true,
+    "issues": [
+      "day=0 需求或偏差与输入不符"
+    ]
+  },
+  {
+    "mutation": "missing_smart_system",
+    "detected": true,
+    "issues": [
+      "独立 LP 重建的最坏净成本与导出策略成本不符",
+      "模型目标值低于实际策略最坏净成本"
+    ]
+  }
+]
