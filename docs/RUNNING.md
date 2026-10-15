@@ -55,11 +55,13 @@ python tools/audit_results.py results/experiments/baseline-v1 --report results/e
 
 ```powershell
 python run.py q3-backtest --experiment rolling-v1 --purpose "比较固定方法的滚动 RMSE 与排名稳定性" --timeout 900
-python tools/verify_backtest_results.py results/experiments/rolling-v1/question3/backtests --report results/experiments/rolling-v1/validation/backtest.json
+python tools/verify_backtest_results.py results/experiments/rolling-v1/question3/backtests --expected-methods SeasonalNaive,LastValue,pooled_time,pooled_city,RandomForest,GradientBoosting,SVR,MLP,LightGBM --report results/experiments/rolling-v1/validation/backtest.json
 python run.py --script src/visualization/visualize_problem1_images.py --experiment baseline-v1 --purpose "使用该实验 CSV 生成交付 PNG，核对图表数据源"
 ```
 
 回测默认最少训练 7 天、步长 3 天、预测 7 天，尾部补齐窗口。窗口重叠，不是独立重复。城市模型按 SKU 跨城市联合训练，未来期无真实值时不宣称实际精度。
+
+验收时用 `--expected-methods` 固定实际要求的方法集合，防止依赖缺失导致方法被静默跳过。工具核对完整方法/窗口网格、准确时间边界、RMSE、事件数和排名，并保存检查命令与输入/校验器指纹；禁止用 `python -O` 跳过断言。
 
 只交付必要 PNG，HTML 入口被拒绝。地图可运行 `visualize_problem1_map.py`，超时路线可运行 `visualize_problem1_overtime.py`，同样需要实验目的。
 

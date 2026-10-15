@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "正式验收固定九方法四个滚动窗口的误差与排名，独立重算36份预测；保留重叠窗口及短历史限制，不宣称普遍最优",
+  "snapshot_files": 48,
+  "artifacts": 38,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-15T14:38:53.703897+00:00",
+  "command": [
+    "D:\\desktop2\\or__contest\\.venv\\Scripts\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/final-forecast-20261015/_runs/q3-backtest/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/final-forecast-20261015/validation/integrity.json"
+  ],
+  "manifest_sha256": "5201983c188519c04bae3da782f43089f090e70c3706553c0d9419cbb288defd",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "ccfff944d5aad6e88e45a7a2bd963a8735a2d9b9945088196eb6d5f8aa3dfd30"
+  }
+}

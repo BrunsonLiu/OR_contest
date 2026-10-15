@@ -1,5 +1,14 @@
 # 结果导航
 
+## 当前通过验收的 v2 记录
+
+| 实验 | 已验收范围 | 验证文件 |
+| --- | --- | --- |
+| `engineering-v2-20261015` | 问题一工程链路及该次解的数值核算，不代表全题最终实验完成 | `validation/integrity.json`、`validation/model_checks.json` |
+| `final-forecast-20261015` | 固定九方法、四窗口回测，36 份预测完整性、RMSE 与排名核查 | `validation/integrity.json`、`validation/backtest.json` |
+
+正式回测只使用 23 天历史，窗口重叠；不据此宣称普遍最优方法。MLP 未收敛提示保留在压缩日志中。问题二、四和论文最终验收仍需对应证据；旧目录不追认为 v2。
+
 数据文件和既有结果按内容校验，搬动前后完全一致。新运行的输出按题号归档。
 
 | 目录 | 内容 |
