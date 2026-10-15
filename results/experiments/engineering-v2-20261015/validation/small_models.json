@@ -1,0 +1,344 @@
+[
+  {
+    "case": "all_deliveries_timely",
+    "expected_feasible": true,
+    "actual_feasible": true,
+    "status": "integer optimal solution",
+    "variables": 25,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "RDC_insufficient_under_growth",
+    "expected_feasible": false,
+    "actual_feasible": false,
+    "status": "integer infeasible",
+    "variables": 25,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "CDC_shared_budget_exceeds_capacity",
+    "expected_feasible": false,
+    "actual_feasible": false,
+    "status": "integer infeasible",
+    "variables": 25,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "no_eligible_route_cannot_drop_demand",
+    "expected_feasible": false,
+    "actual_feasible": false,
+    "status": "integer infeasible",
+    "variables": 19,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "unavailable_transfer_cannot_supply_RDC",
+    "expected_feasible": false,
+    "actual_feasible": false,
+    "status": "integer infeasible",
+    "variables": 21,
+    "Gamma": 1,
+    "worst_RDC_demand": 120,
+    "worst_demand_per_CDC": 70
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      0,
+      0
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 750.235,
+    "actual_objective": 750.235,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      0,
+      0
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 910.282,
+    "actual_objective": 910.282,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      0,
+      0
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 1050.329,
+    "actual_objective": 1050.329,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      0,
+      1
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 551.735,
+    "actual_objective": 551.735,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      0,
+      1
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 671.782,
+    "actual_objective": 671.782,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      0,
+      1
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 771.829,
+    "actual_objective": 771.829,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      1,
+      0
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 691.735,
+    "actual_objective": 691.735,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      1,
+      0
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 831.782,
+    "actual_objective": 831.782,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      1,
+      0
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 967.829,
+    "actual_objective": 967.829,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      1,
+      1
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 493.235,
+    "actual_objective": 493.23500000000007,
+    "absolute_error": 5.684341886080802e-14
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      1,
+      1
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 593.282,
+    "actual_objective": 593.282,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      0,
+      1,
+      1
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 689.329,
+    "actual_objective": 689.329,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      0,
+      0
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 711.7349999999999,
+    "actual_objective": 711.735,
+    "absolute_error": 1.1368683772161603e-13
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      0,
+      0
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 871.7819999999999,
+    "actual_objective": 871.782,
+    "absolute_error": 1.1368683772161603e-13
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      0,
+      0
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 995.829,
+    "actual_objective": 995.829,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      0,
+      1
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 513.2349999999999,
+    "actual_objective": 513.235,
+    "absolute_error": 1.1368683772161603e-13
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      0,
+      1
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 633.2819999999999,
+    "actual_objective": 633.282,
+    "absolute_error": 1.1368683772161603e-13
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      0,
+      1
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 717.329,
+    "actual_objective": 717.329,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      1,
+      0
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 653.235,
+    "actual_objective": 653.235,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      1,
+      0
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 789.282,
+    "actual_objective": 789.282,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      1,
+      0
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 913.329,
+    "actual_objective": 913.329,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      1,
+      1
+    ],
+    "budget_fraction": 0,
+    "expected_objective": 454.735,
+    "actual_objective": 454.73500000000007,
+    "absolute_error": 5.684341886080802e-14
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      1,
+      1
+    ],
+    "budget_fraction": 0.5,
+    "expected_objective": 550.782,
+    "actual_objective": 550.782,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discounted_worst_cost",
+    "systems_CDC_im_CDC_dm_RDC": [
+      1,
+      1,
+      1
+    ],
+    "budget_fraction": 1,
+    "expected_objective": 634.829,
+    "actual_objective": 634.829,
+    "absolute_error": 0.0
+  },
+  {
+    "case": "discount_volume_cannot_be_underreported",
+    "actual_feasible": false
+  }
+]

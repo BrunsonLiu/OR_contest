@@ -14,6 +14,8 @@
 
 ## 新审计实验
 
+- `experiments/engineering-v2-20261015/`：工程标准 v2 的真实问题一验收，包含输入源码快照、完整压缩日志、实际求解参数、产物指纹及独立数值检查；后续实验按 [工程标准](../docs/ENGINEERING.md) 执行。
+
 - `experiments/audit-20261015/`：本轮成本修正前的运行证据，预测评估已使用新流程。
 - `experiments/audit-fixed-20261015/`：修正后的四题运行结果、验证误差、旧预测重建及逐次求解状态。
 - `experiments/audit-cleanenv-20261015/`：独立环境完整问题一的许可限制复现记录。

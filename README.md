@@ -27,6 +27,7 @@ or__contest/
 - [题目](docs/problem/题目.md)
 - [论文](docs/paper/数据驱动的生鲜商品仓网配送优化.pdf)
 - [运行指南](docs/RUNNING.md)
+- [工程与实验标准](docs/ENGINEERING.md)
 - [结果导航](results/README.md)
 - [已知问题](docs/KNOWN_ISSUES.md)
 - [后续待办清单](docs/TODO.md)
@@ -47,18 +48,18 @@ python run.py --list
 ```
 
 ```powershell
-python run.py q1 --experiment my-run
-python run.py q3 --experiment my-run
-python run.py q4-robust --experiment my-run
+python run.py q1 --experiment baseline-v1 --purpose "核对基础模型约束与成本"
+python run.py q3 --experiment forecast-v1 --purpose "验证基线预测误差"
+python run.py q4-robust --experiment robust-v1 --purpose "验证预算集合下的成本、容量与时效"
 ```
 
-使用 `--experiment` 可隔离保存结果，并阻止同一任务重复覆盖。问题四默认使用已保存的 SOTA 预测，而非自动使用刚生成的基线预测。CPLEX 完整模型需要相应许可。
+执行必须填写 `--purpose`。未指定名称时自动创建独立实验目录；同任务拒绝覆盖，同实验禁止并发写入。每次保存代码与输入快照、完整日志、参数、环境和产物指纹。问题四默认使用历史 SOTA，完整模型需要相应 CPLEX 许可。
 
 ## 文件放置约定
 
 - 求解代码按题号放入 `src/solvers/questionN/`；分析和绘图分别放入各自目录。
 - 原始输入统一放在 `data/raw/`，不要混入输出文件。
-- 新结果写入 `results/questionN/`；不同模型版本使用独立子目录。
+- 新结果写入 `results/experiments/实验名称/questionN/`，历史 `results/questionN/` 保留追溯。
 - 已有问题四实验版本保留原有内部结构，版本含义见结果导航。
 - 历史诊断归档到 `archive/diagnostics/`，未完成脚本单独放在 `incomplete/`。
 - 论文、赛题和方法说明分别归入 `docs/` 对应子目录。

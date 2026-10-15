@@ -1,0 +1,44 @@
+# 工程与实验标准
+
+本标准适用于后续实验。统一入口负责记录与隔离，任务专属检查负责验证数值和科学结论。已有旧实验不补造记录。
+
+## 启动与隔离
+
+```powershell
+python run.py q3-backtest --experiment weekly-baseline-v1 --purpose "比较固定方法在滚动窗口的 RMSE，检查排名稳定性" --timeout 900
+```
+
+执行必须填写目的。不提供实验名称时自动使用 UTC 时间与随机标识创建新目录，不再默认写历史 `results/questionN`。同一实验的同一任务拒绝重复运行；目录锁阻止同一实验内并发写入。异常强制结束可能留下锁和 running 记录，必须先确认原进程结束，再处理锁并使用新实验名，不能直接重跑覆盖证据。
+
+同组不同任务可共享数据，但必须使用不冲突的输出文件；不同模型方案用不同实验名称。记录会列出新增、修改、删除的产物；已有 CSV/JSON 在快照中保留运行前版本。改变配置重跑时使用新名称。绘图只生成必要 PNG，HTML 入口被统一入口拒绝。归档脚本必须先迁移才可接入新实验。
+
+## 每次运行的证据
+
+| 文件或字段 | 内容 |
+| --- | --- |
+| `run.json` | schema 版本、目的、原始命令、解析参数、起止时间、状态、退出码、耗时 |
+| `git` | Git 提交、分支、工作区状态；有改动时不能仅用提交号识别实际源码 |
+| `environment` | Python 路径、操作系统、全部已安装包的版本；不采集口令或整个环境变量集合 |
+| `effective_environment` | 入口明确设置的求解控制值、哈希种子等；清除父进程残留的时限、gap、预算设置 |
+| `snapshot.zip` | 当时的 `run.py`、`src` 源码、原始输入、依赖声明、预测输入、该实验已有 CSV/JSON 输入副本 |
+| `snapshot.members` | 每个快照成员及整个压缩包的 SHA256 |
+| `output.log.gz` | 完整标准输出与错误日志，压缩后可随必要结果提交；本地原始 `.log` 仍忽略 |
+| `solver_metrics.jsonl` | 每次真实求解的状态、是否有解、目标值、界、gap，以及实际时限、线程和种子等参数 |
+| `artifacts` | 本次新增/修改产物的相对路径与 SHA256；快照、日志、求解证据单独校验 |
+
+运行前先原子写入 running 记录，结束后更新终态。进程失败、超时、手动中断均保留记录；运行中源码、原始输入或预测文件变化，实验不再标为成功。突发断电或强制终止可能只留下 running，校验工具会拒绝认定其完整。
+
+快照是运行时文件证据，不保证跨操作系统、不同求解许可或底层计算库得到逐位相同结果；复现实验仍需匹配环境、许可和业务定义。代码内模型超参数由源码快照追溯，CPLEX 参数另由实际求解记录确认。外部输入未接入快照前不得据其开展正式新实验。
+
+## 两层验收
+
+```powershell
+python tools/check_experiment.py results/experiments/weekly-baseline-v1/_runs/q3-backtest/run.json --require-success --report results/experiments/weekly-baseline-v1/validation/integrity.json
+python tools/verify_backtest_results.py results/experiments/weekly-baseline-v1/question3/backtests --report results/experiments/weekly-baseline-v1/backtest-check.json
+```
+
+第一条校验快照、日志、产物和求解证据是否完整、是否发生改动。`--require-success` 只接受 completed；限时可行解或部分解可以做完整性检查，但不能冒充完整成功。第二条独立重算回测误差，属于专属数值验证。求解任务使用成本、容量和时效的独立审计，不能用文件指纹证明数学正确或最优。
+
+人工或专属验证生成的检查文件也应保留在对应实验中。若运行后修改已登记的输出，旧记录校验应失败；重新生成须新建实验，或作为有记录的新任务，并明确其对旧证据的影响。
+
+正式引用需要：完整记录通过、专属验证通过、说明业务假设与数据范围、披露实际 gap/失败状态。历史文件来源不明、未来真值缺失、样本太短等问题不能用工程记录消除。

@@ -68,6 +68,14 @@ def solver_evidence(problem):
         "variables": problem.variables.get_num(),
         "constraints": problem.linear_constraints.get_num(),
     }
+    evidence["effective_parameters"] = {}
+    for name, parameter in (("time_limit_seconds", problem.parameters.timelimit),
+                            ("relative_mip_gap", problem.parameters.mip.tolerances.mipgap),
+                            ("threads", problem.parameters.threads),
+                            ("random_seed", problem.parameters.randomseed)):
+        value = parameter.get()
+        if isinstance(value, (int, float)) and math.isfinite(value):
+            evidence["effective_parameters"][name] = value
     if feasible:
         evidence["objective"] = problem.solution.get_objective_value()
     if problem.get_problem_type() in (problem.problem_type.MILP, problem.problem_type.MIQP, problem.problem_type.MIQCP):

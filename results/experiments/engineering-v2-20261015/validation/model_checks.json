@@ -1,0 +1,10 @@
+[
+  {
+    "case": "q1",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0,
+    "timeliness_ratio": 0.9511926924078586,
+    "flow_rounding_tolerance_tonnes": 1e-06,
+    "cost_component_residual": 0.0
+  }
+]

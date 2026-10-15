@@ -116,13 +116,14 @@ class LauncherTests(unittest.TestCase):
             root = Path(folder) / "project"
             (root / "src").mkdir(parents=True)
             shutil.copyfile(ROOT / "run.py", root / "run.py")
+            shutil.copyfile(ROOT / "src/experiment_tracking.py", root / "src/experiment_tracking.py")
             (root / "src/probe.py").write_text(
                 "import os\nfrom pathlib import Path\n"
                 "output = Path(os.environ['OR_RESULTS_ROOT'])\n"
                 "assert Path.cwd() == Path(__file__).resolve().parents[1]\n"
                 "(output / 'probe.txt').write_text('isolated', encoding='utf-8')\n",
                 encoding="utf-8")
-            command = [sys.executable, str(root / "run.py"), "--script", "src/probe.py", "--experiment", "test"]
+            command = [sys.executable, str(root / "run.py"), "--script", "src/probe.py", "--experiment", "test", "--purpose", "Verify output isolation"]
             env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
             first = subprocess.run(command, cwd=folder, env=env, capture_output=True, text=True, encoding="utf-8")
             self.assertEqual(first.returncode, 0, first.stdout + first.stderr)

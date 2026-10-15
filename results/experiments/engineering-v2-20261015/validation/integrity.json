@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "验收工程记录：核对真实 CPLEX 求解的输入源码快照、参数、日志、产物及完整性校验",
+  "snapshot_files": 48,
+  "artifacts": 3,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-15T13:13:24.942879+00:00",
+  "command": [
+    "D:\\desktop2\\or__contest\\.venv\\Scripts\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/engineering-v2-20261015/_runs/q1/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/engineering-v2-20261015/validation/integrity.json"
+  ],
+  "manifest_sha256": "44332d458e6466d9e0eee37206d3b76af73d2ebf752ff0cc226709bdeeb86ba9",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "ccfff944d5aad6e88e45a7a2bd963a8735a2d9b9945088196eb6d5f8aa3dfd30"
+  }
+}

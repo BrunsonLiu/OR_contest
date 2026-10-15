@@ -1,7 +1,6 @@
 """Check layout, task targets, syntax, and static project-root references."""
 import ast
 from pathlib import Path
-import runpy
 import warnings
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +14,9 @@ def check():
                    "results/question4", "docs", "archive/diagnostics", "requirements"):
         if not (ROOT / folder).is_dir():
             errors.append(f"缺少目录：{folder}")
-    tasks = runpy.run_path(str(ROOT / "run.py"))["TASKS"]
+    launcher = ast.parse((ROOT / "run.py").read_text(encoding="utf-8"))
+    tasks = ast.literal_eval(next(node.value for node in launcher.body if isinstance(node, ast.Assign)
+                                 and any(isinstance(target, ast.Name) and target.id == "TASKS" for target in node.targets)))
     for task, target in tasks.items():
         if not (ROOT / target).is_file():
             errors.append(f"任务 {task} 的入口不存在：{target}")
@@ -51,7 +52,7 @@ def check():
                     if value.startswith("data/raw/") and "\n" not in value:
                         if not (ROOT / value).exists():
                             errors.append(f"输入引用不存在：{path.relative_to(ROOT)} → {value}")
-            if folder == "src" and path.name not in ("runtime.py", "forecasting.py", "robust_support.py", "backtesting.py", "timeliness.py", "geography.py"):
+            if folder == "src" and path.name not in ("runtime.py", "forecasting.py", "robust_support.py", "backtesting.py", "timeliness.py", "geography.py", "experiment_tracking.py"):
                 for node in tree.body:
                     if isinstance(node, ast.Assign) and any(
                         isinstance(target, ast.Name) and target.id == "_REPO_ROOT"
