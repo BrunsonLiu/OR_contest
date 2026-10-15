@@ -1,0 +1,286 @@
+{
+  "moves": [
+    {
+      "from": "check_cdc_direct.py",
+      "to": "diagnostics/check_cdc_direct.py"
+    },
+    {
+      "from": "check_constraints.py",
+      "to": "diagnostics/check_constraints.py"
+    },
+    {
+      "from": "check_det_quality.py",
+      "to": "diagnostics/check_det_quality.py"
+    },
+    {
+      "from": "check_missing.py",
+      "to": "diagnostics/check_missing.py"
+    },
+    {
+      "from": "check_robust_lp.py",
+      "to": "diagnostics/check_robust_lp.py"
+    },
+    {
+      "from": "check_robust_lp_v2.py",
+      "to": "diagnostics/check_robust_lp_v2.py"
+    },
+    {
+      "from": "compare_det.py",
+      "to": "diagnostics/compare_det.py"
+    },
+    {
+      "from": "compare_models.py",
+      "to": "diagnostics/compare_models.py"
+    },
+    {
+      "from": "compare_routes.py",
+      "to": "diagnostics/compare_routes.py"
+    },
+    {
+      "from": "deep_verify.py",
+      "to": "diagnostics/deep_verify.py"
+    },
+    {
+      "from": "detailed_compare.py",
+      "to": "diagnostics/detailed_compare.py"
+    },
+    {
+      "from": "diagnose_bug.py",
+      "to": "diagnostics/diagnose_bug.py"
+    },
+    {
+      "from": "diagnose_deterministic_bug.py",
+      "to": "diagnostics/diagnose_deterministic_bug.py"
+    },
+    {
+      "from": "diagnose_det_cdc.py",
+      "to": "diagnostics/diagnose_det_cdc.py"
+    },
+    {
+      "from": "diagnose_gap_root.py",
+      "to": "diagnostics/diagnose_gap_root.py"
+    },
+    {
+      "from": "diagnose_gap_v10.py",
+      "to": "diagnostics/diagnose_gap_v10.py"
+    },
+    {
+      "from": "diagnose_gap_v11.py",
+      "to": "diagnostics/diagnose_gap_v11.py"
+    },
+    {
+      "from": "diagnose_gap_v12.py",
+      "to": "diagnostics/diagnose_gap_v12.py"
+    },
+    {
+      "from": "diagnose_gap_v13.py",
+      "to": "diagnostics/diagnose_gap_v13.py"
+    },
+    {
+      "from": "diagnose_gap_v14.py",
+      "to": "diagnostics/diagnose_gap_v14.py"
+    },
+    {
+      "from": "diagnose_gap_v15.py",
+      "to": "diagnostics/diagnose_gap_v15.py"
+    },
+    {
+      "from": "diagnose_gap_v2.py",
+      "to": "diagnostics/diagnose_gap_v2.py"
+    },
+    {
+      "from": "diagnose_gap_v3.py",
+      "to": "diagnostics/diagnose_gap_v3.py"
+    },
+    {
+      "from": "diagnose_gap_v4.py",
+      "to": "diagnostics/diagnose_gap_v4.py"
+    },
+    {
+      "from": "diagnose_gap_v5.py",
+      "to": "diagnostics/diagnose_gap_v5.py"
+    },
+    {
+      "from": "diagnose_gap_v6.py",
+      "to": "diagnostics/diagnose_gap_v6.py"
+    },
+    {
+      "from": "diagnose_gap_v7.py",
+      "to": "diagnostics/diagnose_gap_v7.py"
+    },
+    {
+      "from": "diagnose_gap_v8.py",
+      "to": "diagnostics/diagnose_gap_v8.py"
+    },
+    {
+      "from": "diagnose_gap_v9.py",
+      "to": "diagnostics/diagnose_gap_v9.py"
+    },
+    {
+      "from": "diagnose_model_diff.py",
+      "to": "diagnostics/diagnose_model_diff.py"
+    },
+    {
+      "from": "diagnose_routing_compare.py",
+      "to": "diagnostics/diagnose_routing_compare.py"
+    },
+    {
+      "from": "diagnose_routing_diff.py",
+      "to": "diagnostics/diagnose_routing_diff.py"
+    },
+    {
+      "from": "diagnose_structure_diff.py",
+      "to": "diagnostics/diagnose_structure_diff.py"
+    },
+    {
+      "from": "diagnose_taizhou.py",
+      "to": "diagnostics/diagnose_taizhou.py"
+    },
+    {
+      "from": "diagnose_timeliness.py",
+      "to": "diagnostics/diagnose_timeliness.py"
+    },
+    {
+      "from": "diagnose_transfer_loss.py",
+      "to": "diagnostics/diagnose_transfer_loss.py"
+    },
+    {
+      "from": "diagnose_tz.py",
+      "to": "diagnostics/diagnose_tz.py"
+    },
+    {
+      "from": "final_gap.py",
+      "to": "diagnostics/final_gap.py"
+    },
+    {
+      "from": "final_gap2.py",
+      "to": "diagnostics/final_gap2.py"
+    },
+    {
+      "from": "final_route.py",
+      "to": "diagnostics/final_route.py"
+    },
+    {
+      "from": "find_bug.py",
+      "to": "diagnostics/find_bug.py"
+    },
+    {
+      "from": "find_gap.py",
+      "to": "diagnostics/find_gap.py"
+    },
+    {
+      "from": "find_gap2.py",
+      "to": "diagnostics/find_gap2.py"
+    },
+    {
+      "from": "find_gap3.py",
+      "to": "diagnostics/find_gap3.py"
+    },
+    {
+      "from": "find_gap4.py",
+      "to": "diagnostics/find_gap4.py"
+    },
+    {
+      "from": "time_compare.py",
+      "to": "diagnostics/time_compare.py"
+    },
+    {
+      "from": "ultimate_compare.py",
+      "to": "diagnostics/ultimate_compare.py"
+    },
+    {
+      "from": "verify_gap.py",
+      "to": "diagnostics/verify_gap.py"
+    },
+    {
+      "from": "verify_optimal.py",
+      "to": "diagnostics/verify_optimal.py"
+    },
+    {
+      "from": "verify_results.py",
+      "to": "diagnostics/verify_results.py"
+    }
+  ],
+  "path_updates": [
+    "solve_problem1_cplex.py",
+    "solve_problem2_1.py",
+    "solve_problem2_2.py",
+    "solve_problem2_3.py",
+    "solve_problem3.py",
+    "solve_problem3_comparison.py",
+    "solve_problem3_multimethod.py",
+    "solve_problem4_no_loss.py",
+    "visualize_comparison.py",
+    "diagnostics/check_cdc_direct.py",
+    "diagnostics/check_constraints.py",
+    "diagnostics/check_det_quality.py",
+    "diagnostics/check_missing.py",
+    "diagnostics/check_robust_lp.py",
+    "diagnostics/check_robust_lp_v2.py",
+    "diagnostics/compare_det.py",
+    "diagnostics/compare_models.py",
+    "diagnostics/compare_routes.py",
+    "diagnostics/deep_verify.py",
+    "diagnostics/detailed_compare.py",
+    "diagnostics/diagnose_bug.py",
+    "diagnostics/diagnose_deterministic_bug.py",
+    "diagnostics/diagnose_gap_root.py",
+    "diagnostics/diagnose_gap_v10.py",
+    "diagnostics/diagnose_gap_v11.py",
+    "diagnostics/diagnose_gap_v12.py",
+    "diagnostics/diagnose_gap_v13.py",
+    "diagnostics/diagnose_gap_v14.py",
+    "diagnostics/diagnose_gap_v15.py",
+    "diagnostics/diagnose_gap_v2.py",
+    "diagnostics/diagnose_gap_v3.py",
+    "diagnostics/diagnose_gap_v4.py",
+    "diagnostics/diagnose_gap_v5.py",
+    "diagnostics/diagnose_gap_v6.py",
+    "diagnostics/diagnose_gap_v7.py",
+    "diagnostics/diagnose_gap_v8.py",
+    "diagnostics/diagnose_gap_v9.py",
+    "diagnostics/diagnose_model_diff.py",
+    "diagnostics/diagnose_routing_compare.py",
+    "diagnostics/diagnose_routing_diff.py",
+    "diagnostics/diagnose_structure_diff.py",
+    "diagnostics/diagnose_taizhou.py",
+    "diagnostics/diagnose_timeliness.py",
+    "diagnostics/diagnose_transfer_loss.py",
+    "diagnostics/diagnose_tz.py",
+    "diagnostics/final_gap.py",
+    "diagnostics/final_gap2.py",
+    "diagnostics/final_route.py",
+    "diagnostics/find_bug.py",
+    "diagnostics/find_gap.py",
+    "diagnostics/find_gap2.py",
+    "diagnostics/find_gap3.py",
+    "diagnostics/find_gap4.py",
+    "diagnostics/time_compare.py",
+    "diagnostics/ultimate_compare.py",
+    "diagnostics/verify_gap.py",
+    "diagnostics/verify_optimal.py",
+    "diagnostics/verify_results.py",
+    "visualization_code/visualize_all_candidates.py",
+    "visualization_code/visualize_dynamic_routes.py",
+    "visualization_code/visualize_problem1.py",
+    "visualization_code/visualize_problem1_images.py",
+    "visualization_code/visualize_problem1_map.py",
+    "visualization_code/visualize_problem1_overtime.py",
+    "visualization_code/visualize_problem2_loss.py",
+    "visualization_code/visualize_problem2_top15_loss.py",
+    "visualization_code/visualize_route_changes.py",
+    "visualization_code/visualize_route_onoff.py",
+    "visualization_code/visualize_route_onoff_loss.py",
+    "visualization_code/visualize_subsidy_policy_final.py",
+    "visualization_code/vis_daily_cost.py",
+    "visualization_code/vis_daily_cost_advanced.py",
+    "visualization_code/vis_daily_cost_loss.py"
+  ],
+  "existing_syntax_errors": [
+    {
+      "file": "diagnostics/diagnose_det_cdc.py",
+      "line": 143,
+      "error": "closing parenthesis ')' does not match opening parenthesis '['"
+    }
+  ]
+}

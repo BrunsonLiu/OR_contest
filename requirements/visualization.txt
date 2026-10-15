@@ -1,0 +1,4 @@
+# 在基础依赖之上，按需安装地图及交互图表支持。
+-r base.txt
+cartopy
+pyecharts

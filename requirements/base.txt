@@ -1,0 +1,10 @@
+# 根据代码导入整理；原项目未提供经过验证的版本锁定。
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+lightgbm
+cplex
+# 读取现有 Excel 结果所需的引擎
+openpyxl
