@@ -8,8 +8,8 @@
 | `question2/` | 时效、补贴和损耗分析 |
 | `question3/` | 预测、模型比较与特征分析 |
 | `question4/problem4_noloss/` | 多日无损耗实验 |
-| `question4/problem4_loss/` | 历史有损耗实验，部分历史绘图使用 |
-| `question4/problem4_loss_v2/` | 当前有损耗入口输出 |
+| `question4/problem4_loss/` | 历史有损耗实验，须显式选择 legacy；生成参数未知 |
+| `question4/problem4_loss_v2/` | 有损耗求解和绘图的默认目录；目录内既有文件仍为历史结果 |
 | `question4/problem4_robust/` | 鲁棒优化、JSON 结果和图表 |
 
 ## 新审计实验
@@ -24,6 +24,8 @@
 - `experiments/robust-discount-20261015/`：第三轮净成本保护修正后的 0%/5% 预算结果，保存逐日配送策略、系统采购和可独立复核的最坏净成本。
 
 ## 已保存文件
+
+版本核查与选择方式见 [第五轮报告](../docs/audits/2026-10-15/LOSS_VERSIONS.md)。`experiments/rolling-20261015/` 保存第四轮四窗口预测回测结果。
 
 ### question1
 

@@ -8,13 +8,13 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from src.runtime import results_root
+from src.runtime import results_root, loss_results_dir
 
 
 def main():
     root = results_root()
     output = root / "question4/problem4_robust"
-    source = root / "question4/problem4_loss_v2/output_result/仓网业务表现文件_汇总.csv"
+    source = loss_results_dir() / "仓网业务表现文件_汇总.csv"
     deterministic = pd.read_csv(source).iloc[0]
     robust = json.loads((output / "robust_results.json").read_text(encoding="utf-8"))
     feasible = [row for row in robust if row.get("total_cost") is not None and math.isfinite(row["total_cost"])]

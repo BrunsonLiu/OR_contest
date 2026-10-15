@@ -11,6 +11,14 @@ def results_root():
     return Path(os.environ.get("OR_RESULTS_ROOT", ROOT / "results")).resolve()
 
 
+def loss_results_dir():
+    version = os.environ.get("OR_LOSS_VERSION", "v2")
+    if version not in ("legacy", "v2"):
+        raise ValueError("有损耗结果版本必须为 legacy 或 v2")
+    folder = "problem4_loss" if version == "legacy" else "problem4_loss_v2"
+    return results_root() / "question4" / folder / "output_result"
+
+
 def forecast_path():
     return Path(os.environ.get("OR_FORECAST_FILE", ROOT / "results/question3/订单需求量预测结果文件_sota.csv")).resolve()
 

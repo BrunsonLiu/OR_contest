@@ -18,20 +18,22 @@ import numpy as np
 matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
-output_dir = str(_RESULTS_ROOT / 'question4/problem4_loss/output_result')
+from src.runtime import loss_results_dir
+output_dir = str(loss_results_dir())
 
 days = ['06-24', '06-25', '06-26', '06-27', '06-28', '06-29', '06-30']
 day_labels = ['24日\n周五', '25日\n周六', '26日\n周日', '27日\n周一', '28日\n周二', '29日\n周三', '30日\n周四']
 
 daily_total = []
 demand = []
+customers = set(pd.read_csv(_REPO_ROOT / 'data/raw/df_customer.csv')['Name'])
 
 for day in days:
     df = pd.read_csv(os.path.join(output_dir, f'仓网业务表现文件_2016-{day}.csv'))
     daily_total.append(df.iloc[0]['当天总成本（万元）'])
 
     df_supply = pd.read_csv(os.path.join(output_dir, f'仓网供应关系文件_2016-{day}.csv'))
-    demand.append(df_supply['数量（吨）'].sum())
+    demand.append(df_supply.loc[df_supply['服务对象'].isin(customers), '数量（吨）'].sum())
 
 x = np.arange(len(days))
 

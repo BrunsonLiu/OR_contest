@@ -26,7 +26,8 @@ print("="*80)
 print("问题4（有损耗）动态路线可视化 - 启动")
 print("="*80)
 
-output_dir = str(_RESULTS_ROOT / 'question4/problem4_loss/output_result')
+from src.runtime import loss_results_dir
+output_dir = str(loss_results_dir())
 input_dir = str(_REPO_ROOT / 'data/raw')
 
 df_wh = pd.read_csv(os.path.join(input_dir, 'df_wh.csv'))
@@ -63,7 +64,7 @@ for day in days:
         df['key'] = df['仓库名称'] + '|' + df['服务对象'] + '|' + df['商品类型']
         day_routes[day] = set(df['key'].tolist())
     else:
-        day_routes[day] = set()
+        raise FileNotFoundError(f"缺少每日路线文件，不能把缺失数据视为无路线: {file_path}")
 
 all_routes = set().union(*day_routes.values())
 common_routes = set.intersection(*day_routes.values()) if day_routes else set()
@@ -103,7 +104,10 @@ for info in dynamic_route_info:
 heatmap_data = np.array(heatmap_data)
 cmap = matplotlib.colors.ListedColormap(['#f0f0f0', '#e74c3c'])
 
-im = ax_heatmap.imshow(heatmap_data, cmap=cmap, aspect='auto')
+if len(heatmap_data):
+    ax_heatmap.imshow(heatmap_data, cmap=cmap, aspect='auto', vmin=0, vmax=1)
+else:
+    ax_heatmap.text(0.5, 0.5, '无动态路线', ha='center', transform=ax_heatmap.transAxes)
 
 ax_heatmap.set_xticks(np.arange(len(days)))
 ax_heatmap.set_xticklabels(['24日\n周五', '25日\n周六', '26日\n周日', '27日\n周一', '28日\n周二', '29日\n周三', '30日\n周四'], fontsize=13)
@@ -190,13 +194,13 @@ try:
                    color=color, linewidth=2.5, alpha=0.6,
                    transform=ccrs.PlateCarree(), zorder=2)
 
-    ax_map.set_title('动态路线空间分布（损耗模型，67条）', fontsize=18, fontweight='bold', pad=20)
+    ax_map.set_title(f'动态路线空间分布（损耗模型，{len(dynamic_route_info)}条）', fontsize=18, fontweight='bold', pad=20)
 
     map_legends = [
         Line2D([0], [0], marker='s', color='w', label='CDC 仓库', markerfacecolor='#d9534f', markersize=12),
         Line2D([0], [0], marker='o', color='w', label='RDC 仓库', markerfacecolor='#5bc0de', markersize=10),
-        Line2D([0], [0], color='#e74c3c', lw=3, label='动态路线 (67条)'),
-        Line2D([0], [0], color='gray', lw=1, alpha=0.15, label='静态路线 (201条)'),
+        Line2D([0], [0], color='#e74c3c', lw=3, label=f'动态路线 ({len(dynamic_route_info)}条)'),
+        Line2D([0], [0], color='gray', lw=1, alpha=0.15, label=f'静态路线 ({len(common_route_list)}条)'),
         Line2D([0], [0], marker='o', color='w', label='客户点', markerfacecolor='gray', markersize=6, alpha=0.5),
     ]
     ax_map.legend(handles=map_legends, loc='lower right', fontsize=11, frameon=True, facecolor='white', framealpha=0.9)

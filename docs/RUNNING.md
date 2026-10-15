@@ -64,6 +64,8 @@ python tools/verify_legacy_forecast.py --output-dir results/experiments/legacy-c
 
 ## 配送策略独立核算
 
+有损耗求解器固定输出 `problem4_loss_v2`。每日成本图、路线开关图和 `plot-comparison` 默认读取 v2，可加 `--loss-version legacy` 显式读取所选实验中的旧目录，不自动回退。历史版本缺少生成参数记录，详见 [版本核查](audits/2026-10-15/LOSS_VERSIONS.md)。
+
 滚动回测：`python run.py q3-backtest --experiment my-backtest --timeout 900`。默认最少训练 7 天、步长 3 天、预测 7 天，末尾补齐最后窗口；重叠窗口不是独立重复。
 
 ```powershell

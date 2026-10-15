@@ -66,3 +66,5 @@ python run.py q4-robust --experiment my-run
 检查结构与路径：`python tools/check_repository.py`。后续工作按 [待办清单](docs/TODO.md) 的优先级推进。
 
 最新检查：[多窗口预测回测与时效口径核查](docs/audits/2026-10-15/ROLLING_AND_TIME.md)。
+
+后续核查：[有损耗版本与绘图一致性](docs/audits/2026-10-15/LOSS_VERSIONS.md)。

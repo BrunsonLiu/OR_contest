@@ -36,6 +36,7 @@ def main():
     parser.add_argument("--experiment", help="将结果隔离到 results/experiments/名称/")
     parser.add_argument("--output-dir", type=Path, help="指定独立结果根目录，与 --experiment 二选一")
     parser.add_argument("--forecast-file", type=Path, help="显式指定问题四预测输入")
+    parser.add_argument("--loss-version", choices=("legacy", "v2"), help="有损耗绘图输入版本，默认 v2；legacy 仅用于历史对照")
     parser.add_argument("--solver-time-limit", type=float, help="每次 CPLEX 求解的秒数上限")
     parser.add_argument("--solver-threads", type=int, default=2, help="CPLEX 线程数，默认 2")
     parser.add_argument("--solver-gap", type=float, help="CPLEX 相对 gap 上限，0 至 1")
@@ -68,6 +69,9 @@ def main():
         parser.error("脚本必须位于项目的 src/ 或 archive/ 目录内")
     if target.suffix != ".py" or not target.is_file():
         parser.error(f"脚本不存在：{target}")
+    loss_plots = {"vis_daily_cost_loss.py", "visualize_route_onoff_loss.py", "visualize_comparison.py"}
+    if args.loss_version and (target.parent != ROOT / "src/visualization" or target.name not in loss_plots):
+        parser.error("--loss-version 仅适用于有损耗每日成本、路线开关和成本比较绘图；求解器固定输出 v2")
     if target.is_relative_to(ROOT / "archive") and (args.experiment or args.output_dir):
         parser.error("历史归档脚本未适配隔离输出，请先迁移到 src/ 再使用实验目录")
     if args.forecast_file:
@@ -90,6 +94,7 @@ def main():
     run_folder.mkdir(parents=True)
     env = os.environ.copy()
     env.update(OR_RESULTS_ROOT=str(result_root), OR_FORECAST_FILE=str(forecast),
+               OR_LOSS_VERSION=args.loss_version or "v2",
                OR_RUN_DIR=str(run_folder), OR_SOLVER_THREADS=str(args.solver_threads),
                PYTHONPATH=str(ROOT) + os.pathsep + env.get("PYTHONPATH", ""),
                PYTHONIOENCODING="utf-8", MPLBACKEND="Agg")
@@ -107,6 +112,7 @@ def main():
         "forecast_sha256": hashlib.sha256(forecast.read_bytes()).hexdigest() if forecast.is_file() else None,
         "python": sys.version, "solver_time_limit": args.solver_time_limit,
         "solver_gap": args.solver_gap, "gamma_values": args.gamma_values,
+        "loss_version": args.loss_version or "v2",
         "source_sha256": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in (ROOT / "src").rglob("*.py")},
     }
