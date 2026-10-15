@@ -25,7 +25,7 @@
 
 ## 已保存文件
 
-`experiments/q1-mapping-final-20261015/`：问题一字段核查后的最终绘图实验，使用修正 CSV；包含 10 张 PNG、5 份 HTML 和四个入口运行记录，见 [核查报告](../docs/audits/2026-10-15/QUESTION1_FIELDS_AND_MAPS.md)。
+`experiments/q1-mapping-final-20261015/`：问题一字段核查后的最终绘图实验，使用修正 CSV，交付 10 张 PNG；HTML 已按用户要求移除，既有运行记录保留追溯，见 [核查报告](../docs/audits/2026-10-15/QUESTION1_FIELDS_AND_MAPS.md)。
 
 版本核查与选择方式见 [第五轮报告](../docs/audits/2026-10-15/LOSS_VERSIONS.md)。`experiments/rolling-20261015/` 保存第四轮四窗口预测回测结果。
 

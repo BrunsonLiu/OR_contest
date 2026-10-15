@@ -74,19 +74,16 @@ def audit():
     for filename in csv_schemas:
         assert (current/filename).read_bytes() == (plot_root/"question1"/filename).read_bytes()
     plot_runs = {}
-    for name in ("visualize_problem1", "visualize_problem1_images", "visualize_problem1_map", "visualize_problem1_overtime"):
+    for name in ("visualize_problem1_images", "visualize_problem1_map", "visualize_problem1_overtime"):
         run = json.loads((plot_root/"_runs"/name/"run.json").read_text(encoding="utf-8"))
         assert run["status"] == "completed" and run["exit_code"] == 0
         plot_runs[name] = run["status"]
-    html = (plot_root/"question1/问题1_业务指标.html").read_text(encoding="utf-8")
-    assert '"yAxisIndex": 2' in html and '"yAxisIndex": 1' in html
-    assert "D:/Python3.12" not in html
     plot_files = {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                   for path in sorted((plot_root/"question1").iterdir()) if path.is_file()}
     return {"workbooks": records, "historical_quantity_comparison": comparisons, "coordinate_coverage": coverage,
             "current_csv_schemas": csv_schemas, "current_outbound_reconciled_rows": len(volumes),
             "plot_evidence": {"runs": plot_runs, "files_sha256": plot_files, "csv_identical_to_corrected_experiment": True,
-                              "interactive_html": "Generated and axis references checked; browser/network rendering not certified."},
+                              "delivery_format": "PNG only; HTML outputs removed at user request."},
             "scope": "Read-only workbook inspection; no recalculation or source-file edits."}
 
 
