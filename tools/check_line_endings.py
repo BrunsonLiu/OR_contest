@@ -20,14 +20,14 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 
 FORECAST_MARKER = "results/question3/"
-# .gitattributes uses gitattributes wildmatch, where `*` does not cross `/`:
-# `results/question3/*.csv` is direct children only. Mirror that here instead of
-# using a git pathspec, whose `*` would also match nested directories.
+# .gitattributes pins every tracked CSV under data/raw/ and results/questionN/
+# to `text eol=crlf` with `**` (crosses directories). Mirror that here.
 def is_fingerprinted_input(name):
     if name.startswith("data/raw/"):
         return True
-    return (name.startswith("results/question3/") and name.endswith(".csv")
-            and name.count("/") == 2)
+    if not name.endswith(".csv"):
+        return False
+    return any(name.startswith(f"results/question{digit}/") for digit in "1234")
 
 
 def digest(path):
@@ -101,11 +101,37 @@ def check_forecast_fingerprints(errors):
             errors.append(f"预测指纹不符：{relative}\n    记录 {recorded}\n    实际 {digest(path)}")
 
 
+def check_loss_version_fingerprints(errors):
+    """Recorded loss-version hashes under the CRLF-pinned classes must resolve.
+
+    ``tools/audit_loss_versions.py`` hashes the checked-in loss result CSVs, which
+    live under ``results/question4/**`` (now ``eol=crlf``). Entries inside
+    ``results/experiments/**`` are ``-text`` (byte-preserved) and are not a
+    line-ending surface, so they are out of scope for this check.
+    """
+    record_path = ROOT / "docs/audits/2026-10-15/loss_versions.json"
+    if not record_path.is_file():
+        return
+    record = json.loads(record_path.read_text(encoding="utf-8"))
+    for version, info in record.get("versions", {}).items():
+        folder = info.get("folder", "")
+        if folder.startswith("results/experiments/"):
+            continue
+        for name, meta in info.get("files", {}).items():
+            path = ROOT / folder / name
+            if not path.is_file():
+                errors.append(f"损耗版本记录的文件缺失：{folder}/{name}")
+            elif digest(path) != meta.get("sha256"):
+                errors.append(f"损耗版本指纹不符：{folder}/{name}\n"
+                              f"    记录 {meta.get('sha256')}\n    实际 {digest(path)}")
+
+
 def check():
     errors = []
     check_attributes(errors)
     check_history_fingerprints(errors)
     check_forecast_fingerprints(errors)
+    check_loss_version_fingerprints(errors)
     for message in errors:
         print("FAIL", message)
     print(f"换行与指纹检查完成；错误 {len(errors)} 个。")

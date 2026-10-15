@@ -9,11 +9,12 @@
 #     them LF in the repository. Their recorded worktree hashes were produced on
 #     the Windows build host with CRLF, so they remain checkout-dependent; the
 #     v2 record re-hashes source for information only and never asserts it.
-#   * data/raw/** and results/question3/*.csv are byte-fingerprinted inputs
+#   * data/raw/** and the checked-in result CSVs are byte-fingerprinted
 #     (run.json forecast_sha256, rolling_backtest.json history_sha256,
-#     tools/audit_results.py). `text eol=crlf` forces the CRLF worktree bytes the
-#     records were produced from on *every* platform, including Linux CI and
-#     macOS, so those assertions hold off Windows too.
+#     tools/audit_results.py, tools/audit_loss_versions.py). `text eol=crlf`
+#     forces the CRLF worktree bytes the records were produced from on *every*
+#     platform, including Linux CI and macOS, so those assertions hold off
+#     Windows too.
 #
 # The blob for both classes stays LF, so no historical commit is rewritten.
 
@@ -30,8 +31,12 @@
 *.pdf  binary
 
 # Byte-fingerprinted tabular inputs: worktree must stay CRLF everywhere.
-data/raw/**              text eol=crlf
-results/question3/*.csv  text eol=crlf
+# `**` (unlike `*`) crosses directories, so nested output_result/ CSVs match.
+data/raw/**                 text eol=crlf
+results/question1/**/*.csv  text eol=crlf
+results/question2/**/*.csv  text eol=crlf
+results/question3/**/*.csv  text eol=crlf
+results/question4/**/*.csv  text eol=crlf
 
 # Experiment evidence is preserved byte-for-byte across Git checkouts.
 # Line-ending conversion would invalidate recorded SHA256 fingerprints.
