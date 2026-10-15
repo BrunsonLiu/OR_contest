@@ -1,0 +1,5 @@
+{
+  "prediction_files_checked": 36,
+  "methods": 9,
+  "checks": "input hash, complete keys, dates, chronology, nonnegative predictions, independent RMSE and weekly baseline"
+}

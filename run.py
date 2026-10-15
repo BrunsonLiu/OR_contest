@@ -19,6 +19,7 @@ TASKS = {
     "q3": "src/solvers/question3/solve_problem3.py",
     "q3-city": "src/solvers/question3/solve_problem3_comparison.py",
     "q3-methods": "src/solvers/question3/solve_problem3_multimethod.py",
+    "q3-backtest": "src/analysis/backtest_forecasts.py",
     "q4-no-loss": "src/solvers/question4/solve_problem4_no_loss.py",
     "q4-loss": "src/solvers/question4/solve_problem4_loss.py",
     "q4-robust": "src/solvers/question4/solve_problem4_robust.py",

@@ -1,0 +1,302 @@
+{
+  "source": "D:\\desktop2\\or__contest\\results\\experiments\\robust-discount-20261015\\question4\\problem4_robust\\robust_results.json",
+  "policy_comparison": [
+    {
+      "gamma": 0.0,
+      "day": 0,
+      "date": "2016-06-24",
+      "last_leg": {
+        "nominal_ratio": 0.9500081574188305,
+        "worst_ratio": 0.9500081574188305,
+        "scenario_total_demand": 10257.034651750511,
+        "scenario_timed_demand": 9744.2665900906,
+        "budget_used": 0.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.23262265625228637,
+        "worst_ratio": 0.23262265625228637,
+        "scenario_total_demand": 10257.034651750511,
+        "scenario_timed_demand": 2386.018645961949,
+        "budget_used": 0.0
+      }
+    },
+    {
+      "gamma": 0.0,
+      "day": 1,
+      "date": "2016-06-25",
+      "last_leg": {
+        "nominal_ratio": 0.9500135090114384,
+        "worst_ratio": 0.9500135090114384,
+        "scenario_total_demand": 12923.254512816977,
+        "scenario_timed_demand": 12277.266367569164,
+        "budget_used": 0.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.24752982440095733,
+        "worst_ratio": 0.24752982440095733,
+        "scenario_total_demand": 12923.254512816977,
+        "scenario_timed_demand": 3198.8909202464656,
+        "budget_used": 0.0
+      }
+    },
+    {
+      "gamma": 0.0,
+      "day": 2,
+      "date": "2016-06-26",
+      "last_leg": {
+        "nominal_ratio": 0.9503930046137133,
+        "worst_ratio": 0.9503930046137133,
+        "scenario_total_demand": 16070.035143988589,
+        "scenario_timed_demand": 15272.848984743283,
+        "budget_used": 0.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.25242403335518976,
+        "worst_ratio": 0.25242403335518976,
+        "scenario_total_demand": 16070.035143988589,
+        "scenario_timed_demand": 4056.4630872052476,
+        "budget_used": 0.0
+      }
+    },
+    {
+      "gamma": 0.0,
+      "day": 3,
+      "date": "2016-06-27",
+      "last_leg": {
+        "nominal_ratio": 0.9509490840066213,
+        "worst_ratio": 0.9509490840066213,
+        "scenario_total_demand": 15222.359189173949,
+        "scenario_timed_demand": 14475.68852736474,
+        "budget_used": 0.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.25105766517298045,
+        "worst_ratio": 0.25105766517298045,
+        "scenario_total_demand": 15222.359189173949,
+        "scenario_timed_demand": 3821.6899564584755,
+        "budget_used": 0.0
+      }
+    },
+    {
+      "gamma": 0.0,
+      "day": 4,
+      "date": "2016-06-28",
+      "last_leg": {
+        "nominal_ratio": 0.9501879293345009,
+        "worst_ratio": 0.9501879293345009,
+        "scenario_total_demand": 11332.527134266405,
+        "scenario_timed_demand": 10768.030491835641,
+        "budget_used": 0.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.24108679640156352,
+        "worst_ratio": 0.24108679640156352,
+        "scenario_total_demand": 11332.527134266405,
+        "scenario_timed_demand": 2732.122661934079,
+        "budget_used": 0.0
+      }
+    },
+    {
+      "gamma": 0.0,
+      "day": 5,
+      "date": "2016-06-29",
+      "last_leg": {
+        "nominal_ratio": 0.9503120866468705,
+        "worst_ratio": 0.9503120866468705,
+        "scenario_total_demand": 10308.214085788877,
+        "scenario_timed_demand": 9796.020437468691,
+        "budget_used": 0.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.236475847179183,
+        "worst_ratio": 0.236475847179183,
+        "scenario_total_demand": 10308.214085788877,
+        "scenario_timed_demand": 2437.643658841312,
+        "budget_used": 0.0
+      }
+    },
+    {
+      "gamma": 0.0,
+      "day": 6,
+      "date": "2016-06-30",
+      "last_leg": {
+        "nominal_ratio": 0.9501624314863446,
+        "worst_ratio": 0.9501624314863446,
+        "scenario_total_demand": 10231.833354262984,
+        "scenario_timed_demand": 9721.903658449599,
+        "budget_used": 0.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.23090788442559063,
+        "worst_ratio": 0.23090788442559063,
+        "scenario_total_demand": 10231.833354262984,
+        "scenario_timed_demand": 2362.6109936280604,
+        "budget_used": 0.0
+      }
+    },
+    {
+      "gamma": 0.05,
+      "day": 0,
+      "date": "2016-06-24",
+      "last_leg": {
+        "nominal_ratio": 0.9574578121699981,
+        "worst_ratio": 0.9508099652327069,
+        "scenario_total_demand": 10328.749504232776,
+        "scenario_timed_demand": 9820.677957016904,
+        "budget_used": 8.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.2416895431392216,
+        "worst_ratio": 0.23085152887992963,
+        "scenario_total_demand": 10738.581767132811,
+        "scenario_timed_demand": 2479.018018944746,
+        "budget_used": 10.200000000000001
+      }
+    },
+    {
+      "gamma": 0.05,
+      "day": 1,
+      "date": "2016-06-25",
+      "last_leg": {
+        "nominal_ratio": 0.957442508025027,
+        "worst_ratio": 0.9523077440961875,
+        "scenario_total_demand": 12992.93562328469,
+        "scenario_timed_demand": 12373.273212597234,
+        "budget_used": 8.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.24752982440095733,
+        "worst_ratio": 0.23863769184894582,
+        "scenario_total_demand": 13404.801628199275,
+        "scenario_timed_demand": 3198.8909202464656,
+        "budget_used": 10.200000000000001
+      }
+    },
+    {
+      "gamma": 0.05,
+      "day": 2,
+      "date": "2016-06-26",
+      "last_leg": {
+        "nominal_ratio": 0.9545343831535935,
+        "worst_ratio": 0.9500939401067637,
+        "scenario_total_demand": 16145.141481167644,
+        "scenario_timed_demand": 15339.401083423718,
+        "budget_used": 8.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.25242403335518976,
+        "worst_ratio": 0.24508007897001086,
+        "scenario_total_demand": 16551.582259370887,
+        "scenario_timed_demand": 4056.4630872052476,
+        "budget_used": 10.200000000000001
+      }
+    },
+    {
+      "gamma": 0.05,
+      "day": 3,
+      "date": "2016-06-27",
+      "last_leg": {
+        "nominal_ratio": 0.9555896668382312,
+        "worst_ratio": 0.951083066404553,
+        "scenario_total_demand": 15294.488630803979,
+        "scenario_timed_demand": 14546.32914607462,
+        "budget_used": 10.200000000000001
+      },
+      "full_chain": {
+        "nominal_ratio": 0.25105766517298045,
+        "worst_ratio": 0.24335919244179843,
+        "scenario_total_demand": 15703.906304556247,
+        "scenario_timed_demand": 3821.6899564584755,
+        "budget_used": 10.200000000000001
+      }
+    },
+    {
+      "gamma": 0.05,
+      "day": 4,
+      "date": "2016-06-28",
+      "last_leg": {
+        "nominal_ratio": 0.9548221965154093,
+        "worst_ratio": 0.9500636174525025,
+        "scenario_total_demand": 11389.288308318668,
+        "scenario_timed_demand": 10820.548450410726,
+        "budget_used": 8.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.24880287469603135,
+        "worst_ratio": 0.24079523407368,
+        "scenario_total_demand": 11709.390094130815,
+        "scenario_timed_demand": 2819.5653285762596,
+        "budget_used": 10.200000000000001
+      }
+    },
+    {
+      "gamma": 0.05,
+      "day": 5,
+      "date": "2016-06-29",
+      "last_leg": {
+        "nominal_ratio": 0.9568278350021947,
+        "worst_ratio": 0.9517926128938827,
+        "scenario_total_demand": 10362.74712876361,
+        "scenario_timed_demand": 9863.186166444499,
+        "budget_used": 8.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.24076360015517603,
+        "worst_ratio": 0.2322718613876955,
+        "scenario_total_demand": 10685.077045653285,
+        "scenario_timed_demand": 2481.8427344648267,
+        "budget_used": 10.200000000000001
+      }
+    },
+    {
+      "gamma": 0.05,
+      "day": 6,
+      "date": "2016-06-30",
+      "last_leg": {
+        "nominal_ratio": 0.9554248915259885,
+        "worst_ratio": 0.9500419395695809,
+        "scenario_total_demand": 10289.807076346158,
+        "scenario_timed_demand": 9775.748272608704,
+        "budget_used": 9.0
+      },
+      "full_chain": {
+        "nominal_ratio": 0.23305622670196974,
+        "worst_ratio": 0.22477714538895555,
+        "scenario_total_demand": 10608.696314127392,
+        "scenario_timed_demand": 2384.5924737878895,
+        "budget_used": 10.200000000000001
+      }
+    }
+  ],
+  "full_chain_upper_bounds": [
+    {
+      "date": "2016-06-24",
+      "capacity_free_full_chain_nominal_ratio_upper_bound": 0.2728047092109028
+    },
+    {
+      "date": "2016-06-25",
+      "capacity_free_full_chain_nominal_ratio_upper_bound": 0.2767919970598522
+    },
+    {
+      "date": "2016-06-26",
+      "capacity_free_full_chain_nominal_ratio_upper_bound": 0.28195618865413336
+    },
+    {
+      "date": "2016-06-27",
+      "capacity_free_full_chain_nominal_ratio_upper_bound": 0.27799075129223305
+    },
+    {
+      "date": "2016-06-28",
+      "capacity_free_full_chain_nominal_ratio_upper_bound": 0.2754930050778961
+    },
+    {
+      "date": "2016-06-29",
+      "capacity_free_full_chain_nominal_ratio_upper_bound": 0.2758992288147783
+    },
+    {
+      "date": "2016-06-30",
+      "capacity_free_full_chain_nominal_ratio_upper_bound": 0.27221591849757265
+    }
+  ],
+  "scope": "Sensitivity analysis, not an official interpretation of the contest's service clock. Factory-to-CDC and handling delays are excluded."
+}
