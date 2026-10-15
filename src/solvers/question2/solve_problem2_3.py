@@ -508,6 +508,11 @@ def solve_with_transportation_loss():
             '运输损耗总成本（单位：万元）': [total_loss_cost]  # 新增列，用于记录运输损耗成本
         })
         business_performance.to_csv(os.path.join(output_dir, '仓网业务表现文件_运输损耗_cplex.csv'), index=False, encoding='utf-8-sig')
+        pd.DataFrame([{'Name': wh,
+                       'open': int(problem.solution.get_values(y_indices[wh]) > 0.5),
+                       'smart': int(problem.solution.get_values(z_indices[wh]) > 0.5) if wh in z_indices else 0}
+                      for wh in valid_whs]).to_csv(
+            os.path.join(output_dir, '仓库决策文件_运输损耗_cplex.csv'), index=False, encoding='utf-8-sig')
 
         # --- 写入附件10（考虑运输损耗成本）---
         pd.DataFrame(warehouse_stats).to_csv(os.path.join(output_dir, '仓库处置订单量文件_运输损耗_cplex.csv'), index=False, encoding='utf-8-sig')
@@ -641,4 +646,4 @@ if result_loss:
     print("2. 仓库处置订单量文件_运输损耗_cplex.csv")
     print("3. 仓网供应关系文件_运输损耗_cplex.csv")
 else:
-    print("模型求解失败，请检查代码和输入数据。") 
+    print("模型求解失败，请检查代码和输入数据。")

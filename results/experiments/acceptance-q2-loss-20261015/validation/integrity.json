@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "沿用末段600分钟与95%货量口径验收问题二损耗模型；独立检查需求、流量、容量、费用分解及损耗明细，不宣称业务时效定义已确认",
+  "snapshot_files": 48,
+  "artifacts": 5,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-15T14:49:59.318566+00:00",
+  "command": [
+    "D:\\desktop2\\or__contest\\.venv\\Scripts\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/acceptance-q2-loss-20261015/_runs/q2-loss/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/acceptance-q2-loss-20261015/validation/integrity.json"
+  ],
+  "manifest_sha256": "e78f87286d5997a49f1f8a5ac1d5cc0abc3afed287e19cd6133a7eb67263789a",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "ccfff944d5aad6e88e45a7a2bd963a8735a2d9b9945088196eb6d5f8aa3dfd30"
+  }
+}

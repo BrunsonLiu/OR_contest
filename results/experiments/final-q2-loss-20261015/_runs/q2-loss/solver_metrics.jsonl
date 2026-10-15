@@ -1,0 +1,1 @@
+{"status_code": 102, "status": "integer optimal, tolerance", "has_incumbent": true, "variables": 4176, "constraints": 8073, "effective_parameters": {"time_limit_seconds": 60.0, "relative_mip_gap": 0.001, "threads": 2, "random_seed": 202009243}, "objective": 27601.996281500004, "best_bound": 27584.847465053925, "relative_gap": 0.0006212889919694916}

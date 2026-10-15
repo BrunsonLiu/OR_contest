@@ -6,8 +6,11 @@
 | --- | --- | --- |
 | `engineering-v2-20261015` | 问题一工程链路及该次解的数值核算，不代表全题最终实验完成 | `validation/integrity.json`、`validation/model_checks.json` |
 | `final-forecast-20261015` | 固定九方法、四窗口回测，36 份预测完整性、RMSE 与排名核查 | `validation/integrity.json`、`validation/backtest.json` |
+| `final-q2-loss-20261015` | 声明末段时效假设下的问题二损耗模型；需求、流量、容量、233 条损耗明细、采购折扣与成本核对 | `validation/integrity.json`、`validation/model_checks.json` |
 
-正式回测只使用 23 天历史，窗口重叠；不据此宣称普遍最优方法。MLP 未收敛提示保留在压缩日志中。问题二、四和论文最终验收仍需对应证据；旧目录不追认为 v2。
+正式回测只使用 23 天历史，窗口重叠；不据此宣称普遍最优方法。MLP 未收敛提示保留在压缩日志中。问题二时效扫描/补贴、问题四和论文验收仍需对应证据；旧目录不追认为 v2。
+
+`acceptance-q2-loss-20261015` 是补齐仓库采购决策前的本轮运行，完整记录保留，但折扣分配缺少决策证据，不列为完整数值验收。其后的 `final-q2-loss-20261015` 补齐导出并重新求解，未覆盖前一实验。
 
 数据文件和既有结果按内容校验，搬动前后完全一致。新运行的输出按题号归档。
 

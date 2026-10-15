@@ -1,5 +1,6 @@
 """Independently check exported flows, capacities, timeliness and accounting."""
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
@@ -181,6 +182,102 @@ def check_network(supply, demand, label, tolerance):
 
 def audit(result_root, forecast_override=None):
     reports = []
+    q2 = result_root / "question2/仓网供应关系文件_运输损耗_cplex.csv"
+    if q2.exists():
+        supply = pd.read_csv(q2)
+        supply.columns = ["source", "target", "sku", "qty"]
+        orders = pd.read_csv(ROOT/"data/raw/df_order.csv").set_index(["Name", "SKU"]).qty
+        checked = check_network(supply, orders, "q2-loss", 1e-6)
+        reports.append(checked)
+        issues = checked["issues"]
+        customers = pd.read_csv(ROOT/"data/raw/df_customer.csv")
+        aliases = dict(zip(customers.Location, customers.Name))
+        supply["target"] = supply.target.map(lambda name: aliases.get(name, name))
+        procurement = pd.read_csv(ROOT/"data/raw/df_proc.csv").set_index("Name")
+        facilities = pd.read_csv(ROOT/"data/raw/df_wh.csv").set_index("Name")
+        matrix = pd.read_csv(ROOT/"data/raw/df_matrix.csv").set_index(["From", "To"])
+        business = pd.read_csv(q2.parent/"仓网业务表现文件_运输损耗_cplex.csv").iloc[0]
+        if not np.isfinite(business.to_numpy(dtype=float)).all():
+            raise ValueError("问题二费用表包含非有限数值，不能验收")
+        amounts = {"transfer": 0.0, "delivery": 0.0, "loss": 0.0}
+        for route in supply.itertuples(index=False):
+            arc = matrix.loc[(route.source, route.target)]
+            loss = 0.2*max(float(arc.Duration)-500, 0)**2/10000*route.qty
+            transfer = facilities.Type.get(route.target) == "RDC"
+            amounts["transfer" if transfer else "delivery"] += (0.9e-4 if transfer else 1.45e-4)*arc.Distance*route.qty+loss
+            amounts["loss"] += loss
+        residuals = {key: float(business[column])-amounts[key] for key, column in (
+            ("transfer", "仓库之间的运输总成本（单位：万元）"),
+            ("delivery", "仓库到门店的运输总成本（单位：万元）"),
+            ("loss", "运输损耗总成本（单位：万元）"))}
+        if any(abs(value) > 1e-5 for value in residuals.values()):
+            issues.append("运输或损耗与原始路网独立重算不一致")
+        total = float(business.iloc[3:8].sum())  # Transport columns already include loss.
+        residuals["total_components"] = float(business["总物流成本（单位：万元）"])-total
+        if abs(residuals["total_components"]) > 1e-5:
+            issues.append("成本分解不一致，运输列已含损耗，不应再次叠加损耗列")
+        if abs(float(business["时效满足率"])-checked["timeliness_ratio"]) > 1e-7:
+            issues.append("导出时效比例与逐路线重算不一致")
+        detail_count = 0
+        for filename, destination in (("仓→仓损耗明细文件_完整版_cplex.csv", "To_wh"),
+                                      ("仓→店损耗明细文件_完整版_cplex.csv", "To_store")):
+            details = pd.read_csv(q2.parent/filename)
+            numeric = ["Qty（单位：吨）", "运输时间(分钟)", "单吨损耗成本(万元)", "总损耗成本(万元)"]
+            if not np.isfinite(details[numeric].to_numpy(dtype=float)).all():
+                raise ValueError(f"损耗明细包含非有限数值: {filename}")
+            rows = details.rename(columns={"From_wh": "source", destination: "target", "SKU": "sku", "Qty（单位：吨）": "qty"})
+            expected_rows = supply[supply.target.isin(facilities.index)] if destination == "To_wh" else supply[~supply.target.isin(facilities.index)]
+            if rows.duplicated(["source", "target", "sku"]).any() or set(zip(rows.source, rows.target, rows.sku)) != set(zip(expected_rows.source, expected_rows.target, expected_rows.sku)):
+                issues.append(f"损耗明细路线缺失或重复: {filename}")
+                continue
+            expected_qty = expected_rows.set_index(["source", "target", "sku"]).qty
+            for _, row in rows.iterrows():
+                arc = matrix.loc[(row.source, row.target)]
+                unit_loss = 0.2*max(float(arc.Duration)-500, 0)**2/10000
+                if (abs(row.qty-expected_qty.loc[(row.source, row.target, row.sku)]) > 1e-6
+                        or abs(row["运输时间(分钟)"]-arc.Duration) > 1e-7
+                        or abs(row["单吨损耗成本(万元)"]-unit_loss) > 0.00000051
+                        or abs(row["总损耗成本(万元)"]-row.qty*unit_loss) > 0.000051):
+                    issues.append(f"损耗明细与原始路网或配送量不一致: {filename}")
+                    break
+            detail_count += len(rows)
+        checked["loss_detail_rows_checked"] = detail_count
+        outgoing = supply.groupby(["source", "sku"]).qty.sum()
+        quantities = pd.read_csv(q2.parent/"仓库处置订单量文件_运输损耗_cplex.csv").set_index(["Name", "SKU"]).iloc[:, 0]
+        outgoing.index.names = quantities.index.names
+        if quantities.subtract(outgoing, fill_value=0).abs().max() > 1e-6:
+            issues.append("处置订单量与逐路线出库量不一致")
+        decisions_path = q2.parent/"仓库决策文件_运输损耗_cplex.csv"
+        checked["smart_policy_checked"] = decisions_path.exists()
+        if decisions_path.exists():
+            decisions = pd.read_csv(decisions_path)
+            expected = set(facilities.index[facilities.Type.isin(["CDC", "RDC"])])
+            if decisions.Name.duplicated().any() or set(decisions.Name) != expected or not decisions[["open", "smart"]].isin([0, 1]).all().all():
+                raise ValueError("仓库决策缺失、重复或非二元")
+            decisions = decisions.set_index("Name")
+            if (decisions.smart > decisions.open).any() or any(decisions.loc[wh, "open"] != 1 for wh in facilities.index[facilities.Type.eq("CDC")]):
+                issues.append("系统采购与开仓绑定或 CDC 必开约束违反")
+            if any(decisions.loc[wh, "open"] != 1 for wh in outgoing.index.get_level_values(0)):
+                issues.append("未开仓即配送")
+            volume = supply.groupby("source").qty.sum().reindex(decisions.index, fill_value=0)
+            expected_costs = {
+                "出入仓处置总成本（单位：万元）": float((volume*procurement.Processing_fee*(1-0.4*decisions.smart)).sum()),
+                "开仓总成本（单位：万元）": float((decisions.open*procurement.Opening_fee).sum()),
+                "智能调度系统采购总成本（单位：万元）": float(decisions.smart.sum()*1.5),
+                "开仓数量": int(decisions.open.sum())}
+            for column, expected_value in expected_costs.items():
+                residuals[column] = float(business[column])-expected_value
+                if abs(residuals[column]) > 1e-5:
+                    issues.append(f"独立决策重算不一致: {column}")
+        else:
+            checked["limitations"] = ["缺少仓库开设/系统采购决策，不能独立验证折扣分配"]
+        evidence_path = result_root/"_runs/q2-loss/solver_metrics.jsonl"
+        if evidence_path.exists():
+            evidence = [json.loads(line) for line in evidence_path.read_text(encoding="utf-8").splitlines()]
+            if len(evidence) != 1 or not evidence[0].get("has_incumbent") or abs(evidence[0]["objective"]-business["总物流成本（单位：万元）"]) > 1e-5:
+                issues.append("导出总成本与真实求解目标不一致")
+        checked["cost_residuals"] = residuals
+        checked["cost_scope"] = "Transport columns include loss; loss column is a non-additive breakdown."
 
     def task_forecast(task):
         manifest_path = result_root / "_runs" / task / "run.json"
@@ -254,10 +351,21 @@ if __name__ == "__main__":
     parser.add_argument("--forecast-file", type=Path, help="原运行使用的预测文件；默认按运行清单定位")
     args = parser.parse_args()
     reports = audit(args.result_root.resolve(), args.forecast_file)
+    if not reports:
+        raise SystemExit("FAIL: 未找到可核查结果，不能把零检查项判为通过")
+    provenance = {"checked_at_utc": datetime.now(timezone.utc).isoformat(), "command": [sys.executable, *sys.argv],
+                  "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                  "raw_inputs_sha256": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                                        for path in sorted((ROOT/"data/raw").glob("*.csv"))}}
+    for report in reports:
+        report["audit_provenance"] = provenance
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(reports, ensure_ascii=False, indent=2), encoding="utf-8")
     issues = [(r["case"], r["issues"]) for r in reports if r["issues"]]
-    print(f"Checked {len(reports)} result cases; cases with issues: {len(issues)}")
+    incomplete = [(r["case"], r["limitations"]) for r in reports if r.get("limitations")]
+    print(f"Checked {len(reports)} result cases; cases with issues: {len(issues)}; incomplete evidence: {len(incomplete)}")
     for case, messages in issues:
         print(case, messages)
-    raise SystemExit(1 if issues else 0)
+    for case, limitations in incomplete:
+        print("INCOMPLETE", case, limitations)
+    raise SystemExit(1 if issues else 2 if incomplete else 0)

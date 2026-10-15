@@ -1,0 +1,42 @@
+[
+  {
+    "case": "q2-loss",
+    "issues": [],
+    "max_demand_error_tonnes": 0.0,
+    "timeliness_ratio": 0.9500544982782396,
+    "flow_rounding_tolerance_tonnes": 1e-06,
+    "loss_detail_rows_checked": 233,
+    "smart_policy_checked": false,
+    "limitations": [
+      "缺少仓库开设/系统采购决策，不能独立验证折扣分配"
+    ],
+    "cost_residuals": {
+      "transfer": 0.0,
+      "delivery": 0.0,
+      "loss": 3.637978807091713e-12,
+      "total_components": 0.0
+    },
+    "cost_scope": "Transport columns include loss; loss column is a non-additive breakdown.",
+    "audit_provenance": {
+      "checked_at_utc": "2026-10-15T14:51:28.020832+00:00",
+      "command": [
+        "D:\\desktop2\\or__contest\\.venv\\Scripts\\python.exe",
+        "tools/audit_results.py",
+        "results/experiments/acceptance-q2-loss-20261015",
+        "--report",
+        "results/experiments/acceptance-q2-loss-20261015/validation/model_checks.json"
+      ],
+      "verifier_sha256": "37db9c520a81c573c558cf85f6b0f76d4192d4a8ea1e6a135bd084ec9565f84a",
+      "raw_inputs_sha256": {
+        "df_customer.csv": "69ba455a3b4792ad5e991721efa548f96e542b9e32cb86cf443b3611ae2a4ff4",
+        "df_list.csv": "740ce9a7357c2be096803a1b2b0682178f4959db0a232a94785ed168f1923ddd",
+        "df_loc.csv": "15ef3cc92bf98042c38c7dda75728a8ae98d69caed7f2e2c4bc50f24e09da826",
+        "df_matrix.csv": "81e60304db211eb67122c8814b0fe024dd1d83610c6892a44d93fe547ccf5089",
+        "df_order.csv": "2954f9126d239027f4ae56492a5ad87340b6fb20658cf9b47d49624d6b003ec1",
+        "df_past_order.csv": "85acd2b6017e16dfe7514d465313ffea48637861c36a61d5a45d5f1028bd21ab",
+        "df_proc.csv": "64c3e1799cdfaf541f4739c768f4bbf101db637e023061216d20b59ad05f6746",
+        "df_wh.csv": "6613f14dce5bca488f13e43b32ba1f37350f3e62bb053485ad35b130669c78d8"
+      }
+    }
+  }
+]

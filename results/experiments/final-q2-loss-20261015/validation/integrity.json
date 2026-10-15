@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "补齐开仓及智能采购决策后验收问题二损耗模型，独立重算完整费用；末段600分钟和95%货量为声明假设",
+  "snapshot_files": 48,
+  "artifacts": 6,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-15T14:46:36.553344+00:00",
+  "command": [
+    "D:\\desktop2\\or__contest\\.venv\\Scripts\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/final-q2-loss-20261015/_runs/q2-loss/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/final-q2-loss-20261015/validation/integrity.json"
+  ],
+  "manifest_sha256": "2428b1d9f4f37cd04131b7689a40e0d85ba7bd6bec0b5460ab1389924166005d",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "ccfff944d5aad6e88e45a7a2bd963a8735a2d9b9945088196eb6d5f8aa3dfd30"
+  }
+}
