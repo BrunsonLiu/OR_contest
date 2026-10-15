@@ -15,7 +15,7 @@ or__contest/
 ├── results/                # question1～question4：各题结果
 ├── docs/
 │   ├── problem/            # 赛题
-│   ├── paper/              # 论文与 AI 工具使用说明
+│   ├── paper/              # 论文材料状态与 AI 工具说明；成稿待提供
 │   ├── methodology/        # 鲁棒优化方法说明
 │   └── maintenance/        # 整理清单与验证记录
 ├── archive/diagnostics/    # 历史排查：检查、对比、调查、未完成脚本
@@ -25,11 +25,13 @@ or__contest/
 ```
 
 - [题目](docs/problem/题目.md)
-- [论文](docs/paper/数据驱动的生鲜商品仓网配送优化.pdf)
+- [赛题原件 PDF](docs/problem/赛题原件.pdf)
+- [论文材料状态](docs/paper/README.md)
+- [现行问题四方法说明](docs/methodology/problem4_robust_methodology.md)
 - [运行指南](docs/RUNNING.md)
 - [工程与实验标准](docs/ENGINEERING.md)
 - [结果导航](results/README.md)
-- [已知问题](docs/KNOWN_ISSUES.md)
+- [当前项目状态与未完成条件](docs/KNOWN_ISSUES.md)
 - [后续待办清单](docs/TODO.md)
 - [历史代码检查与修复报告](docs/audits/2026-10-15/REPORT.md)
 - [第二轮：鲁棒时效与容量约束](docs/audits/2026-10-15/ROBUST_CONSTRAINTS.md)
@@ -62,7 +64,7 @@ python run.py q4-robust --experiment robust-v1 --purpose "验证预算集合下�
 - 新结果写入 `results/experiments/实验名称/questionN/`，历史 `results/questionN/` 保留追溯。
 - 已有问题四实验版本保留原有内部结构，版本含义见结果导航。
 - 历史诊断归档到 `archive/diagnostics/`，未完成脚本单独放在 `incomplete/`。
-- 论文、赛题和方法说明分别归入 `docs/` 对应子目录。
+- 论文材料、赛题和现行方法说明分别归入 `docs/` 对应子目录；失效方法稿保留于 `archive/documents/`。
 
 检查结构与路径：`python tools/check_repository.py`。后续工作按 [待办清单](docs/TODO.md) 的优先级推进。
 

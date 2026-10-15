@@ -4,7 +4,7 @@
 # with Bertsimas-Sim Budget-of-Uncertainty
 #
 # 技术路线:
-#   1. 从历史数据计算各城市-SKU的需求变异系数(CV),构建不确定集半径 δ
+#   1. 从历史需求减去星期均值，以残差样本标准差构建不确定集半径 δ
 #   2. 建立静态鲁棒优化模型:
 #      仓库开设(y)、系统采购(z)、配送(u)、调拨(f)和时效(v)均预先决定。
 #      当前没有需求情景对应的可调整策略，不能直接解释为两阶段自适应模型。
@@ -55,7 +55,6 @@ SMART_COST = 1.5
 SMART_DISCOUNT = 0.4
 
 GAMMA_VALUES = [float(value) for value in os.environ.get("OR_GAMMA_VALUES", "0,0.005,0.01,0.015,0.02,0.025,0.03,0.04,0.05").split(",")]
-DELTA_SCALE = 0.3
 
 CPLEX_TIME_LIMIT = 1800
 CPLEX_MIP_GAP = 0.005
@@ -121,8 +120,7 @@ for _, row in df_loc.iterrows():
 # 2. 不确定集构建：基于预测残差的δ（替代CV×α）
 #    - 按星期几拆分历史数据，计算去周期残差
 #    - δ = std_resid × RESIDUAL_BETA × weekday_factor
-#    - 理由: 第三问分析发现CV混淆了可预测周期性与真实不确定性
-#           回测残差delta是CV_delta的~3倍
+#    - 星期均值与残差使用同一历史样本估计，不能解释为独立回测误差或统计覆盖保证。
 # ===========================================================================
 
 print("=" * 70)
