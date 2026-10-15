@@ -4,6 +4,8 @@
 
 ## 启动与隔离
 
+以下 `--experiment` 名称是示意值，并非仓库中已存在的实验；实际运行请换成本次自己的名称（省略该参数则由入口自动生成）。
+
 ```powershell
 python run.py q3-backtest --experiment weekly-baseline-v1 --purpose "比较固定方法在滚动窗口的 RMSE，检查排名稳定性" --timeout 900
 ```
@@ -51,3 +53,15 @@ python tools/verify_backtest_results.py results/experiments/weekly-baseline-v1/q
 人工或专属验证生成的检查文件也应保留在对应实验中。若运行后修改已登记的输出，旧记录校验应失败；重新生成须新建实验，或作为有记录的新任务，并明确其对旧证据的影响。
 
 正式引用需要：完整记录通过、专属验证通过、说明业务假设与数据范围、披露实际 gap/失败状态。历史文件来源不明、未来真值缺失、样本太短等问题不能用工程记录消除。
+
+## 提交前检查
+
+每次提交前运行：
+
+```powershell
+python tools/check_repository.py
+python tools/check_line_endings.py
+python -m unittest discover -s tests -v
+```
+
+当前测试为 8 个文件、49 项；`docs/audits/` 中出现的旧测试项数是当时的点状快照，不代表当前数量。

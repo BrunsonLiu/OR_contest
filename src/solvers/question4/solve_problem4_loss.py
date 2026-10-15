@@ -752,9 +752,14 @@ def solve_multi_period(gnn_opened=None, gnn_smart=None):
                         if w_val > 0.01:
                             total_discount += 0.4 * proc_cost.get(wh, 0.0) * w_val
 
+        # 开仓不关闭：周期末已开设的仓库数即整个计划期开设的仓库数，含两个 CDC
+        final_open_wh_count = 2 + sum(
+            1 for wh in rdc_names if f'y_{T-1}_{wh}' in var_indices
+            and problem.solution.get_values(var_indices[f'y_{T-1}_{wh}']) > 0.5)
+
         summary_perf = pd.DataFrame([{
             '指标': '汇总（7天）',
-            '开仓数量': 19,
+            '开仓数量': final_open_wh_count,
             '时效满足率': '-',
             '仓库之间的运输总成本（万元）': round(total_trans_wh, 2),
             '仓库到门店的运输总成本（万元）': round(total_trans_cust, 2),

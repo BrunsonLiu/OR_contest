@@ -1,3 +1,4 @@
+import ast
 import os
 from pathlib import Path
 import subprocess
@@ -25,3 +26,23 @@ class ResultVersionTests(unittest.TestCase):
                                 capture_output=True)
         self.assertEqual(result.returncode, 2)
         self.assertIn(b"--loss-version", result.stderr)
+
+    def test_question4_summary_open_count_is_computed_not_literal(self):
+        # A hardcoded 19 once disagreed with the daily files (18 on 2016-06-24).
+        for name in ("solve_problem4_no_loss.py", "solve_problem4_loss.py"):
+            source = ROOT / "src/solvers/question4" / name
+            tree = ast.parse(source.read_text(encoding="utf-8"))
+            summary = None
+            for node in ast.walk(tree):
+                if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                        and node.func.attr == "DataFrame" and node.args
+                        and isinstance(node.args[0], ast.List)):
+                    continue
+                dictionary = next((element for element in node.args[0].elts if isinstance(element, ast.Dict)), None)
+                if dictionary and any(isinstance(key, ast.Constant) and key.value == "指标" for key in dictionary.keys):
+                    summary = dictionary
+            self.assertIsNotNone(summary, f"{name} 未找到汇总行")
+            value = next(value for key, value in zip(summary.keys, summary.values)
+                         if isinstance(key, ast.Constant) and key.value == "开仓数量")
+            self.assertIsInstance(value, ast.Name, f"{name} 汇总开仓数量必须是计算值而非字面量")
+            self.assertEqual(value.id, "final_open_wh_count", f"{name} 汇总开仓数量来源不符")

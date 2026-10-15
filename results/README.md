@@ -22,7 +22,7 @@
 | `question4/problem4_noloss/` | 多日无损耗实验 |
 | `question4/problem4_loss/` | 历史有损耗实验，须显式选择 legacy；生成参数未知 |
 | `question4/problem4_loss_v2/` | 有损耗求解和绘图的默认目录；目录内既有文件仍为历史结果 |
-| `question4/problem4_robust/` | 鲁棒优化、JSON 结果和图表 |
+| `question4/problem4_robust/` | 历史鲁棒优化目录；`robust_results.json` 等旧结论已作废，仅作追溯，见下方说明。当前鲁棒结果见 `experiments/robust-discount-20261015/` |
 
 ## 新审计实验
 
@@ -163,6 +163,9 @@
 - [problem4_noloss/output_result/仓网供应关系文件_2016-06-28.csv](question4/problem4_noloss/output_result/仓网供应关系文件_2016-06-28.csv)
 - [problem4_noloss/output_result/仓网供应关系文件_2016-06-29.csv](question4/problem4_noloss/output_result/仓网供应关系文件_2016-06-29.csv)
 - [problem4_noloss/output_result/仓网供应关系文件_2016-06-30.csv](question4/problem4_noloss/output_result/仓网供应关系文件_2016-06-30.csv)
+
+`problem4_robust/` 为历史目录：以下 5 个文件由修正前的目标函数与旧时效口径生成，`robust_results.json` 的净成本与预算结论已作废，`first_principles_analysis.png` 把候选路线损耗率求和，不能读作每吨平均损耗。它们只作版本追溯，不作为当前结果引用；当前鲁棒结论见 `experiments/robust-discount-20261015/`。
+
 - [problem4_robust/first_principles_analysis.png](question4/problem4_robust/first_principles_analysis.png)
 - [problem4_robust/price_of_robustness.png](question4/problem4_robust/price_of_robustness.png)
 - [problem4_robust/robust_results.json](question4/problem4_robust/robust_results.json)

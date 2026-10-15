@@ -1,6 +1,6 @@
 # 运行指南
 
-所有新求解、训练、回测和绘图通过 `run.py` 启动，必须填写 `--purpose`。完整要求见 [工程标准](ENGINEERING.md)。`python run.py --list` 只列任务，不运行模型。
+所有新求解、训练、回测和绘图通过 `run.py` 启动，必须填写 `--purpose`。完整要求见 [工程标准](ENGINEERING.md)。`python run.py --list` 只列任务，不运行模型。下文命令中的 `--experiment` 名称均为示意值，不是仓库中已存在的实验；实际运行请替换为自己本次的名称。
 
 ## 环境
 
