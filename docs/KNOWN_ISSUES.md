@@ -41,4 +41,6 @@
 
 ## CI 状态（2026-10-16）
 
-历次 `Repository checks` 运行（含最新 `8b7ab6d`）都在第 5 步 `python -m pip check` 失败，第 6—8 步（结构检查、回归测试、可选小模型）从未执行，因此远程 CI 尚未验证过任何工程检查。原因不在固定版本清单本身：在独立的 3.12 虚拟环境中按 `requirements/lock-py312-windows.txt` 全新安装后 `pip check` 输出 “No broken requirements found”。失败来自 runner 工具缓存 Python 预装的额外包与共享解释器环境的交互。工作流已改为在隔离虚拟环境中执行依赖闭包检查，使结构检查与测试得以运行；下一次推送后应核对结果，不再由本地结果推定远程通过。
+历次 `Repository checks` 运行（含最新 `8b7ab6d`）都在第 5 步 `python -m pip check` 失败，第 6—8 步（结构检查、回归测试、可选小模型）从未执行，因此远程 CI 尚未验证过任何工程检查。失败位置由 Actions API 确认（步骤跳过状态），但原始错误文本无法获取：作业日志下载返回 403 “Must have admin rights”，检查注解只给出通用的 “exit code 1”。
+
+已在独立 3.12 虚拟环境中按 `requirements/lock-py312-windows.txt` 全新安装，`pip check` 输出 “No broken requirements found”，因此固定版本清单本身在干净环境中自洽。至于远程失败的具体机制（推测与 runner 工具缓存解释器的预装包有关），尚未取得证据，不作为已确认结论。工作流已改为在隔离虚拟环境中执行依赖闭包检查，使后续结构检查与测试得以运行；下一次推送后应核对结果，不再由本地结果推定远程通过。
