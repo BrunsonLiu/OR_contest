@@ -28,6 +28,20 @@ class BacktestVerificationTests(unittest.TestCase):
         result = verify(self.folder, self.methods)
         self.assertEqual(result["prediction_files_checked"], 36)
         self.assertEqual(len(result["inputs_sha256"]), 37)
+        self.assertTrue(result["method_set_asserted"])
+
+    def test_omitted_expected_methods_is_flagged_not_asserted(self):
+        # Self-referential check: without an explicit target the method set is
+        # only compared to itself, so completeness was not actually asserted.
+        result = verify(self.folder)
+        self.assertFalse(result["method_set_asserted"])
+
+    def test_cli_requires_expected_methods(self):
+        report = self.folder/"must-not-exist.json"
+        process = subprocess.run([sys.executable, str(ROOT/"tools/verify_backtest_results.py"),
+                                  str(self.folder), "--report", str(report)], capture_output=True)
+        self.assertNotEqual(process.returncode, 0)
+        self.assertFalse(report.exists())
 
     def test_silently_dropped_method_is_rejected(self):
         self.report["summary"].pop("LightGBM")
@@ -60,6 +74,7 @@ class BacktestVerificationTests(unittest.TestCase):
 
     def test_optimized_python_cannot_disable_acceptance_checks(self):
         process = subprocess.run([sys.executable, "-O", str(ROOT/"tools/verify_backtest_results.py"),
-                                  str(self.folder), "--report", str(self.folder/"must-not-exist.json")], capture_output=True)
+                                  str(self.folder), "--expected-methods", ",".join(sorted(self.methods)),
+                                  "--report", str(self.folder/"must-not-exist.json")], capture_output=True)
         self.assertNotEqual(process.returncode, 0)
         self.assertFalse((self.folder/"must-not-exist.json").exists())

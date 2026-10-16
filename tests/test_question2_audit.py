@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import shutil
 import subprocess
 import sys
@@ -71,3 +72,30 @@ class Question2AuditTests(unittest.TestCase):
                                   "--report", str(report)], capture_output=True)
         self.assertEqual(process.returncode, 2)
         self.assertTrue(report.exists())
+
+    def test_missing_solver_evidence_is_incomplete_not_success(self):
+        # Without solver_metrics.jsonl the exported total cannot be tied to a
+        # real solve; this is an evidence gap (exit 2), never a silent pass.
+        (self.root/"_runs/q2-loss/solver_metrics.jsonl").unlink()
+        report = self.root/"validation/checks.json"
+        process = subprocess.run([sys.executable, str(ROOT/"tools/audit_results.py"), str(self.root),
+                                  "--report", str(report)], capture_output=True)
+        self.assertEqual(process.returncode, 2)
+        rows = json.loads(report.read_text(encoding="utf-8"))
+        self.assertTrue(any(r.get("limitations") for r in rows))
+
+    def test_missing_q4_daily_file_is_incomplete_not_success(self):
+        # A partial daily export used to be skipped day by day and still exit 0.
+        source = ROOT/"results/experiments/audit-fixed-20261015/question4/problem4_loss_v2"
+        shutil.copytree(source, self.root/"question4/problem4_loss_v2")
+        evidence = self.root/"_runs/q4-loss"
+        evidence.mkdir(parents=True)
+        shutil.copyfile(ROOT/"results/experiments/audit-fixed-20261015/_runs/q4-loss/run.json",
+                        evidence/"run.json")
+        (self.root/"question4/problem4_loss_v2/output_result/仓网供应关系文件_2016-06-27.csv").unlink()
+        report = self.root/"validation/checks.json"
+        process = subprocess.run([sys.executable, str(ROOT/"tools/audit_results.py"), str(self.root),
+                                  "--report", str(report)], capture_output=True)
+        self.assertEqual(process.returncode, 2)
+        rows = json.loads(report.read_text(encoding="utf-8"))
+        self.assertTrue(any("2016-06-27" in m for r in rows for m in r.get("limitations", [])))

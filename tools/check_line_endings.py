@@ -90,9 +90,13 @@ def check_history_fingerprints(errors):
     actual = digest(raw)
     for report_path in sorted(ROOT.glob("results/experiments/*/question3/backtests/rolling_backtest.json")):
         recorded = json.loads(report_path.read_text(encoding="utf-8")).get("history_sha256")
-        if recorded and recorded != actual:
-            errors.append(f"历史指纹不符：{report_path.relative_to(ROOT).as_posix()}\n"
-                          f"    记录 {recorded}\n    实际 {actual}")
+        relative = report_path.relative_to(ROOT).as_posix()
+        if not recorded:
+            # A committed backtest without a history fingerprint cannot be tied to
+            # the checked-out raw input; skipping it would erase this surface.
+            errors.append(f"回测记录缺少 history_sha256 指纹：{relative}")
+        elif recorded != actual:
+            errors.append(f"历史指纹不符：{relative}\n    记录 {recorded}\n    实际 {actual}")
 
 
 def check_forecast_fingerprints(errors):
@@ -103,9 +107,16 @@ def check_forecast_fingerprints(errors):
         recorded, name = record.get("forecast_sha256"), record.get("forecast_file") or ""
         name = name.replace("\\", "/")
         marker = name.find(FORECAST_MARKER)
-        if not recorded or marker < 0:
+        if marker < 0:
+            # No fingerprinted question3 forecast referenced; nothing to pin here.
             continue
         relative = name[marker:]
+        if not recorded:
+            # A manifest that consumed the pinned forecast must record its hash,
+            # otherwise the forecast bytes it used are unverified.
+            errors.append(f"运行清单缺少 forecast_sha256 指纹："
+                          f"{manifest.relative_to(ROOT).as_posix()} → {relative}")
+            continue
         if relative in checked:
             continue
         checked.add(relative)
