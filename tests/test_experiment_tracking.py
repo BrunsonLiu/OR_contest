@@ -101,6 +101,22 @@ class ExperimentTrackingTests(unittest.TestCase):
         manifest = next((self.root/"results/experiments").glob("*/_runs/solver/run.json"))
         self.assertEqual(verify_record(manifest)["status"], "no_feasible_solution")
 
+    def test_empty_snapshot_is_not_certified_as_verified(self):
+        # A manifest describing an empty snapshot must not pass integrity.
+        process = self.run_probe("print('ok')")
+        self.assertEqual(process.returncode, 0, process.stdout+process.stderr)
+        manifest = self.manifest()
+        record = json.loads(manifest.read_text(encoding="utf-8"))
+        with zipfile.ZipFile(manifest.parent/"snapshot.zip", "w") as bundle:
+            pass
+        # Recompute the archive hash for the emptied zip so only the member list is at issue.
+        import hashlib
+        digest = hashlib.sha256((manifest.parent/"snapshot.zip").read_bytes()).hexdigest()
+        record["snapshot"] = {"file": "snapshot.zip", "sha256": digest, "members": {}}
+        manifest.write_text(json.dumps(record), encoding="utf-8")
+        with self.assertRaises(ValueError):
+            verify_record(manifest)
+
     def test_historical_output_roots_are_protected(self):
         process = self.run_probe("print('must not run')", "--output-dir", str(self.root/"results/question1"))
         self.assertEqual(process.returncode, 2)

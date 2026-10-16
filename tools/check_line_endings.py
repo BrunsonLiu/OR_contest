@@ -149,7 +149,13 @@ def check_loss_version_fingerprints(errors):
         folder = info.get("folder", "")
         if folder.startswith("results/experiments/"):
             continue
-        for name, meta in info.get("files", {}).items():
+        files = info.get("files", {})
+        if not files:
+            # An entry present but with no files asserts nothing; without this
+            # guard its whole fingerprint surface is dropped silently.
+            errors.append(f"损耗版本记录缺少文件清单：{version}（{folder or '未记录目录'}）")
+            continue
+        for name, meta in files.items():
             path = ROOT / folder / name
             if not path.is_file():
                 errors.append(f"损耗版本记录的文件缺失：{folder}/{name}")

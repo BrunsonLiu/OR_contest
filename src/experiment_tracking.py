@@ -131,6 +131,10 @@ def verify_record(manifest, require_success=False):
     with zipfile.ZipFile(archive) as bundle:
         if set(bundle.namelist()) != set(snapshot["members"]):
             raise ValueError("快照内容清单不一致")
+        if not snapshot["members"]:
+            # A record that bundles no source/input is not verified evidence;
+            # an empty snapshot must not read as an integrity pass.
+            raise ValueError("快照没有成员文件，不能把零项证据判为通过")
         for name, digest in snapshot["members"].items():
             if hashlib.sha256(bundle.read(name)).hexdigest() != digest:
                 raise ValueError(f"快照输入损坏: {name}")

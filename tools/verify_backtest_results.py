@@ -43,6 +43,7 @@ def verify(folder, expected_methods=None):
     assert report["target_date_events_per_series"] == len(origins)*horizon
     assert report["distinct_target_dates"] == len({date for origin in origins for date in dates_all[origin:origin+horizon]})
     errors = {}
+    baseline_verified = False
     input_hashes = {"rolling_backtest.json": hashlib.sha256((folder/"rolling_backtest.json").read_bytes()).hexdigest()}
     for row in report["windows"]:
         origin = origins[row["window"]-1]
@@ -69,6 +70,7 @@ def verify(folder, expected_methods=None):
         assert np.isclose(np.sqrt(sse/truth.size), row["metrics"]["rmse"], rtol=1e-12)
         assert truth.size == row["points"]
         if row["method"] == "SeasonalNaive":
+            baseline_verified = True
             assert origin >= 7
             past_columns = [dates_all[origin-7+index % 7].strftime("%Y/%m/%d") for index in range(horizon)]
             np.testing.assert_allclose(values, actual.loc[:, past_columns].to_numpy())
@@ -87,9 +89,15 @@ def verify(folder, expected_methods=None):
         peers = [other for other in report["windows"] if other["window"] == row["window"]]
         rank = 1+sum(other["metrics"]["rmse"] < row["metrics"]["rmse"]-1e-12 for other in peers)
         assert row["rank"] == rank, "窗口排名与已重算误差不一致"
+    # The weekly baseline is only actually recomputed when a SeasonalNaive row
+    # exists; do not let a hard-coded string claim it ran when it did not.
+    checks = ("complete method/window grid, input hash, keys, exact training/validation dates, "
+              "overlap counts, predictions, independent RMSE, event counts and ranks")
+    if baseline_verified:
+        checks += ", plus the weekly SeasonalNaive baseline"
     return {"prediction_files_checked": len(report["windows"]), "methods": len(errors),
-            "method_set_asserted": method_set_asserted,
-            "checks": "complete method/window grid, input hash, keys, exact training/validation dates, overlap counts, predictions, independent RMSE, event counts, ranks and weekly baseline",
+            "method_set_asserted": method_set_asserted, "weekly_baseline_verified": baseline_verified,
+            "checks": checks,
             "history_sha256": report["history_sha256"], "inputs_sha256": input_hashes}
 
 
