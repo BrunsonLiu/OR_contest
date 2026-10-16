@@ -66,6 +66,21 @@ def check_attributes(errors):
         errors.append("未找到任何受指纹保护的输入，属性规则可能失效")
 
 
+def check_experiment_bytes(errors):
+    """Experiment evidence is byte-preserved (`-text`); a `text` rule would
+    normalize line endings on checkout and invalidate recorded SHA256s."""
+    seen = 0
+    for name, fields in tracked_eol().items():
+        if not name.startswith("results/experiments/"):
+            continue
+        seen += 1
+        attribute = fields[2] if len(fields) > 2 else "attr/(none)"
+        if attribute != "attr/-text":
+            errors.append(f"实验证据应为 -text 逐字节保护：{name} → {attribute}")
+    if not seen:
+        errors.append("未找到任何实验证据文件，-text 规则可能失效")
+
+
 def check_history_fingerprints(errors):
     """Committed backtests must hash the same df_past_order bytes we check out."""
     raw = ROOT / "data/raw/df_past_order.csv"
@@ -111,9 +126,15 @@ def check_loss_version_fingerprints(errors):
     """
     record_path = ROOT / "docs/audits/2026-10-15/loss_versions.json"
     if not record_path.is_file():
+        # A deleted/renamed record must not silently erase this fingerprint surface.
+        errors.append(f"缺少损耗版本清单：{record_path.relative_to(ROOT).as_posix()}")
         return
     record = json.loads(record_path.read_text(encoding="utf-8"))
-    for version, info in record.get("versions", {}).items():
+    versions = record.get("versions", {})
+    if not versions:
+        errors.append("损耗版本清单为空，指纹断言失效")
+        return
+    for version, info in versions.items():
         folder = info.get("folder", "")
         if folder.startswith("results/experiments/"):
             continue
@@ -129,6 +150,7 @@ def check_loss_version_fingerprints(errors):
 def check():
     errors = []
     check_attributes(errors)
+    check_experiment_bytes(errors)
     check_history_fingerprints(errors)
     check_forecast_fingerprints(errors)
     check_loss_version_fingerprints(errors)
