@@ -46,3 +46,25 @@ class ResultVersionTests(unittest.TestCase):
                          if isinstance(key, ast.Constant) and key.value == "开仓数量")
             self.assertIsInstance(value, ast.Name, f"{name} 汇总开仓数量必须是计算值而非字面量")
             self.assertEqual(value.id, "final_open_wh_count", f"{name} 汇总开仓数量来源不符")
+
+    def test_feature_analysis_skips_multi_method_section_without_inputs(self):
+        # Under run.py isolation the sibling 预测结果_<method>.csv grid is absent,
+        # so method_forecasts stays empty. Section 6 used to index methods_list[0]
+        # unconditionally and raise IndexError, killing the whole task (no outputs).
+        source = (ROOT / "src/analysis/analysis_data_features.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        guards = [node for node in ast.walk(tree)
+                  if isinstance(node, ast.If)
+                  and isinstance(node.test, ast.UnaryOp) and isinstance(node.test.op, ast.Not)
+                  and isinstance(node.test.operand, ast.Name)
+                  and node.test.operand.id == "method_forecasts"]
+        self.assertTrue(guards, "第 6 节缺少 method_forecasts 为空时的守卫")
+        # The guard must exist before the unguarded `method_forecasts[methods_list[0]]` access.
+        first_guard = min(node.lineno for node in guards)
+        accesses = [node.lineno for node in ast.walk(tree)
+                    if isinstance(node, ast.Subscript)
+                    and isinstance(node.value, ast.Name) and node.value.id == "method_forecasts"
+                    and isinstance(node.slice, ast.Subscript)]
+        self.assertTrue(accesses, "未找到 methods_list[0] 形式的索引，测试需更新")
+        self.assertLess(first_guard, min(accesses),
+                        "method_forecasts 索引必须位于空值守卫之后")

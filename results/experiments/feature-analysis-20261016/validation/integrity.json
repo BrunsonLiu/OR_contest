@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "在隔离结果根目录下首次生成特征的 v2 记录；核对周期性/趋势与残差-CV 覆盖数字，供不确定集方法讨论引用",
+  "snapshot_files": 48,
+  "artifacts": 4,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-16T04:17:32.050821+00:00",
+  "command": [
+    "C:\\Users\\Brunson\\miniforge3\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/feature-analysis-20261016/_runs/analyze-features/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/feature-analysis-20261016/validation/integrity.json"
+  ],
+  "manifest_sha256": "4f65d0ee33d87ac1baf5e9243647413b21dd6fcae59a55273b7aeef8a01d40ef",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "c90434101001804ed14f35adb301752a9c988b43e665efdd43ee08e21b4e1064",
+    "src/experiment_tracking.py": "c36bd737b2a0d060b3c4aa493c4f2f5d4e1f2f25bdc1f9cbe50021fd08c378ea"
+  }
+}

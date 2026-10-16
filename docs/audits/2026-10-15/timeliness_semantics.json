@@ -1,5 +1,5 @@
 {
-  "source": "D:\\desktop2\\or__contest\\results\\experiments\\robust-discount-20261015\\question4\\problem4_robust\\robust_results.json",
+  "source": "results/experiments/robust-discount-20261015/question4/problem4_robust/robust_results.json",
   "policy_comparison": [
     {
       "gamma": 0.0,

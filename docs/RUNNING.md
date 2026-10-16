@@ -14,6 +14,12 @@ python -m unittest discover -s tests -v
 
 版本锁已在 Windows/Python 3.12 验证。完整模型需要超出 CPLEX Community Edition 限制的许可；仅安装依赖不能保证可运行完整模型。PNG 地图需要 `requirements/visualization.txt` 中的可选依赖和底图资源，独立环境地图复现仍待完成。
 
+不安装 CPLEX 时，本机可运行的任务限于预测与分析，求解类任务会因 `import cplex` 失败：
+
+| 可运行（无需 CPLEX） | 需要 CPLEX 许可 | 其它 |
+| --- | --- | --- |
+| `q3`、`q3-city`、`q3-methods`、`q3-backtest`、`analyze-features` | `q1`、`q2-time`、`q2-subsidy`、`q2-loss`、`q4-no-loss`、`q4-loss`、`q4-robust` | `plot-comparison` 读取既有 CPLEX 输出；地图脚本另需 `cartopy` 与底图 |
+
 ## 任务与隔离
 
 每次默认创建 `results/experiments/时间-标识/`，也可用 `--experiment 名称` 或 `--output-dir 路径` 指定。以下输出都相对于该实验根目录，不再默认写入历史结果。
