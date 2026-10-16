@@ -43,4 +43,6 @@
 
 历次 `Repository checks` 运行（含最新 `8b7ab6d`）都在第 5 步 `python -m pip check` 失败，第 6—8 步（结构检查、回归测试、可选小模型）从未执行，因此远程 CI 尚未验证过任何工程检查。失败位置由 Actions API 确认（步骤跳过状态），但原始错误文本无法获取：作业日志下载返回 403 “Must have admin rights”，检查注解只给出通用的 “exit code 1”。
 
-已在独立 3.12 虚拟环境中按 `requirements/lock-py312-windows.txt` 全新安装，`pip check` 输出 “No broken requirements found”，因此固定版本清单本身在干净环境中自洽。至于远程失败的具体机制（推测与 runner 工具缓存解释器的预装包有关），尚未取得证据，不作为已确认结论。工作流已改为在隔离虚拟环境中执行依赖闭包检查，使后续结构检查与测试得以运行；下一次推送后应核对结果，不再由本地结果推定远程通过。
+已在独立 3.12 虚拟环境中按 `requirements/lock-py312-windows.txt` 全新安装，`pip check` 输出 “No broken requirements found”，因此固定版本清单本身在干净环境中自洽。至于远程失败的具体机制（推测与 runner 工具缓存解释器的预装包有关），尚未取得直接证据，不作为已确认结论。
+
+工作流已改为在隔离虚拟环境中执行依赖闭包检查，使后续结构检查与测试得以运行。推送 `644d916` 后的 run 38846059788 已通过：依赖闭包（第 6 步）、`check_repository.py`（第 7 步）、`check_line_endings.py`（第 8 步）、回归测试（第 9 步）均实际执行且成功；可选 CPLEX 小模型按 `workflow_dispatch` 条件跳过。这确认了隔离检查使远程步骤恢复运行，但原失败机制仍未取得日志证据。
