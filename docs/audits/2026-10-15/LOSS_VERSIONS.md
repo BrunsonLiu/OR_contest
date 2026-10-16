@@ -6,7 +6,7 @@
 
 两个历史目录各有 22 份 CSV，文件集合和字段一致，但没有一份文件内容完全相同。汇总成本分别为 233185.84、233949.68 万元，智能系统成本分别为 27、25.5 万元。二者没有足够运行记录，因此不能把差异归因于某个参数、某项模型改动，也不能声称能够精确复现旧版本。
 
-机器可读清单、字段、逐文件 SHA256 和汇总见 [loss_versions.json](loss_versions.json)，可运行 `python tools/audit_loss_versions.py` 重建。`legacy` 与 `historical_v2` 两份清单的 SHA256 按 CRLF 工作区字节计算，与 `data/raw/**`、`results/questionN/**/*.csv` 一同受 `.gitattributes` 的 `eol=crlf` 保护；`corrected_v2` 一项位于 `results/experiments/**`（逐字节保护），其记录的哈希与当前文件不一致，属清单过期，重新运行上述工具即可刷新，不作为 fingerprint 断言依据。
+机器可读清单、字段、逐文件 SHA256 和汇总见 [loss_versions.json](loss_versions.json)，可运行 `python tools/audit_loss_versions.py` 重建。`legacy` 与 `historical_v2` 两份清单的 SHA256 按 CRLF 工作区字节计算，与 `data/raw/**`、`results/questionN/**/*.csv` 一同受 `.gitattributes` 的 `eol=crlf` 保护；`corrected_v2` 位于 `results/experiments/**`（逐字节保护）。三条记录均已用上述工具刷新，逐文件哈希与当前文件一致；`tools/check_line_endings.py` 复核 `legacy` 与 `historical_v2`（`results/questionN/**` 受 `eol=crlf` 保护），experiments 项不在其断言面内，清单缺失或为空即失败。
 
 当前源代码可以确认的参数：损耗在 500 分钟后按 `0.2*(分钟-500)^2/10000` 万元/吨计算；时效门槛为末段 600 分钟，名义需求量加权达标比例 95%；处理费计一次，智能系统优惠为处理费的 40%；默认 gap 0.005、时限 1800 秒，允许统一入口覆盖。这里描述当前源码，不追认两个历史目录的生成参数。
 

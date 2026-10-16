@@ -37,7 +37,7 @@ python run.py q3-backtest --experiment weekly-baseline-v1 --purpose "比较固�
 - **受指纹断言保护的输入**（`data/raw/**` 与 `results/question1|2|3|4/**/*.csv`）固定为 `text eol=crlf`。历史记录中的 `forecast_sha256`、`history_sha256`、`tools/audit_results.py` 的预测校验与 `tools/audit_loss_versions.py` 的损耗版本清单都按 CRLF 工作区字节计算，`eol=crlf` 让 Linux、macOS 与 CI 检出也得到同一份 CRLF 字节，不再依赖本机 `core.autocrlf`。
 - **源码**（`run.py`、`src/**`、`requirements/**`）为 `text`，仓库内保持 LF；其历史工作区哈希（`source_sha256`、`script_sha256`）仅在 Windows 构建机以 CRLF 生成，`experiment_tracking.finalize` 只把它们当信息记录、不作断言，因此源码仍随检出设置变化。
 
-`tools/check_line_endings.py` 断言这些属性规则生效、索引为 LF、工作区为 CRLF，并复核已提交回测、运行记录和损耗版本清单里的输入指纹。它把 `results/experiments/**` 排除在外，因为该目录由 `-text` 逐字节保护，不是换行转换面。缺规则或指纹不符即失败，CI 在 `check_repository.py` 之后运行该检查。
+`tools/check_line_endings.py` 断言这些属性规则生效、索引为 LF、工作区为 CRLF，并复核已提交回测、运行记录和损耗版本清单里的输入指纹。`check_experiment_bytes` 另行断言 `results/experiments/**` 仍由 `-text` 逐字节保护——该目录不是换行转换面，若其规则被改成 `text` 或缺失即失败。缺规则或指纹不符即失败，CI 在 `check_repository.py` 之后运行该检查。
 
 快照是运行时文件证据，不保证跨操作系统、不同求解许可或底层计算库得到逐位相同结果；复现实验仍需匹配环境、许可和业务定义。代码内模型超参数由源码快照追溯，CPLEX 参数另由实际求解记录确认。外部输入未接入快照前不得据其开展正式新实验。
 
@@ -64,4 +64,4 @@ python tools/check_line_endings.py
 python -m unittest discover -s tests -v
 ```
 
-当前测试为 8 个文件、49 项；`docs/audits/` 中出现的旧测试项数是当时的点状快照，不代表当前数量。
+当前测试为 8 个文件、50 项（以 `python -m unittest discover -s tests -v` 实际输出为准）；`docs/audits/` 中出现的旧测试项数是当时的点状快照，不代表当前数量。
