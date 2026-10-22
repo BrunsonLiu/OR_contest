@@ -42,3 +42,11 @@
 6. **维护债务**：部分求解/绘图模块导入即运行；历史诊断依赖源码行号。`archive/diagnostics/incomplete/diagnose_det_cdc.py:143` 保留原语法错误，明确排除，不计入通过。
 
 历史 `first_principles_analysis.png` 将候选路线损耗率求和，不能解释为每吨平均损耗。当前比较图读取导出成本与求解证据；旧图只留追溯。按用户要求，不新增 HTML、额外模型或无关图表。
+
+## CI 状态（2026-10-16）
+
+历次 `Repository checks` 运行（含最新 `8b7ab6d`）都在第 5 步 `python -m pip check` 失败，第 6—8 步（结构检查、回归测试、可选小模型）从未执行，因此远程 CI 尚未验证过任何工程检查。失败位置由 Actions API 确认（步骤跳过状态），但原始错误文本无法获取：作业日志下载返回 403 “Must have admin rights”，检查注解只给出通用的 “exit code 1”。
+
+已在独立 3.12 虚拟环境中按 `requirements/lock-py312-windows.txt` 全新安装，`pip check` 输出 “No broken requirements found”，因此固定版本清单本身在干净环境中自洽。至于远程失败的具体机制（推测与 runner 工具缓存解释器的预装包有关），尚未取得直接证据，不作为已确认结论。
+
+工作流已改为在隔离虚拟环境中执行依赖闭包检查，使后续结构检查与测试得以运行。推送 `644d916` 后的 run 38846059788 已通过：依赖闭包（第 6 步）、`check_repository.py`（第 7 步）、`check_line_endings.py`（第 8 步）、回归测试（第 9 步）均实际执行且成功；可选 CPLEX 小模型按 `workflow_dispatch` 条件跳过。这确认了隔离检查使远程步骤恢复运行，但原失败机制仍未取得日志证据。

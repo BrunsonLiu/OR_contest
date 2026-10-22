@@ -14,6 +14,11 @@ from src.timeliness import worst_service_ratio
 
 def audit(path):
     records = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        source_label = path.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        # Outside the repo: keep the absolute path so the input is still identifiable.
+        source_label = str(path.resolve())
     matrix = pd.read_csv(ROOT / "data/raw/df_matrix.csv").set_index(["From", "To"])
     facilities = pd.read_csv(ROOT / "data/raw/df_wh.csv")
     rdcs = facilities.loc[facilities.Type.eq("RDC"), "Name"].tolist()
@@ -62,7 +67,7 @@ def audit(path):
     upper_bounds = [{"date": str(pd.Timestamp(date).date()),
                      "capacity_free_full_chain_nominal_ratio_upper_bound": float(forecast[date].to_numpy() @ possible/forecast[date].sum())}
                     for date in forecast.columns]
-    return {"source": str(path), "policy_comparison": policy_results, "full_chain_upper_bounds": upper_bounds,
+    return {"source": source_label, "policy_comparison": policy_results, "full_chain_upper_bounds": upper_bounds,
             "scope": "Sensitivity analysis, not an official interpretation of the contest's service clock. Factory-to-CDC and handling delays are excluded."}
 
 

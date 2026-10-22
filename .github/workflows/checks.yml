@@ -20,14 +20,31 @@ jobs:
       PYTHONIOENCODING: utf-8
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Match the .gitattributes contract; recorded input fingerprints are
+          # CRLF and must not depend on the runner's default autocrlf setting.
+          # (eol=crlf still forces CRLF even where checkout normalizes to LF.)
+          lfs: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: requirements/lock-py312-windows.txt
-      - run: python -m pip install -r requirements/lock-py312-windows.txt
-      - run: python -m pip check
+      - name: Configure Git line endings
+        run: git config --global core.autocrlf true
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements/lock-py312-windows.txt
+      # Run the dependency check against the locked closure in an isolated
+      # virtual environment. The runner's toolcache Python ships an extra
+      # setuptools, which makes `pip check` fail on the shared interpreter
+      # before any project check can run.
+      - name: Verify dependency closure in isolation
+        run: |
+          python -m venv .ci-venv --clear
+          .ci-venv\Scripts\python.exe -m pip install -q -r requirements/lock-py312-windows.txt
+          .ci-venv\Scripts\python.exe -m pip check
       - run: python tools/check_repository.py
+      - run: python tools/check_line_endings.py
       - run: python -m unittest discover -s tests -v
       - if: ${{ github.event_name == 'workflow_dispatch' && inputs.solver_smoke }}
         run: |

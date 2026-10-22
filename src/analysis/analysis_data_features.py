@@ -466,38 +466,45 @@ for method_name, fname in method_files.items():
         method_forecasts[method_name] = fc_dict
         print(f"  加载 {method_name}: {len(fc_dict)} 条预测")
 
-# 计算每对方法之间的相关性
-print(f"\n  各方法日均总预测相关性矩阵:")
+# 本节需要同实验 question3 目录下的多方法预测网格。统一入口会隔离结果
+# 根目录，若这些兄弟文件未随实验提供，本节无输入可比；明确跳过而不是
+# 继续到 methods_list[0] 触发 IndexError，避免整个任务无产物。
 methods_list = list(method_forecasts.keys())
-n_methods = len(methods_list)
-for i in range(n_methods):
-    row_str = f"  {methods_list[i]:<25}"
-    for j in range(n_methods):
-        if i == j:
-            row_str += f" {'1.000':>8}"
-        else:
-            vals_i = []
-            vals_j = []
-            for k in all_keys:
-                if k in method_forecasts[methods_list[i]] and k in method_forecasts[methods_list[j]]:
-                    vals_i.extend(method_forecasts[methods_list[i]][k])
-                    vals_j.extend(method_forecasts[methods_list[j]][k])
-            if len(vals_i) > 0:
-                corr = np.corrcoef(vals_i, vals_j)[0, 1]
-                row_str += f" {corr:>8.4f}"
+if not method_forecasts:
+    print(f"  未找到多方法预测文件（在 {os.path.join(str(_RESULTS_ROOT), 'question3')} 下）")
+    print("  跳过第 6 节的多模型一致性分析；其余各节不受影响。")
+else:
+    # 计算每对方法之间的相关性
+    print(f"\n  各方法日均总预测相关性矩阵:")
+    n_methods = len(methods_list)
+    for i in range(n_methods):
+        row_str = f"  {methods_list[i]:<25}"
+        for j in range(n_methods):
+            if i == j:
+                row_str += f" {'1.000':>8}"
             else:
-                row_str += f" {'N/A':>8}"
-    print(row_str)
+                vals_i = []
+                vals_j = []
+                for k in all_keys:
+                    if k in method_forecasts[methods_list[i]] and k in method_forecasts[methods_list[j]]:
+                        vals_i.extend(method_forecasts[methods_list[i]][k])
+                        vals_j.extend(method_forecasts[methods_list[j]][k])
+                if len(vals_i) > 0:
+                    corr = np.corrcoef(vals_i, vals_j)[0, 1]
+                    row_str += f" {corr:>8.4f}"
+                else:
+                    row_str += f" {'N/A':>8}"
+        print(row_str)
 
-# 每个方法的总预测
-print(f"\n  各方法7天总预测对比:")
-sota_keys = set(method_forecasts[methods_list[0]].keys())
-for method in methods_list:
-    total = 0
-    for k in sota_keys:
-        if k in method_forecasts[method]:
-            total += np.sum(method_forecasts[method][k])
-    print(f"    {method:<25}: {total:>12.1f} 吨")
+    # 每个方法的总预测
+    print(f"\n  各方法7天总预测对比:")
+    sota_keys = set(method_forecasts[methods_list[0]].keys())
+    for method in methods_list:
+        total = 0
+        for k in sota_keys:
+            if k in method_forecasts[method]:
+                total += np.sum(method_forecasts[method][k])
+        print(f"    {method:<25}: {total:>12.1f} 吨")
 
 # ============================================================
 # 7. 不确定集构建改进建议

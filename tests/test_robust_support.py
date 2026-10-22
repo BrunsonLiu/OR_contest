@@ -98,6 +98,24 @@ class RobustBudgetTests(unittest.TestCase):
                                         for z in vertices(n, budget))
                     self.assertEqual(solution.success, worst_deficit <= 1e-8)
 
+    def test_service_dual_rows_encode_ratio_exactly(self):
+        # Feasibility at ratio 0.95 cannot distinguish a `ratio*delta` right-hand
+        # side from a bare `delta` one, so assert the coefficients directly.
+        nominal = np.array([40.0, 55.0, 5.0])
+        deltas = np.array([8.0, 20.0, 10.0])
+        ratio, budget, n = 0.95, 1.0, 3
+        rows = service_ratio_rows(nominal, deltas, range(n), ratio, budget, n, range(n+1, 2*n+1))
+        for delta, v, q in zip(deltas, range(n), range(n+1, 2*n+1)):
+            row = next(candidate for candidate in rows if candidate[0] == [n, q, v])
+            _, coefficients, sense, bound = row
+            self.assertEqual(sense, "G")
+            self.assertEqual(coefficients, [1.0, 1.0, float(delta)])
+            self.assertAlmostEqual(bound, ratio*float(delta))
+        nominal_row = rows[-1]
+        self.assertEqual(nominal_row[2], "L")
+        self.assertAlmostEqual(nominal_row[3], -ratio*float(nominal.sum()))
+        self.assertEqual(nominal_row[1][n], float(budget))
+
     def test_all_on_time_is_feasible_when_old_denominator_test_fails(self):
         nominal, delta, ratio, budget = [50, 50], [20, 20], 0.95, 1
         old_required = ratio*(sum(nominal)+budget_support(delta, budget))

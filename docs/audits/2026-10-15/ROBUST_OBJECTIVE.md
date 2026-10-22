@@ -72,7 +72,7 @@ p+q_i+\delta_i a_C b_C+\delta_i a_R b_R
 
 ```powershell
 python run.py q4-robust --experiment robust-discount-20261015 --gamma-values 0,0.05 --solver-gap 0.001 --solver-time-limit 90 --timeout 240
-python tools/audit_results.py results/experiments/robust-discount-20261015 --report results/discount-checks.json
+python tools/audit_results.py results/experiments/robust-discount-20261015 --report results/experiments/robust-discount-20261015/validation/discount-checks.json
 ```
 
 | 预算比例 | 求解目标值（万元） | 独立 LP 重算（万元） | gap | 状态 |

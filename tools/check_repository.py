@@ -17,6 +17,9 @@ def check():
     launcher = ast.parse((ROOT / "run.py").read_text(encoding="utf-8"))
     tasks = ast.literal_eval(next(node.value for node in launcher.body if isinstance(node, ast.Assign)
                                  and any(isinstance(target, ast.Name) and target.id == "TASKS" for target in node.targets)))
+    if not tasks:
+        # An empty task table makes the entry-existence check assert nothing.
+        errors.append("run.py 的 TASKS 为空，任务入口检查失效")
     for task, target in tasks.items():
         if not (ROOT / target).is_file():
             errors.append(f"任务 {task} 的入口不存在：{target}")

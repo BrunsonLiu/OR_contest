@@ -271,11 +271,17 @@ def audit(result_root, forecast_override=None):
                     issues.append(f"独立决策重算不一致: {column}")
         else:
             checked["limitations"] = ["缺少仓库开设/系统采购决策，不能独立验证折扣分配"]
+        # Missing solver evidence is an evidence gap, not a silent pass: without
+        # `solver_metrics.jsonl` the exported total cost cannot be tied to a real
+        # solve, so record a limitation (exit 2) instead of skipping the check.
         evidence_path = result_root/"_runs/q2-loss/solver_metrics.jsonl"
         if evidence_path.exists():
             evidence = [json.loads(line) for line in evidence_path.read_text(encoding="utf-8").splitlines()]
             if len(evidence) != 1 or not evidence[0].get("has_incumbent") or abs(evidence[0]["objective"]-business["总物流成本（单位：万元）"]) > 1e-5:
                 issues.append("导出总成本与真实求解目标不一致")
+        else:
+            checked.setdefault("limitations", []).append(
+                "缺少 _runs/q2-loss/solver_metrics.jsonl，无法核对导出总成本与真实求解目标")
         checked["cost_residuals"] = residuals
         checked["cost_scope"] = "Transport columns include loss; loss column is a non-additive breakdown."
 
@@ -286,8 +292,13 @@ def audit(result_root, forecast_override=None):
         path = Path(forecast_override) if forecast_override is not None else Path(manifest.get("forecast_file", forecast_path()))
         if not path.exists() and forecast_override is None:
             path = forecast_path()
-        if expected_hash and hashlib.sha256(path.read_bytes()).hexdigest() != expected_hash:
-            raise ValueError(f"{task} 预测输入指纹不匹配，请用 --forecast-file 提供原始预测文件")
+        if expected_hash:
+            if hashlib.sha256(path.read_bytes()).hexdigest() != expected_hash:
+                raise ValueError(f"{task} 预测输入指纹不匹配，请用 --forecast-file 提供原始预测文件")
+        elif forecast_override is None:
+            # No recorded fingerprint means the forecast bytes are unverified;
+            # an unverified input must not pass as a clean check.
+            raise ValueError(f"{task} 运行清单缺少 forecast_sha256，无法核对预测输入，请用 --forecast-file 显式提供")
         return read_forecast(path).set_index(["Customer", "SKU"])
     q1 = result_root / "question1/仓网供应关系文件_cplex.csv"
     if q1.exists():
@@ -311,14 +322,23 @@ def audit(result_root, forecast_override=None):
         if not folder.exists():
             continue
         forecast = task_forecast("q4-no-loss" if version == "problem4_noloss" else "q4-loss")
+        missing, checked_days = [], 0
         for day, col in enumerate(forecast.columns):
             date = pd.Timestamp(col).strftime("%Y-%m-%d")
             path = folder / f"仓网供应关系文件_{date}.csv"
             if not path.exists():
+                missing.append(date)
                 continue
             supply = pd.read_csv(path).iloc[:, :4]
             supply.columns = ["source", "target", "sku", "qty"]
             reports.append(check_network(supply, forecast[col], f"{version}/{date}", 0.6))
+            checked_days += 1
+        # A partial daily export must not read as a clean pass: missing days are
+        # recorded as incomplete evidence (exit 2), never skipped silently.
+        if missing:
+            reports.append({"case": version, "issues": [],
+                            "limitations": [f"缺少 {len(missing)} 个每日文件，未逐日核算：{', '.join(missing)}"],
+                            "days_checked": checked_days})
     robust_path = result_root / "question4/problem4_robust/robust_results.json"
     if robust_path.exists():
         forecast = task_forecast("q4-robust")

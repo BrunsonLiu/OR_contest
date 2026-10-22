@@ -30,7 +30,12 @@ def verify(folder, expected_methods=None):
         origins.append(len(dates_all)-horizon)
     methods = set(report["summary"])
     assert methods and all(name.replace("_", "").isalnum() for name in methods)
-    if expected_methods is not None:
+    # Without an explicit target the method set is self-referential: it only
+    # proves the report agrees with itself, so an entire method silently
+    # dropped by a missing dependency would pass. The CLI requires the flag,
+    # and a direct call that omits it records that completeness was not asserted.
+    method_set_asserted = expected_methods is not None
+    if method_set_asserted:
         assert methods == set(expected_methods), "实际方法集合不符合本次验收目标"
     pairs = [(row["window"], row["method"]) for row in report["windows"]]
     assert len(pairs) == len(set(pairs)), "重复的窗口/方法记录"
@@ -38,6 +43,7 @@ def verify(folder, expected_methods=None):
     assert report["target_date_events_per_series"] == len(origins)*horizon
     assert report["distinct_target_dates"] == len({date for origin in origins for date in dates_all[origin:origin+horizon]})
     errors = {}
+    baseline_verified = False
     input_hashes = {"rolling_backtest.json": hashlib.sha256((folder/"rolling_backtest.json").read_bytes()).hexdigest()}
     for row in report["windows"]:
         origin = origins[row["window"]-1]
@@ -64,6 +70,7 @@ def verify(folder, expected_methods=None):
         assert np.isclose(np.sqrt(sse/truth.size), row["metrics"]["rmse"], rtol=1e-12)
         assert truth.size == row["points"]
         if row["method"] == "SeasonalNaive":
+            baseline_verified = True
             assert origin >= 7
             past_columns = [dates_all[origin-7+index % 7].strftime("%Y/%m/%d") for index in range(horizon)]
             np.testing.assert_allclose(values, actual.loc[:, past_columns].to_numpy())
@@ -82,8 +89,15 @@ def verify(folder, expected_methods=None):
         peers = [other for other in report["windows"] if other["window"] == row["window"]]
         rank = 1+sum(other["metrics"]["rmse"] < row["metrics"]["rmse"]-1e-12 for other in peers)
         assert row["rank"] == rank, "窗口排名与已重算误差不一致"
+    # The weekly baseline is only actually recomputed when a SeasonalNaive row
+    # exists; do not let a hard-coded string claim it ran when it did not.
+    checks = ("complete method/window grid, input hash, keys, exact training/validation dates, "
+              "overlap counts, predictions, independent RMSE, event counts and ranks")
+    if baseline_verified:
+        checks += ", plus the weekly SeasonalNaive baseline"
     return {"prediction_files_checked": len(report["windows"]), "methods": len(errors),
-            "checks": "complete method/window grid, input hash, keys, exact training/validation dates, overlap counts, predictions, independent RMSE, event counts, ranks and weekly baseline",
+            "method_set_asserted": method_set_asserted, "weekly_baseline_verified": baseline_verified,
+            "checks": checks,
             "history_sha256": report["history_sha256"], "inputs_sha256": input_hashes}
 
 
@@ -91,9 +105,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("folder", type=Path)
     parser.add_argument("--report", type=Path, required=True)
-    parser.add_argument("--expected-methods", help="本次验收必须包含的方法，逗号分隔；不允许静默跳过")
+    parser.add_argument("--expected-methods", required=True,
+                        help="本次验收必须包含的方法，逗号分隔；不允许静默跳过")
     args = parser.parse_args()
-    result = verify(args.folder, args.expected_methods.split(",") if args.expected_methods else None)
+    expected = [name for name in args.expected_methods.split(",") if name]
+    if not expected:
+        parser.error("--expected-methods 不能为空；否则无法断言方法集合完整")
+    result = verify(args.folder, expected)
     result.update(checked_at_utc=datetime.now(timezone.utc).isoformat(), command=[sys.executable, *sys.argv],
                   verifier_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
     args.report.parent.mkdir(parents=True, exist_ok=True)

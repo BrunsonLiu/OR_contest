@@ -28,6 +28,46 @@ class BacktestVerificationTests(unittest.TestCase):
         result = verify(self.folder, self.methods)
         self.assertEqual(result["prediction_files_checked"], 36)
         self.assertEqual(len(result["inputs_sha256"]), 37)
+        self.assertTrue(result["method_set_asserted"])
+        self.assertTrue(result["weekly_baseline_verified"])
+
+    def test_omitted_expected_methods_is_flagged_not_asserted(self):
+        # Self-referential check: without an explicit target the method set is
+        # only compared to itself, so completeness was not actually asserted.
+        result = verify(self.folder)
+        self.assertFalse(result["method_set_asserted"])
+
+    def test_report_does_not_claim_a_baseline_that_never_ran(self):
+        # The baseline recompute is gated on a SeasonalNaive row; the report must
+        # not assert it ran when none exists (baseline dropped from the run).
+        import math
+        self.report["summary"].pop("SeasonalNaive")
+        self.report["windows"] = [row for row in self.report["windows"] if row["method"] != "SeasonalNaive"]
+        for window in {row["window"] for row in self.report["windows"]}:
+            peers = [row for row in self.report["windows"] if row["window"] == window]
+            for row in peers:
+                row["rank"] = 1+sum(other["metrics"]["rmse"] < row["metrics"]["rmse"]-1e-12 for other in peers)
+        for method, summary in self.report["summary"].items():
+            rows = [row for row in self.report["windows"] if row["method"] == method]
+            points = sum(row["points"] for row in rows)
+            summary.update(best_rank=min(row["rank"] for row in rows),
+                           worst_rank=max(row["rank"] for row in rows),
+                           windows_tied_for_best=sum(row["rank"] == 1 for row in rows),
+                           forecast_events=points,
+                           mean_window_rmse=sum(row["metrics"]["rmse"] for row in rows)/len(rows),
+                           forecast_event_rmse=math.sqrt(
+                               sum(row["points"]*row["metrics"]["rmse"]**2 for row in rows)/points))
+        self.save()
+        result = verify(self.folder, self.methods - {"SeasonalNaive"})
+        self.assertFalse(result["weekly_baseline_verified"])
+        self.assertNotIn("weekly SeasonalNaive baseline", result["checks"])
+
+    def test_cli_requires_expected_methods(self):
+        report = self.folder/"must-not-exist.json"
+        process = subprocess.run([sys.executable, str(ROOT/"tools/verify_backtest_results.py"),
+                                  str(self.folder), "--report", str(report)], capture_output=True)
+        self.assertNotEqual(process.returncode, 0)
+        self.assertFalse(report.exists())
 
     def test_silently_dropped_method_is_rejected(self):
         self.report["summary"].pop("LightGBM")
@@ -60,6 +100,7 @@ class BacktestVerificationTests(unittest.TestCase):
 
     def test_optimized_python_cannot_disable_acceptance_checks(self):
         process = subprocess.run([sys.executable, "-O", str(ROOT/"tools/verify_backtest_results.py"),
-                                  str(self.folder), "--report", str(self.folder/"must-not-exist.json")], capture_output=True)
+                                  str(self.folder), "--expected-methods", ",".join(sorted(self.methods)),
+                                  "--report", str(self.folder/"must-not-exist.json")], capture_output=True)
         self.assertNotEqual(process.returncode, 0)
         self.assertFalse((self.folder/"must-not-exist.json").exists())
