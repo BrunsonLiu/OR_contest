@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "scope": "calendar and raw-data inventory only; no DFL training or decision-quality comparison",
+  "history": {
+    "start": "2016-06-01",
+    "end": "2016-06-23",
+    "network_days": 23,
+    "city_sku_series": 204,
+    "cities": 102,
+    "skus": [
+      "dm",
+      "im"
+    ],
+    "scalar_demand_observations": 4692,
+    "weekday_observation_counts": {
+      "0": 3,
+      "1": 3,
+      "2": 4,
+      "3": 4,
+      "4": 3,
+      "5": 3,
+      "6": 3
+    },
+    "future_week_actual_dates_in_history": 0
+  },
+  "weekly_decision_cases": {
+    "horizon_days": 7,
+    "minimum_history_days": 7,
+    "holdout_start": "2016-06-17",
+    "holdout_end": "2016-06-23",
+    "case_counts": {
+      "pre_holdout": 3,
+      "crosses_holdout": 6,
+      "within_holdout": 1
+    },
+    "maximum_nonoverlapping_pre_holdout_target_blocks": 1,
+    "validation_reserved_within_pre_holdout": false,
+    "windows": [
+      {
+        "history_end": "2016-06-07",
+        "target_start": "2016-06-08",
+        "target_end": "2016-06-14",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-08",
+        "target_start": "2016-06-09",
+        "target_end": "2016-06-15",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-09",
+        "target_start": "2016-06-10",
+        "target_end": "2016-06-16",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-10",
+        "target_start": "2016-06-11",
+        "target_end": "2016-06-17",
+        "role": "crosses_holdout"
+      },
+      {
+        "history_end": "2016-06-11",
+        "target_start": "2016-06-12",
+        "target_end": "2016-06-18",
+        "role": "crosses_holdout"
+      },
+      {
+        "history_end": "2016-06-12",
+        "target_start": "2016-06-13",
+        "target_end": "2016-06-19",
+        "role": "crosses_holdout"
+      },
+      {
+        "history_end": "2016-06-13",
+        "target_start": "2016-06-14",
+        "target_end": "2016-06-20",
+        "role": "crosses_holdout"
+      },
+      {
+        "history_end": "2016-06-14",
+        "target_start": "2016-06-15",
+        "target_end": "2016-06-21",
+        "role": "crosses_holdout"
+      },
+      {
+        "history_end": "2016-06-15",
+        "target_start": "2016-06-16",
+        "target_end": "2016-06-22",
+        "role": "crosses_holdout"
+      },
+      {
+        "history_end": "2016-06-16",
+        "target_start": "2016-06-17",
+        "target_end": "2016-06-23",
+        "role": "within_holdout"
+      }
+    ]
+  },
+  "daily_decision_cases": {
+    "horizon_days": 1,
+    "minimum_history_days": 7,
+    "holdout_start": "2016-06-17",
+    "holdout_end": "2016-06-23",
+    "case_counts": {
+      "pre_holdout": 9,
+      "crosses_holdout": 0,
+      "within_holdout": 7
+    },
+    "maximum_nonoverlapping_pre_holdout_target_blocks": 9,
+    "validation_reserved_within_pre_holdout": false,
+    "windows": [
+      {
+        "history_end": "2016-06-07",
+        "target_start": "2016-06-08",
+        "target_end": "2016-06-08",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-08",
+        "target_start": "2016-06-09",
+        "target_end": "2016-06-09",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-09",
+        "target_start": "2016-06-10",
+        "target_end": "2016-06-10",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-10",
+        "target_start": "2016-06-11",
+        "target_end": "2016-06-11",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-11",
+        "target_start": "2016-06-12",
+        "target_end": "2016-06-12",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-12",
+        "target_start": "2016-06-13",
+        "target_end": "2016-06-13",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-13",
+        "target_start": "2016-06-14",
+        "target_end": "2016-06-14",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-14",
+        "target_start": "2016-06-15",
+        "target_end": "2016-06-15",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-15",
+        "target_start": "2016-06-16",
+        "target_end": "2016-06-16",
+        "role": "pre_holdout"
+      },
+      {
+        "history_end": "2016-06-16",
+        "target_start": "2016-06-17",
+        "target_end": "2016-06-17",
+        "role": "within_holdout"
+      },
+      {
+        "history_end": "2016-06-17",
+        "target_start": "2016-06-18",
+        "target_end": "2016-06-18",
+        "role": "within_holdout"
+      },
+      {
+        "history_end": "2016-06-18",
+        "target_start": "2016-06-19",
+        "target_end": "2016-06-19",
+        "role": "within_holdout"
+      },
+      {
+        "history_end": "2016-06-19",
+        "target_start": "2016-06-20",
+        "target_end": "2016-06-20",
+        "role": "within_holdout"
+      },
+      {
+        "history_end": "2016-06-20",
+        "target_start": "2016-06-21",
+        "target_end": "2016-06-21",
+        "role": "within_holdout"
+      },
+      {
+        "history_end": "2016-06-21",
+        "target_start": "2016-06-22",
+        "target_end": "2016-06-22",
+        "role": "within_holdout"
+      },
+      {
+        "history_end": "2016-06-22",
+        "target_start": "2016-06-23",
+        "target_end": "2016-06-23",
+        "role": "within_holdout"
+      }
+    ]
+  },
+  "limitations": [
+    "City/SKU rows share the same capacitated network; scalar observations are not independent network cases.",
+    "Disjoint label blocks are not proof of statistical independence; histories can overlap.",
+    "June 17-23 has already been used by existing forecast backtests; it is not an untouched confirmatory test.",
+    "Three overlapping weekly pre-holdout cases do not yet reserve a separate validation week.",
+    "This inventory does not establish the existence or absence of a DFL performance gain."
+  ],
+  "not_measured": [
+    "realized decision cost",
+    "capacity/service violations",
+    "regret",
+    "DFL training cost"
+  ]
+}

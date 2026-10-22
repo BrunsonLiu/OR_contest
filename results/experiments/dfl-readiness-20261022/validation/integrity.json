@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "评估DFL适用条件：相对204条序列的表面样本量，核算网络级时间案例；验收训练标签不跨留出边界并记录周/日案例数，不训练DFL或宣称决策收益",
+  "snapshot_files": 50,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-22T03:12:05.470160+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/dfl-readiness-20261022/_runs/dfl-readiness/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/dfl-readiness-20261022/validation/integrity.json"
+  ],
+  "manifest_sha256": "e73219a2204c3af6a40bf9368dec9e5fc212fec5b14fe723268291ecbfae6361",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

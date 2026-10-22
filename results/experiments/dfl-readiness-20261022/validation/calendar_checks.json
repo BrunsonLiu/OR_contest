@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "checked_at_utc": "2026-10-22T03:13:15.549447+00:00",
+  "raw_sha256": "85acd2b6017e16dfe7514d465313ffea48637861c36a61d5a45d5f1028bd21ab",
+  "artifact_sha256": "78fe06e07dedf16ea06e4d12f57012c3bf1d7f6fbb2ff640b62b2235b2ba0ba1",
+  "method": "Independent stdlib CSV count and closed-form interval arithmetic: 23 days minus 7-day history minus 7-day holdout gives 9 pre-holdout target days; count windows as max(0,9-horizon+1), disjoint blocks as floor(9/horizon).",
+  "verified_counts": {
+    "weekly_decision_cases": {
+      "pre_holdout": 3,
+      "within_holdout": 1,
+      "crosses_holdout": 6
+    },
+    "daily_decision_cases": {
+      "pre_holdout": 9,
+      "within_holdout": 7,
+      "crosses_holdout": 0
+    }
+  },
+  "scope": "Calendar/data counts only, no decision-quality or DFL gain verification."
+}
