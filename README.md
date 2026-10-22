@@ -17,6 +17,7 @@ or__contest/
 │   ├── problem/            # 赛题
 │   ├── paper/              # 论文材料状态与 AI 工具说明；成稿待提供
 │   ├── methodology/        # 鲁棒优化方法说明
+│   ├── research/           # 新问题候选、现实证据与选题排除
 │   └── maintenance/        # 整理清单与验证记录
 ├── archive/diagnostics/    # 历史排查：检查、对比、调查、未完成脚本
 ├── requirements/           # 基础、可选绘图依赖和版本锁
@@ -28,6 +29,7 @@ or__contest/
 - [赛题原件 PDF](docs/problem/赛题原件.pdf)
 - [论文材料状态](docs/paper/README.md)
 - [现行问题四方法说明](docs/methodology/problem4_robust_methodology.md)
+- [研究问题发现与候选筛选](docs/research/PROBLEM_DISCOVERY.md)
 - [运行指南](docs/RUNNING.md)
 - [工程与实验标准](docs/ENGINEERING.md)
 - [结果导航](results/README.md)
