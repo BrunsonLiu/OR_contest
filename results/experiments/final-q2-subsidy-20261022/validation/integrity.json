@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "修复补贴开关符号后核对无补贴与有补贴双方案；保留现有超过10仓每仓7万元及末段600分钟95%货量口径，完整导出双方决策并独立核对企业与社会成本",
+  "snapshot_files": 49,
+  "artifacts": 11,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-22T02:22:34.450696+00:00",
+  "command": [
+    "D:\\desktop2\\or__contest\\.venv\\Scripts\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/final-q2-subsidy-20261022/_runs/q2-subsidy/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/final-q2-subsidy-20261022/validation/integrity.json"
+  ],
+  "manifest_sha256": "dd7913c3c451e3188aaac6abf898bb70c4452cd832bc19f4c519a343fdd1d0ca",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "ccfff944d5aad6e88e45a7a2bd963a8735a2d9b9945088196eb6d5f8aa3dfd30"
+  }
+}

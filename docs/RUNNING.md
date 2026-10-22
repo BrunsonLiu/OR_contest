@@ -71,6 +71,8 @@ python run.py --script src/visualization/visualize_problem1_images.py --experime
 
 ## 专项工具范围
 
+补贴双方案验收使用 `python tools/audit_subsidy_results.py results/experiments/实验名称 --report results/experiments/实验名称/validation/model_checks.json`。需要 `q2-subsidy` 导出的两组 `subsidy_scenarios/` 数据与两次求解证据；缺少无补贴对照不能验收。该工具独立重算运输、处置、开仓、采购、补贴、企业和社会成本，并核对对比表。当前公式为 `7*max(开仓总数-10,0)`，包括 CDC，业务解释改变时须新建实验。
+
 - `tools/audit_question1_workbooks.py`：只读历史 Excel 和固定实验，检查字段、数量和地图证据，不改写工作簿；见 [说明](audits/2026-10-15/QUESTION1_FIELDS_AND_MAPS.md)。
 - `tools/audit_timeliness_semantics.py`：固定历史 SOTA，比较末段与 CDC 起算累计时间；自定义预测暂不在该工具范围。
 - `tools/verify_small_robust_model.py`：真实 CPLEX 小模型核查，可用于 Community Edition，完整模型另需许可。

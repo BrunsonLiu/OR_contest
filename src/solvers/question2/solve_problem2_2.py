@@ -15,6 +15,7 @@ import sys as _runtime_sys
 _runtime_sys.path.insert(0, str(_REPO_ROOT))
 from src.runtime import results_root as _results_root, read_forecast as _read_forecast, configure_solver as _configure_solver, record_solver as _record_solver
 _RESULTS_ROOT = _results_root()
+from src.subsidy_support import subsidy_rows
 
 import pandas as pd
 import cplex
@@ -379,37 +380,12 @@ def solve_model_with_subsidy(apply_subsidy=False):
         )
         constraint_count += 1
         
-        # 8.2 大M法定义补贴条件
-        M_big = 100  # 足够大的数
-        
-        # 约束：如果开仓数 >= 10，则 subsidy_indicator 必须为 1
-        # total_open >= 10 - M*(1 - subsidy_indicator)
-        row1 = [[subsidy_vars['total_open'], subsidy_vars['subsidy_indicator']], [1.0, -M_big]]
-        problem.linear_constraints.add(lin_expr=[row1], senses=['G'], rhs=[10.0 - M_big], names=['subsidy_trigger1'])
-        constraint_count += 1
-        
-        # 约束：如果开仓数 <= 9，则 subsidy_indicator 必须为 0
-        # total_open <= 9 + M*subsidy_indicator
-        row2 = [[subsidy_vars['total_open'], subsidy_vars['subsidy_indicator']], [1.0, -M_big]]
-        problem.linear_constraints.add(lin_expr=[row2], senses=['L'], rhs=[9.0], names=['subsidy_trigger2'])
-        constraint_count += 1
-        
-        # 8.3 定义 excess_warehouses
-        # excess_warehouses >= total_open - 9
-        row3 = [[subsidy_vars['excess_warehouses'], subsidy_vars['total_open']], [1.0, -1.0]]
-        problem.linear_constraints.add(lin_expr=[row3], senses=['G'], rhs=[-10.0], names=['excess_min'])
-        constraint_count += 1
-        
-        # excess_warehouses <= M * subsidy_indicator
-        row4 = [[subsidy_vars['excess_warehouses'], subsidy_vars['subsidy_indicator']], [1.0, -M_big]]
-        problem.linear_constraints.add(lin_expr=[row4], senses=['L'], rhs=[0.0], names=['excess_max1'])
-        constraint_count += 1
-        
-        # excess_warehouses <= total_open - 9 + M*(1 - subsidy_indicator)
-        row5 = [[subsidy_vars['excess_warehouses'], subsidy_vars['total_open'], subsidy_vars['subsidy_indicator']], 
-                [1.0, -1.0, -M_big]]
-        problem.linear_constraints.add(lin_expr=[row5], senses=['L'], rhs=[-10.0 - M_big], names=['excess_max2'])
-        constraint_count += 1
+        # count includes both CDCs. Preserve the current excess=max(count-10, 0) policy.
+        for indices, coefficients, sense, rhs in subsidy_rows(
+                subsidy_vars['total_open'], subsidy_vars['subsidy_indicator'],
+                subsidy_vars['excess_warehouses'], len(y_indices)):
+            problem.linear_constraints.add(lin_expr=[[indices, coefficients]], senses=[sense], rhs=[rhs])
+            constraint_count += 1
 
     print(f"总变量数: {problem.variables.get_num()}")
     print(f"总约束数: {constraint_count}")
@@ -424,8 +400,8 @@ def solve_model_with_subsidy(apply_subsidy=False):
     print(f"求解状态: {status_string}")
 
     # 检查求解状态
-    if "optimal" in status_string.lower():
-        print(f'最优总成本: {problem.solution.get_objective_value():.2f} 万元')
+    if problem.solution.is_primal_feasible():
+        print(f'当前可行解目标: {problem.solution.get_objective_value():.2f} 万元')
         
         # ========== 结果提取 ==========
         valid_whs = [wh for wh in df_wh['Name'] if wh in cap]
@@ -549,6 +525,18 @@ def solve_model_with_subsidy(apply_subsidy=False):
             'z_indices': z_indices
         }
         
+        scenario = _RESULTS_ROOT / 'question2/subsidy_scenarios' / ('with_subsidy' if apply_subsidy else 'without_subsidy')
+        scenario.mkdir(parents=True, exist_ok=True)
+        pd.DataFrame([result]).to_csv(scenario/'business.csv', index=False, encoding='utf-8-sig')
+        pd.DataFrame(warehouse_stats).to_csv(scenario/'warehouse_quantities.csv', index=False, encoding='utf-8-sig')
+        pd.DataFrame([{'Name': wh, 'open': int(problem.solution.get_values(y_indices[wh]) > 0.5),
+                       'smart': int(problem.solution.get_values(z_indices[wh]) > 0.5)}
+                      for wh in valid_whs]).to_csv(scenario/'decisions.csv', index=False, encoding='utf-8-sig')
+        flows = [{'source': cdc, 'target': rdc, 'sku': sku, 'qty': problem.solution.get_values(index)}
+                 for (cdc, rdc, sku), index in f_indices.items() if problem.solution.get_values(index) > 0.01]
+        flows += [{'source': wh, 'target': store, 'sku': sku, 'qty': demand[store, sku]}
+                  for (wh, store, sku), index in u_indices.items() if problem.solution.get_values(index) > 0.5]
+        pd.DataFrame(flows).to_csv(scenario/'flows.csv', index=False, encoding='utf-8-sig')
         return result, attachment_data
     else:
         print(f'求解状态: {problem.solution.get_status_string()}')
