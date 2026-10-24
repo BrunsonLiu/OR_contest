@@ -1,6 +1,6 @@
 # 生鲜商品仓网配送优化
 
-仓库选址、时效与补贴、运输损耗、需求预测和多日鲁棒优化的竞赛项目。
+以仓库选址、时效与补贴、运输损耗、需求预测和多日鲁棒优化的竞赛成果为基础，推进独立论文研究。论文主线为：**发现有必要机制的新问题，针对它改进经典算法，再通过实验验证并形成有条件的实践启示**。当前尚未确认论文选题，已有竞赛模型与工程验收不直接视为论文贡献。
 
 ## 目录导航
 
@@ -29,7 +29,7 @@ or__contest/
 - [赛题原件 PDF](docs/problem/赛题原件.pdf)
 - [论文材料状态](docs/paper/README.md)
 - [现行问题四方法说明](docs/methodology/problem4_robust_methodology.md)
-- [研究问题发现与候选筛选](docs/research/PROBLEM_DISCOVERY.md)
+- [论文研究设计、整改标准与候选证据](docs/research/PROBLEM_DISCOVERY.md)
 - [运行指南](docs/RUNNING.md)
 - [工程与实验标准](docs/ENGINEERING.md)
 - [结果导航](results/README.md)
