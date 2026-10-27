@@ -30,6 +30,7 @@ or__contest/
 - [论文材料状态](docs/paper/README.md)
 - [现行问题四方法说明](docs/methodology/problem4_robust_methodology.md)
 - [论文研究设计、整改标准与候选证据](docs/research/PROBLEM_DISCOVERY.md)
+- [P0 候选证据汇总（含四项检查与结论）](docs/research/CANDIDATE_EVIDENCE.md)
 - [运行指南](docs/RUNNING.md)
 - [工程与实验标准](docs/ENGINEERING.md)
 - [结果导航](results/README.md)
