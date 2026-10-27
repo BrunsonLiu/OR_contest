@@ -40,6 +40,7 @@ python -m unittest discover -s tests -v
 | `confirm-scale` | 商品数 1—4 的精确 DP 与两个规则比较（不是门店策略） | `confirm_scale/` |
 | `confirm-multi` | 两个缺货点/并发请求的精确 DP 与两个规则比较（不是门店策略） | `confirm_multi/` |
 | `confirm-grid` | 二维布局、带跳过权的精确 DP 与规则比较（不是门店策略） | `confirm_grid/` |
+| `confirm-grid-rules` | 二维等待/顺序/停止规则族与精确 DP 比较（不是门店策略） | `confirm_grid_rules/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -61,6 +62,8 @@ DFL 适用性盘点示例：`python run.py dfl-readiness --experiment dfl-readin
 两个缺货点示例：`python run.py confirm-multi --experiment confirm-multi-v1 --purpose "检查两个并发待回复请求下完整策略与两个规则的差距"`。六个节点的线状精确 DP，不是门店策略。
 
 二维布局示例：`python run.py confirm-grid --experiment confirm-grid-v1 --purpose "给所有规则同样的跳过缺货点权利后，比较完整 DP 与阈值规则"`。4×4 网格、替代品偏离路线；阈值规则族在同批实例上取最好值，对基线有利。
+
+二维规则族示例：`python run.py confirm-grid-rules --experiment confirm-grid-rules-v1 --purpose "加入等待时长、顺序和替代前停止选项后，完整 DP 是否仍高于规则族"`。规则族在同批实例上取最好组合。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

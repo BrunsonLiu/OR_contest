@@ -1,0 +1,21 @@
+{
+  "instances": 16,
+  "full_beats_best_rule": 0,
+  "max_gap": 0.0,
+  "by_reject_probability": {
+    "0.0": {
+      "instances": 8,
+      "beats": 0
+    },
+    "0.2": {
+      "instances": 8,
+      "beats": 0
+    }
+  },
+  "scope": "timing, order and stop-before-substitute family versus exact DP on a 4x4 grid",
+  "limitations": [
+    "The family is chosen per instance, which favours the baseline.",
+    "One stockout, three other items; no real store data.",
+    "The family is finite; a different rule could still close the remaining gap."
+  ]
+}

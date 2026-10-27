@@ -1,0 +1,17 @@
+deadline,window,reject_probability,full_value,best_rule_value,gap,best_visit,best_wait,best_order,best_s_first,best_max_before
+6,6,0.0,3.0,3.0,0.0,False,0,nearest,False,0
+6,6,0.2,3.0,3.0,0.0,False,0,nearest,False,0
+6,4,0.0,3.0,3.0,0.0,False,0,nearest,False,0
+6,4,0.2,3.0,3.0,0.0,False,0,nearest,False,0
+7,7,0.0,3.0,3.0,0.0,False,0,nearest,False,0
+7,7,0.2,3.0,3.0,0.0,False,0,nearest,False,0
+7,5,0.0,3.0,3.0,0.0,False,0,nearest,False,0
+7,5,0.2,3.0,3.0,0.0,False,0,nearest,False,0
+8,8,0.0,4.0,4.0,0.0,True,0,nearest,False,2
+8,8,0.2,3.8000000000000003,3.8000000000000007,-4.440892098500626e-16,True,0,nearest,False,2
+8,6,0.0,4.0,4.0,0.0,True,0,nearest,False,2
+8,6,0.2,3.8000000000000003,3.8000000000000007,-4.440892098500626e-16,True,0,nearest,False,2
+10,10,0.0,5.0,5.0,0.0,True,0,nearest,False,2
+10,10,0.2,4.6,4.6000000000000005,-8.881784197001252e-16,True,0,nearest,False,2
+10,8,0.0,5.0,5.0,0.0,True,0,nearest,False,2
+10,8,0.2,4.6,4.6000000000000005,-8.881784197001252e-16,True,0,nearest,False,2

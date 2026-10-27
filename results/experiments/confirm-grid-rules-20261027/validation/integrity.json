@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "给二维规则族加入等待时长、近邻/远邻顺序、替代先取/后取和替代前最多拣几件的停止选项，检验完整DP是否仍高于族内最好规则",
+  "snapshot_files": 56,
+  "artifacts": 2,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-27T15:50:20.867861+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/confirm-grid-rules-20261027/_runs/confirm-grid-rules/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/confirm-grid-rules-20261027/validation/integrity.json"
+  ],
+  "manifest_sha256": "2fdd9a37d173b2175f7c1b760f5c4ce244c8eea849b64e7dd188910e74298ed3",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}
