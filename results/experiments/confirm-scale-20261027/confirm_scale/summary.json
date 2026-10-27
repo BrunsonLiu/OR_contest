@@ -1,0 +1,47 @@
+{
+  "instances": 48,
+  "full_beats_best_baseline": 26,
+  "max_gap": 0.8999999999999999,
+  "by_n_items": {
+    "1": {
+      "instances": 12,
+      "beats": 0,
+      "max_gap": 0.0,
+      "mean_gap": 0.0
+    },
+    "2": {
+      "instances": 12,
+      "beats": 4,
+      "max_gap": 0.8999999999999999,
+      "mean_gap": 0.1583333333333334
+    },
+    "3": {
+      "instances": 12,
+      "beats": 12,
+      "max_gap": 0.8999999999999999,
+      "mean_gap": 0.4116666666666668
+    },
+    "4": {
+      "instances": 12,
+      "beats": 10,
+      "max_gap": 0.6599999999999997,
+      "mean_gap": 0.3133333333333333
+    }
+  },
+  "by_reject_probability": {
+    "0.0": {
+      "instances": 24,
+      "beats": 12
+    },
+    "0.2": {
+      "instances": 24,
+      "beats": 14
+    }
+  },
+  "scope": "line metric, one stockout, one substitute, 1-4 other items; exact DP and two rules",
+  "limitations": [
+    "Reply delay and rejection remain independent; no customer-choice correlation.",
+    "Rules are greedy nearest-neighbour and are not tuned per instance.",
+    "No real store data; the largest instance is still a small exact DP."
+  ]
+}

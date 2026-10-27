@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "检验商品数从1增到4、期限随路线长度收紧时，完整精确策略与自挂起、继续拣货规则的差距如何变化",
+  "snapshot_files": 53,
+  "artifacts": 2,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-27T15:34:39.228687+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/confirm-scale-20261027/_runs/confirm-scale/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/confirm-scale-20261027/validation/integrity.json"
+  ],
+  "manifest_sha256": "8ed5d08cba589596ce696766225efadeffd3184d30fd11637586c65edfd9c425",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

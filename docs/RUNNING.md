@@ -37,6 +37,7 @@ python -m unittest discover -s tests -v
 | `analyze-features` | 特征分析 | `question3/data_feature_analysis/` |
 | `confirm-instance` | 顾客确认机制的小实例精确 DP（不是门店策略） | `confirm_instance/` |
 | `confirm-policy` | 随机回复/拒绝下完整 DP 与两个规则的比较（不是门店策略） | `confirm_policy/` |
+| `confirm-scale` | 商品数 1—4 的精确 DP 与两个规则比较（不是门店策略） | `confirm_scale/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -52,6 +53,8 @@ DFL 适用性盘点示例：`python run.py dfl-readiness --experiment dfl-readin
 顾客确认机制检查示例：`python run.py confirm-instance --experiment confirm-instance-v1 --purpose "检验回复生成任务与确认窗口是否改变可交付集合"`。该任务只跑线状小实例上的精确 DP，比较完整机制与“替代已预批准”“窗口放宽”两个冻结对照；不是门店策略，也不含真实回复数据。独立枚举核对：`python tools/verify_confirm_instances.py results/experiments/<名称>/confirm_instance/instances.csv --report results/experiments/<名称>/validation/instance_check.json`。
 
 顾客确认策略比较示例：`python run.py confirm-policy --experiment confirm-policy-v1 --purpose "随机回复与拒绝下比较完整 DP 与自挂起、继续拣货规则"`。它在线状小实例上算期望可交付价值，不训练、不声称门店效果。跨模型核对：`python tools/verify_confirm_policy.py results/experiments/<名称>/confirm_policy/policies.csv results/experiments/<实例名称>/confirm_instance/instances.csv --report results/experiments/<名称>/validation/policy_check.json`。
+
+商品数扩展示例：`python run.py confirm-scale --experiment confirm-scale-v1 --purpose "检查商品数增加时完整策略与两个规则的差距"`。期限按各实例最后货架位置收紧；仍是精确 DP，不是可扩展算法。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 
