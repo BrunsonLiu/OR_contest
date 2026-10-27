@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "二维布局、替代品偏离路线时，给所有规则同样的跳过缺货点权利后，完整DP与阈值规则族的差距",
+  "snapshot_files": 55,
+  "artifacts": 2,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-27T15:45:18.456634+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/confirm-grid-20261027/_runs/confirm-grid/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/confirm-grid-20261027/validation/integrity.json"
+  ],
+  "manifest_sha256": "a05c3d10a65f7e1d0a399b2402fa130694ee6fbe804124ae40fef7c63f1a6c43",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

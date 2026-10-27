@@ -34,6 +34,7 @@ TASKS = {
     "confirm-policy": "src/analysis/confirm_policy_compare.py",
     "confirm-scale": "src/analysis/confirm_scale.py",
     "confirm-multi": "src/analysis/confirm_multi.py",
+    "confirm-grid": "src/analysis/confirm_grid2d.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

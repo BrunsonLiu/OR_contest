@@ -1,0 +1,21 @@
+{
+  "instances": 16,
+  "full_beats_best_rule": 4,
+  "max_gap_vs_best_rule": 1.0,
+  "by_reject_probability": {
+    "0.0": {
+      "instances": 8,
+      "beats": 2
+    },
+    "0.2": {
+      "instances": 8,
+      "beats": 2
+    }
+  },
+  "scope": "one stockout and an off-route substitute on a 4x4 grid; exact DP versus rules with a skip option",
+  "limitations": [
+    "One stockout; three other items; Manhattan distances and direct moves.",
+    "The threshold family is tuned on the same instances, which favours the baseline.",
+    "Exact DP only; no real store data."
+  ]
+}
