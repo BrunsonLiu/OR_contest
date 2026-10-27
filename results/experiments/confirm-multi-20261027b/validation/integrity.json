@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "两个缺货点、两个并发待回复请求下，比较完整精确DP与逐点等待、走完再回两个规则；脚本含参数校验的最终版",
+  "snapshot_files": 54,
+  "artifacts": 2,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-27T15:39:24.834977+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/confirm-multi-20261027b/_runs/confirm-multi/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/confirm-multi-20261027b/validation/integrity.json"
+  ],
+  "manifest_sha256": "1ea584ee0000c9618384938637f466e685a72b6dc1071e927a9fee539bc2eca3",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

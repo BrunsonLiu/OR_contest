@@ -1,0 +1,21 @@
+{
+  "instances": 12,
+  "full_beats_best_baseline": 4,
+  "max_gap": 0.5,
+  "by_reject_probability": {
+    "0.0": {
+      "instances": 6,
+      "beats": 2
+    },
+    "0.2": {
+      "instances": 6,
+      "beats": 2
+    }
+  },
+  "scope": "two stockouts and two pending requests on a six-node line; exact DP and two rules",
+  "limitations": [
+    "Independent replies across the two requests; no shared customer or basket effects.",
+    "One other item only; the rules are not tuned.",
+    "Exact DP only; this is not a scalable algorithm and has no real store data."
+  ]
+}
