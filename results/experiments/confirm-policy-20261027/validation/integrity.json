@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "随机回复与拒绝分支下，比较完整精确DP与自挂起、继续拣货两个规则的同信息、同预算期望可交付价值",
+  "snapshot_files": 52,
+  "artifacts": 2,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-27T15:29:30.571243+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/confirm-policy-20261027/_runs/confirm-policy/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/confirm-policy-20261027/validation/integrity.json"
+  ],
+  "manifest_sha256": "aa6944edb64e5804fc74891674db1466358122167a41539850cd4ab1660c64a0",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

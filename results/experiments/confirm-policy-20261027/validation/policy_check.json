@@ -1,0 +1,10 @@
+{
+  "deterministic_rows": 504,
+  "point_mass_mismatches": 0,
+  "policy_rows": 162,
+  "baseline_above_full": 0,
+  "window_monotonicity_violations": 0,
+  "examples": [],
+  "method": "point-mass equivalence, baseline dominance and window monotonicity; no reuse of the experiment CSV arithmetic",
+  "scope": "line metric, independent reply delay and rejection, no customer-choice correlation"
+}

@@ -31,6 +31,7 @@ TASKS = {
     "q4-robust": "src/solvers/question4/solve_problem4_robust.py",
     "analyze-features": "src/analysis/analysis_data_features.py",
     "confirm-instance": "src/analysis/confirm_instance_check.py",
+    "confirm-policy": "src/analysis/confirm_policy_compare.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

@@ -1,0 +1,22 @@
+{
+  "instances": 162,
+  "full_beats_best_baseline": 31,
+  "full_beats_suspend": 44,
+  "full_beats_continue": 120,
+  "max_gap": 0.2400000000000002,
+  "by_distribution": {
+    "fast": 6,
+    "long": 16,
+    "slow": 9
+  },
+  "by_reject_probability": {
+    "0.0": 1,
+    "0.2": 30
+  },
+  "scope": "small exact DP and two rules; no algorithm for realistic order sizes",
+  "limitations": [
+    "Line metric, one stockout, one substitute and one other item.",
+    "Reply delay and rejection are independent; no customer-choice correlation.",
+    "Rules are replayed under the same information and deadline; no real store data."
+  ]
+}
