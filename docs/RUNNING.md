@@ -42,6 +42,7 @@ python -m unittest discover -s tests -v
 | `confirm-grid` | 二维布局、带跳过权的精确 DP 与规则比较（不是门店策略） | `confirm_grid/` |
 | `confirm-grid-rules` | 二维等待/顺序/停止规则族与精确 DP 比较（不是门店策略） | `confirm_grid_rules/` |
 | `assortment-check` | 两仓八 SKU 的选品—确认成本最小检查（条件性） | `assortment_check/` |
+| `confirm-shared` | 两订单争一件替代的精确 DP 与规则族比较（不是门店策略） | `confirm_shared/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -67,6 +68,8 @@ DFL 适用性盘点示例：`python run.py dfl-readiness --experiment dfl-readin
 二维规则族示例：`python run.py confirm-grid-rules --experiment confirm-grid-rules-v1 --purpose "加入等待时长、顺序和替代前停止选项后，完整 DP 是否仍高于规则族"`。规则族在同批实例上取最好组合。
 
 选品—确认最小检查示例：`python run.py assortment-check --experiment assortment-check-v1 --purpose "确认成本变化是否改变最优仓库与选品宽度"`。两仓八 SKU 的解析枚举，条件性机制检查，不是网络设计结论。
+
+共享替代示例：`python run.py confirm-shared --experiment confirm-shared-v1 --purpose "两个订单争一件替代时，规则族是否被完整 DP 追平"`。四节点精确 DP，规则族含访问子集、顺序、等待和分配。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

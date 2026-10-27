@@ -1,0 +1,21 @@
+{
+  "instances": 12,
+  "full_beats_best_rule": 0,
+  "max_gap": 4.440892098500626e-16,
+  "by_reject_probability": {
+    "0.0": {
+      "instances": 6,
+      "beats": 0
+    },
+    "0.2": {
+      "instances": 6,
+      "beats": 0
+    }
+  },
+  "scope": "two orders, one shared substitute unit, four nodes; exact DP versus rules",
+  "limitations": [
+    "No other items; the only conflict is the shared substitute.",
+    "Replies are independent; values are fixed.",
+    "Rules are tuned per instance, which favours the baseline."
+  ]
+}
