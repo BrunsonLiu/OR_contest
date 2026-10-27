@@ -1,0 +1,45 @@
+{
+  "skus": 8,
+  "warehouses": {
+    "near": {
+      "fixed": 10.0,
+      "transport_per_sku": 1.0,
+      "holding": 0.5
+    },
+    "far": {
+      "fixed": 4.0,
+      "transport_per_sku": 2.0,
+      "holding": 0.25
+    }
+  },
+  "rows": 9,
+  "design_switch": true,
+  "switches": [
+    {
+      "from": "near",
+      "to": "far",
+      "between": [
+        1.5,
+        2.0
+      ]
+    }
+  ],
+  "baseline_without_confirmation": {
+    "confirmation_cost": 0.0,
+    "warehouse": "near",
+    "breadth": 0,
+    "cost": 18.0
+  },
+  "high_confirmation": {
+    "confirmation_cost": 5.0,
+    "warehouse": "far",
+    "breadth": 8,
+    "cost": 36.0
+  },
+  "scope": "one store, two warehouses, eight SKUs; convex holding; confirmation cost per unserved SKU",
+  "limitations": [
+    "The stockout-to-confirmation mapping is linear and stylised; no real store data.",
+    "The direction of the switch depends on the chosen holding/transport parameters.",
+    "This tests a mechanism, not the presence of the gap in the literature."
+  ]
+}

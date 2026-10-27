@@ -36,6 +36,7 @@ TASKS = {
     "confirm-multi": "src/analysis/confirm_multi.py",
     "confirm-grid": "src/analysis/confirm_grid2d.py",
     "confirm-grid-rules": "src/analysis/confirm_grid_rules.py",
+    "assortment-check": "src/analysis/assortment_check.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
