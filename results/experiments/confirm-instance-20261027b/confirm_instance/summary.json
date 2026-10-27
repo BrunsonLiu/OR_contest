@@ -1,0 +1,30 @@
+{
+  "instances": 504,
+  "frozen_plan_loses_value": 279,
+  "frozen_plan_violates_window": 432,
+  "window_binds": 41,
+  "full_differs_from_frozen_or_window": 320,
+  "max_value_loss_vs_frozen": 2.0,
+  "max_value_loss_vs_window": 2.0,
+  "by_reply_delay": {
+    "1": 0,
+    "2": 64,
+    "3": 64,
+    "4": 52,
+    "5": 52,
+    "6": 44,
+    "8": 44
+  },
+  "by_window_slack": {
+    "0": 80,
+    "2": 80,
+    "4": 80,
+    "6": 80
+  },
+  "scope": "small exact DP instances; no real store data, no algorithm comparison",
+  "limitations": [
+    "Deterministic reply delay and approve-all replies; no rejection branch.",
+    "One stockout and one substitute; no batching of requests or multi-order picking.",
+    "The frozen plan is replayed under full rules; its value is an observed violation, not a deployable policy."
+  ]
+}

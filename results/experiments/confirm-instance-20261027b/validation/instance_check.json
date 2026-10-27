@@ -1,0 +1,7 @@
+{
+  "checked": 504,
+  "mismatches": 0,
+  "first_mismatches": [],
+  "method": "independent enumeration of visit orders; no import of the DP",
+  "scope": "line metric, one stockout, one substitute, one other item, deterministic reply"
+}
