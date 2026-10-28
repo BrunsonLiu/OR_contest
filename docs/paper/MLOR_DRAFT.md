@@ -89,19 +89,73 @@ The model is a multi-depot vehicle-routing problem with an age-dependent arrival
 
 ## 4. Algorithm
 
-Exact subset dynamic programming is used for small and medium instances: enumerate feasible routes per warehouse, then a DP over covered store subsets and opened warehouses. It solves 8 stores quickly and 12 stores in about 19 seconds per instance.
+### 4.1 Exact subset dynamic programming
 
-For larger instances we use an age-feasible ALNS:
+For each warehouse i and each store subset S with |S| ≤ Q, enumerate the permutations of S, keep the cheapest order that satisfies every store's arrival deadline, and store its cost and order. A second DP covers stores and opened warehouses.
 
-- Initial solution: greedy insertion by MLOR, respecting remaining shelf life.
-- Destroy: remove 2–4 served stores and 1–2 currently unserved stores.
-- Repair: reinsert each removed store at the cheapest age-feasible position across warehouses and routes; allow a new route; keep unserved if no feasible position exists.
-- Acceptance: accept only improving solutions in the current implementation.
-- Cost: opening, vehicle, transport and a penalty for unserved stores.
+```text
+for i in I:
+  for S ⊆ J with 1 ≤ |S| ≤ Q:
+    route[i,S] = argmin over π ∈ Perm(S) of cost(i,π)
+                 subject to T_j(π) ≤ L − a_i − m_j for all j ∈ S
+dp[0,0] = 0
+for mask, openmask:
+  for i in I, S ⊆ J \ mask:
+    if route[i,S] exists:
+      dp[mask ∪ S, openmask ∪ {i}] =
+        min(dp[...], dp[mask, openmask] + cost(route[i,S])
+            + (F_i if i ∉ openmask else 0))
+return min over openmask of dp[J, openmask]
+```
+
+The route enumeration is dominated by Σ_i Σ_{|S|≤Q} C(J,|S|) |S|!, and the covering DP by 3^J 2^I in the worst case. This is why the exact method stops at 12 stores in practice.
+
+### 4.2 Age-feasible ALNS
+
+```text
+routes = greedy_age_aware()
+best = routes
+for iter = 1..N:
+  pool = remove 2–4 served stores
+  pool = pool + sample 1–2 currently unserved stores
+  shuffle(pool)
+  for store in pool:
+    insert at the cheapest position across all routes and warehouses
+      such that every store on the route still meets its deadline;
+      otherwise open a new route; otherwise leave unserved
+  if cost(routes) < cost(best):
+    best = routes
+return best
+```
+
+The greedy initial solution inserts stores in decreasing MLOR order. The repair step is the only place where age feasibility is enforced; it is also the component that can move a high-MLOR store from an old warehouse to a fresh one.
+
+### 4.3 Cost and acceptance
+
+The cost is opening + vehicle fixed + transport + a penalty per unserved store. The current implementation accepts only improving solutions; no simulated annealing or tabu criterion is used. This keeps the ablation interpretable.
 
 ## 5. Experiments (summary)
 
-All instances are synthetic; parameters are illustrative.
+### 5.1 Instances and parameters
+
+All instances are synthetic and share the same generator:
+
+| Parameter | Value |
+| --- | --- |
+| Shelf life L | 6 days |
+| Warehouse ages | 0, 2.5, 4.5 days |
+| Store MLOR | 1, 2, or 3 days |
+| Vehicle capacity | 4 stores |
+| Opening cost | 100 |
+| Vehicle fixed cost | 50 |
+| Transport cost | 0.5 per km |
+| Speed | 100 km per day |
+| Unserved penalty | 200 (varied in the sensitivity) |
+| Store coordinates | uniform on [0,300]² |
+
+The 12- and 20-store runs use the same generator with more stores; the ages and MLOR values are unchanged.
+
+### 5.2 Results
 
 | Experiment | Result |
 | --- | --- |
