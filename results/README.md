@@ -222,3 +222,5 @@
 - `experiments/mlor-sensitivity-20261028/`：8 店精确 DP，拒收惩罚 0—800。惩罚 0 时年龄盲便宜 36.4（0/5 感知更好）；惩罚 50 时年龄感知好 223.6（5/5）；盈亏平衡约 7/次。只作条件性机制结论。
 
 - `experiments/mlor-figures-20261028/`：论文草稿的两幅图。`penalty_sensitivity.png`（惩罚 0—800 的平均差与盈亏平衡 ≈7）、`alns_ablation.png`（贪心 473.4、去重插 280.9、完整 ALNS 15.85）。
+
+- `experiments/mlor-bound-20261028/`：20 店集合划分 LP 松弛下界（分数路线/开仓，5 seeds）。与 ALNS 的平均相对差 9.0%，最大 14.1%；种子 0 下界 1092.15、ALNS 1201.71。LP 很松，不是最优性证明。

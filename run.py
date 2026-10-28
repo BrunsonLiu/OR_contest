@@ -53,6 +53,7 @@ TASKS = {
     "mlor-ablation": "src/analysis/mlor_ablation.py",
     "mlor-sensitivity": "src/analysis/mlor_sensitivity.py",
     "mlor-figures": "src/visualization/mlor_figures.py",
+    "mlor-bound": "src/analysis/mlor_bound.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

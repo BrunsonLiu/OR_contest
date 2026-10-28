@@ -166,6 +166,7 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | ALNS, 20 stores | Improves greedy 10/10, mean 1280.1 |
 | Ablation, 12 stores | Greedy gap 473.4; no unserved retry 280.9; full ALNS 15.85 |
 | Penalty sensitivity, 8 stores | Age-blind cheaper by 36.4 at penalty 0; age-aware better from penalty 50; break-even about 7 per infeasible delivery |
+| LP bound, 20 stores | Mean relative gap 9.0%, max 14.1% (weak LP relaxation, not an optimality proof) |
 
 Figures: [penalty sensitivity](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png) and [ALNS ablation](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png).
 
@@ -177,7 +178,7 @@ The ablation supports the role of the unserved-retry component: old warehouses l
 - The model uses one temperature zone, one product, one age class per warehouse, and a single period. Multi-temperature, multi-product and multi-period extensions are open.
 - All parameters are synthetic. The break-even penalty is a model quantity, not an observed markdown cost; no field recommendation follows.
 - The ALNS is a standard destroy-repair scheme with an age-feasible insertion; its contribution is the feasibility logic, not a new metaheuristic.
-- The 20-store experiments have no lower bound; the 12-store exact comparison is the current quality evidence.
+- The 20-store experiments use a weak LP relaxation as a lower bound: mean relative gap 9.0%, max 14.1%. This bounds the true gap from above only loosely; it is not an optimality proof.
 
 ## 7. Status
 
