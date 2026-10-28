@@ -220,3 +220,5 @@
 - 说明：`mlor-ablation-20261028/` 是含“去年龄可行性”变体的旧运行；该变体允许不可行解、与硬约束精确 DP 不可比，已由 `mlor-ablation-20261028b/` 取代，旧记录保留。
 
 - `experiments/mlor-sensitivity-20261028/`：8 店精确 DP，拒收惩罚 0—800。惩罚 0 时年龄盲便宜 36.4（0/5 感知更好）；惩罚 50 时年龄感知好 223.6（5/5）；盈亏平衡约 7/次。只作条件性机制结论。
+
+- `experiments/mlor-figures-20261028/`：论文草稿的两幅图。`penalty_sensitivity.png`（惩罚 0—800 的平均差与盈亏平衡 ≈7）、`alns_ablation.png`（贪心 473.4、去重插 280.9、完整 ALNS 15.85）。

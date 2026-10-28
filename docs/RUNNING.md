@@ -56,6 +56,7 @@ python -m unittest discover -s tests -v
 | `mlor-validate` | 12 店 ALNS 对精确 DP 的验证 | `mlor_validate/` |
 | `mlor-ablation` | 12 店 ALNS 硬可行消融 | `mlor_ablation/` |
 | `mlor-sensitivity` | 8 店拒收惩罚敏感性 | `mlor_sensitivity/` |
+| `mlor-figures` | 惩罚敏感性与 ALNS 消融两幅图 | `mlor_figures/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -103,6 +104,8 @@ MLOR 验证示例：`python run.py mlor-validate --experiment mlor-validate-v1 -
 MLOR 消融示例：`python run.py mlor-ablation --experiment mlor-ablation-v1 --purpose "12 店硬可行 ALNS 的部件消融"`。依赖 `mlor-dp12-20261028` 的结果文件。
 
 MLOR 敏感性示例：`python run.py mlor-sensitivity --experiment mlor-sensitivity-v1 --purpose "拒收惩罚从 0 到 800 时年龄感知的价值"`。8 店精确 DP，条件性结论。
+
+MLOR 出图示例：`python run.py mlor-figures --experiment mlor-figures-v1 --purpose "惩罚敏感性与 ALNS 消融两幅图"`。依赖两个实验的 summary.json。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

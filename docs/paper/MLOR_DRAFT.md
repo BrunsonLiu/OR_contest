@@ -167,6 +167,8 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | Ablation, 12 stores | Greedy gap 473.4; no unserved retry 280.9; full ALNS 15.85 |
 | Penalty sensitivity, 8 stores | Age-blind cheaper by 36.4 at penalty 0; age-aware better from penalty 50; break-even about 7 per infeasible delivery |
 
+Figures: [penalty sensitivity](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png) and [ALNS ablation](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png).
+
 The ablation supports the role of the unserved-retry component: old warehouses leave high-MLOR stores unserved, and only reinsertion can place them at a fresh warehouse.
 
 ## 6. Discussion and limitations
