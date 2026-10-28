@@ -37,7 +37,7 @@ def solution_cost(routes, unserved, stores=None):
 STORES_REF = [None]
 
 
-def insert_best(routes, store, stores):
+def insert_best(routes, store, stores, enforce_age=True):
     best = None
     for warehouse_index in range(len(WAREHOUSES)):
         for route_index, order in enumerate(routes[warehouse_index]):
@@ -46,7 +46,7 @@ def insert_best(routes, store, stores):
             for position in range(len(order) + 1):
                 candidate = order[:position] + [store] + order[position:]
                 _, infeasible = route_eval(warehouse_index, candidate, stores, "actual")
-                if infeasible:
+                if enforce_age and infeasible:
                     continue
                 trial = copy.deepcopy(routes)
                 trial[warehouse_index][route_index] = candidate
@@ -55,7 +55,7 @@ def insert_best(routes, store, stores):
                     best = (cost, trial)
         if len(routes[warehouse_index]) < 6:
             _, infeasible = route_eval(warehouse_index, [store], stores, "actual")
-            if infeasible == 0:
+            if not enforce_age or infeasible == 0:
                 trial = copy.deepcopy(routes)
                 trial[warehouse_index].append([store])
                 cost = solution_cost(trial, [])
@@ -64,10 +64,10 @@ def insert_best(routes, store, stores):
     return best
 
 
-def alns(stores, iterations=300, seed=0):
+def alns(stores, iterations=300, seed=0, enforce_age=True, retry_unserved=True):
     STORES_REF[0] = stores
     rng = random.Random(seed)
-    _, initial_routes, _ = construct(stores, "actual", True)
+    _, initial_routes, _ = construct(stores, "actual", enforce_age)
     served_initial = {store for route_list in initial_routes.values() for order in route_list for store in order}
     initial_unserved = [store for store in range(len(stores)) if store not in served_initial]
     best_routes = copy.deepcopy(initial_routes)
@@ -88,12 +88,12 @@ def alns(stores, iterations=300, seed=0):
                 if store in order:
                     order.remove(store)
             trial_routes[warehouse_index] = [order for order in trial_routes[warehouse_index] if order]
-        extra = rng.sample(trial_unserved, min(2, len(trial_unserved))) if trial_unserved else []
+        extra = rng.sample(trial_unserved, min(2, len(trial_unserved))) if (retry_unserved and trial_unserved) else []
         trial_unserved = [store for store in trial_unserved if store not in extra]
         pool = [store for _, store in removed] + extra
         rng.shuffle(pool)
         for store in pool:
-            insertion = insert_best(trial_routes, store, stores)
+            insertion = insert_best(trial_routes, store, stores, enforce_age)
             if insertion is None:
                 trial_unserved.append(store)
             else:
@@ -118,7 +118,7 @@ def main():
     rows = []
     for seed in range(10):
         stores = make_instance(seed, 20)
-        _, initial_routes, _ = construct(stores, "actual", True)
+        _, initial_routes, _ = construct(stores, "actual", enforce_age)
         served_initial = {store for route_list in initial_routes.values() for order in route_list for store in order}
         initial_unserved = [store for store in range(len(stores)) if store not in served_initial]
         initial = solution_cost(initial_routes, initial_unserved, stores)

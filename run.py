@@ -50,6 +50,7 @@ TASKS = {
     "mlor-dp12": "src/analysis/mlor_dp12.py",
     "mlor-alns": "src/analysis/mlor_alns.py",
     "mlor-validate": "src/analysis/mlor_validate.py",
+    "mlor-ablation": "src/analysis/mlor_ablation.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
