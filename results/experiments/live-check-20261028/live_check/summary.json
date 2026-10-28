@@ -1,0 +1,52 @@
+{
+  "survival": [
+    0.5,
+    0.8,
+    0.9
+  ],
+  "multiplier": {
+    "0": 1.0,
+    "1": 0.6
+  },
+  "deadline": 2,
+  "periods": 3,
+  "rows": [
+    {
+      "policy": "exact",
+      "value": 1.28,
+      "states": null
+    },
+    {
+      "policy": "fifo",
+      "value": 1.04,
+      "states": [
+        0,
+        2
+      ]
+    },
+    {
+      "policy": "worst_state_first",
+      "value": 1.04,
+      "states": [
+        0,
+        2
+      ]
+    },
+    {
+      "policy": "edd",
+      "value": 1.04,
+      "states": [
+        0,
+        2
+      ]
+    }
+  ],
+  "exact_beats_all": true,
+  "best_gap": 0.24,
+  "scope": "two batches, one recovery slot, common deadline; illustrative parameters",
+  "limitations": [
+    "Survival probabilities are assumed, not estimated.",
+    "Recovery is deterministic and cannot revive dead animals.",
+    "Only one slot and two batches; no transport duration or order value heterogeneity."
+  ]
+}

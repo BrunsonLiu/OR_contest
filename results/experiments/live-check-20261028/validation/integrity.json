@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "活鲜恢复—出运最小判别：同一期限、不同运输存活乘数下，最优是否不同于FIFO/状态最差/EDD",
+  "snapshot_files": 62,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T06:50:24.838626+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/live-check-20261028/_runs/live-check/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/live-check-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "42405c673a324c3b3662b637773895e4d7fa960e1e946cb3910ded2974ef179b",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}
