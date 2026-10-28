@@ -18,11 +18,13 @@ from src.runtime import results_root
 SURVIVAL = (0.5, 0.8, 0.9)
 N = 4
 PERIODS = 5
+DEADLINE_HIGH = 4
+SEEDS = 20
 
 
 def make_instance(seed):
     rng = random.Random(seed)
-    deadlines = [rng.randint(2, 4) for _ in range(N)]
+    deadlines = [rng.randint(2, DEADLINE_HIGH) for _ in range(N)]
     multipliers = [round(rng.uniform(0.5, 1.0), 2) for _ in range(N)]
     initial = [rng.randint(0, 1) for _ in range(N)]
     return deadlines, multipliers, initial
@@ -92,10 +94,19 @@ def marginal(t, xs, mask, deadlines, multipliers):
                                               -deadlines[index]))
 
 
+def index_rule(t, xs, mask, deadlines, multipliers):
+    candidates = [index for index in range(N) if mask & (1 << index) and xs[index] < 2]
+    if not candidates:
+        return None
+    return max(candidates, key=lambda index: (
+        (SURVIVAL[xs[index] + 1] - SURVIVAL[xs[index]]) * multipliers[index] / max(1, deadlines[index] - t),
+        -deadlines[index]))
+
+
 def main():
-    rules = {"fifo": fifo, "worst_state": worst_state, "edd": edd, "marginal": marginal}
+    rules = {"fifo": fifo, "worst_state": worst_state, "edd": edd, "marginal": marginal, "index": index_rule}
     rows = []
-    for seed in range(20):
+    for seed in range(SEEDS):
         deadlines, multipliers, initial = make_instance(seed)
         optimum = exact(deadlines, multipliers, initial)
         row = {"seed": seed, "exact": optimum,
@@ -111,8 +122,10 @@ def main():
         "exact_beats_marginal": sum(1 for row in rows if row["exact"] > row["marginal"] + 1e-9),
         "mean_gap_marginal": sum(row["exact"] - row["marginal"] for row in rows) / len(rows),
         "mean_gap_edd": sum(row["exact"] - row["edd"] for row in rows) / len(rows),
+        "exact_beats_index": sum(1 for row in rows if row["exact"] > row["index"] + 1e-9),
+        "mean_gap_index": sum(row["exact"] - row["index"] for row in rows) / len(rows),
         "rows": rows,
-        "scope": "four batches, one slot, five periods, heterogeneous deadlines and multipliers; synthetic",
+        "scope": f"{N} batches, one slot, {PERIODS} periods, heterogeneous deadlines and multipliers; synthetic",
         "limitations": [
             "Survival probabilities and multipliers are assumed.",
             "Dispatch is automatic at the deadline; no early dispatch or holding cost.",

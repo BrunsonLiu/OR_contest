@@ -1,0 +1,349 @@
+{
+  "instances": 10,
+  "exact_beats_fifo": 10,
+  "exact_beats_worst": 9,
+  "exact_beats_edd": 9,
+  "exact_beats_marginal": 8,
+  "mean_gap_marginal": 0.04400000000000004,
+  "mean_gap_edd": 0.11629999999999999,
+  "exact_beats_index": 4,
+  "mean_gap_index": 0.009200000000000052,
+  "rows": [
+    {
+      "seed": 0,
+      "exact": 4.17,
+      "deadlines": [
+        5,
+        5,
+        2,
+        4,
+        5,
+        5
+      ],
+      "multipliers": [
+        0.96,
+        0.91,
+        0.98,
+        0.68,
+        0.95,
+        0.61
+      ],
+      "initial": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "fifo": 3.8770000000000002,
+      "worst_state": 4.168000000000001,
+      "edd": 4.055000000000001,
+      "marginal": 4.168000000000001,
+      "index": 4.17
+    },
+    {
+      "seed": 1,
+      "exact": 3.697,
+      "deadlines": [
+        3,
+        2,
+        4,
+        2,
+        5,
+        5
+      ],
+      "multipliers": [
+        0.74,
+        0.69,
+        0.6,
+        0.74,
+        0.95,
+        0.69
+      ],
+      "initial": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "fifo": 3.535,
+      "worst_state": 3.683,
+      "edd": 3.6570000000000005,
+      "marginal": 3.6919999999999997,
+      "index": 3.683
+    },
+    {
+      "seed": 2,
+      "exact": 3.7199999999999998,
+      "deadlines": [
+        2,
+        2,
+        2,
+        4,
+        3,
+        4
+      ],
+      "multipliers": [
+        0.63,
+        0.61,
+        0.52,
+        0.84,
+        1.0,
+        0.82
+      ],
+      "initial": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "fifo": 3.4440000000000004,
+      "worst_state": 3.7020000000000004,
+      "edd": 3.66,
+      "marginal": 3.72,
+      "index": 3.72
+    },
+    {
+      "seed": 3,
+      "exact": 3.9330000000000003,
+      "deadlines": [
+        3,
+        3,
+        4,
+        5,
+        2,
+        2
+      ],
+      "multipliers": [
+        0.95,
+        0.73,
+        0.78,
+        0.6,
+        0.86,
+        0.77
+      ],
+      "initial": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "fifo": 3.7399999999999998,
+      "worst_state": 3.727,
+      "edd": 3.9330000000000003,
+      "marginal": 3.89,
+      "index": 3.8980000000000006
+    },
+    {
+      "seed": 4,
+      "exact": 3.3770000000000002,
+      "deadlines": [
+        3,
+        4,
+        2,
+        5,
+        5,
+        3
+      ],
+      "multipliers": [
+        0.55,
+        0.51,
+        0.77,
+        0.64,
+        1.0,
+        0.53
+      ],
+      "initial": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "fifo": 3.08,
+      "worst_state": 3.3150000000000004,
+      "edd": 3.224,
+      "marginal": 3.364,
+      "index": 3.351
+    },
+    {
+      "seed": 5,
+      "exact": 3.6930000000000005,
+      "deadlines": [
+        4,
+        4,
+        2,
+        5,
+        3,
+        2
+      ],
+      "multipliers": [
+        0.95,
+        0.56,
+        0.73,
+        0.62,
+        0.77,
+        0.79
+      ],
+      "initial": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "fifo": 3.5180000000000007,
+      "worst_state": 3.6930000000000005,
+      "edd": 3.582,
+      "marginal": 3.6930000000000005,
+      "index": 3.6930000000000005
+    },
+    {
+      "seed": 6,
+      "exact": 3.81,
+      "deadlines": [
+        2,
+        5,
+        4,
+        2,
+        2,
+        3
+      ],
+      "multipliers": [
+        0.83,
+        0.74,
+        0.88,
+        0.69,
+        0.89,
+        0.64
+      ],
+      "initial": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "fifo": 3.494,
+      "worst_state": 3.603,
+      "edd": 3.6860000000000004,
+      "marginal": 3.6910000000000003,
+      "index": 3.81
+    },
+    {
+      "seed": 7,
+      "exact": 2.9030000000000005,
+      "deadlines": [
+        4,
+        3,
+        5,
+        2,
+        2,
+        2
+      ],
+      "multipliers": [
+        0.68,
+        0.53,
+        0.75,
+        0.52,
+        0.72,
+        0.53
+      ],
+      "initial": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fifo": 2.649,
+      "worst_state": 2.596,
+      "edd": 2.714,
+      "marginal": 2.7439999999999998,
+      "index": 2.9030000000000005
+    },
+    {
+      "seed": 8,
+      "exact": 3.692,
+      "deadlines": [
+        3,
+        4,
+        5,
+        3,
+        3,
+        2
+      ],
+      "multipliers": [
+        0.54,
+        0.62,
+        1.0,
+        0.6,
+        0.82,
+        0.73
+      ],
+      "initial": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "fifo": 3.265,
+      "worst_state": 3.664,
+      "edd": 3.557,
+      "marginal": 3.61,
+      "index": 3.6919999999999997
+    },
+    {
+      "seed": 9,
+      "exact": 3.916000000000001,
+      "deadlines": [
+        5,
+        4,
+        4,
+        3,
+        3,
+        2
+      ],
+      "multipliers": [
+        0.67,
+        0.73,
+        0.8,
+        0.67,
+        0.97,
+        0.85
+      ],
+      "initial": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "fifo": 3.4260000000000006,
+      "worst_state": 3.6370000000000005,
+      "edd": 3.6800000000000006,
+      "marginal": 3.8990000000000005,
+      "index": 3.8990000000000005
+    }
+  ],
+  "scope": "6 batches, one slot, 6 periods, heterogeneous deadlines and multipliers; synthetic",
+  "limitations": [
+    "Survival probabilities and multipliers are assumed.",
+    "Dispatch is automatic at the deadline; no early dispatch or holding cost.",
+    "Only one recovery slot and four batches."
+  ]
+}

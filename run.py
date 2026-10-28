@@ -43,6 +43,7 @@ TASKS = {
     "lrp-scale": "src/analysis/lrp_scale.py",
     "live-check": "src/analysis/live_check.py",
     "live-scale": "src/analysis/live_scale.py",
+    "live-scale6": "src/analysis/live_scale6.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
