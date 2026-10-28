@@ -181,7 +181,7 @@ A real-network illustration uses three contest RDCs (Guangzhou, Dongguan, Chengd
 ## 6. Discussion and limitations
 
 - The gap is not fully verified: Omega 2019 has not been read. If it contains a store-level remaining-shelf-life constraint, the contribution must be repositioned or withdrawn.
-- The model uses one temperature zone, one product, one age class per warehouse, and a single period. Multi-temperature, multi-product and multi-period extensions are open.
+- The model uses one temperature zone, one product, one age class per warehouse, one visit per store, and unit demand. A demand-weighted trial with contest demands (50–100 t/day per city) degenerated: 30-t vehicles cannot cover a city, 150-t vehicles reduce routes to single stores, the ALNS improvement is zero, and a 200 penalty is negligible against million-scale transport costs. Split deliveries or multi-trip routing are a separate model extension, not a parameter change.
 - All parameters are synthetic. The break-even penalty is a model quantity, not an observed markdown cost; no field recommendation follows.
 - The ALNS is a standard destroy-repair scheme with an age-feasible insertion; its contribution is the feasibility logic, not a new metaheuristic.
 - The 20-store experiments use a weak LP relaxation as a lower bound: mean relative gap 9.0%, max 14.1%. This bounds the true gap from above only loosely; it is not an optimality proof.
