@@ -38,6 +38,7 @@ TASKS = {
     "confirm-grid-rules": "src/analysis/confirm_grid_rules.py",
     "assortment-check": "src/analysis/assortment_check.py",
     "confirm-shared": "src/analysis/confirm_shared.py",
+    "lrp-check": "src/analysis/lrp_check.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

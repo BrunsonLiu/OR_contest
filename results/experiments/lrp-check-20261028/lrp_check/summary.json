@@ -1,0 +1,69 @@
+{
+  "stores": [
+    {
+      "x": 120.0,
+      "y": 20.0,
+      "weight": 0.32
+    },
+    {
+      "x": 130.0,
+      "y": 0.0,
+      "weight": 0.32
+    },
+    {
+      "x": 400.0,
+      "y": 300.0,
+      "weight": 0.32
+    },
+    {
+      "x": 500.0,
+      "y": 500.0,
+      "weight": 0.04
+    }
+  ],
+  "direct_cost": 2975.08,
+  "direct_open": [
+    0
+  ],
+  "direct_assignment": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "joint_cost": 1543.8000000000002,
+  "joint_open": [
+    0
+  ],
+  "joint_assignment": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "joint_routes": {
+    "-1": [
+      [
+        1,
+        0
+      ]
+    ],
+    "0": [
+      [
+        2,
+        3
+      ]
+    ]
+  },
+  "joint_late_stores": [
+    3
+  ],
+  "sequential_cost_after_routing": 1555.64,
+  "design_changed": true,
+  "scope": "one CDC, two RDC candidates, four stores, one vehicle capacity two; synthetic coordinates",
+  "limitations": [
+    "Transport cost charges each store for the leg into it, not the whole vehicle load.",
+    "No vehicle return cost; capacity is two stores, not weight.",
+    "Only one product class is modelled."
+  ]
+}

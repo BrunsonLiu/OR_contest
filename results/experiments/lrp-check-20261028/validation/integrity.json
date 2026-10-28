@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "最小冷链LRP：直达、先分配再路径、联合路线化；看开仓/分配是否变、95%预算是否被选择性使用",
+  "snapshot_files": 59,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T05:32:55.785605+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/lrp-check-20261028/_runs/lrp-check/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/lrp-check-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "f6ee44019f3f7be8c6b4a49e09debab85b37f04f8b9d6598d7522fa777687976",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}
