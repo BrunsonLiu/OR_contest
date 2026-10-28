@@ -40,6 +40,7 @@ TASKS = {
     "confirm-shared": "src/analysis/confirm_shared.py",
     "lrp-check": "src/analysis/lrp_check.py",
     "lrp-localsearch": "src/analysis/lrp_localsearch.py",
+    "lrp-scale": "src/analysis/lrp_scale.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

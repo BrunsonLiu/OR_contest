@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "20店容量4下，顺序（绕行缓冲）与联合插入在同一局部搜索下是否仍有稳定差距",
+  "snapshot_files": 61,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T06:28:23.326621+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/lrp-scale-20261028/_runs/lrp-scale/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/lrp-scale-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "18e967debad96cf3a203f261377ff05326fe2c0f81f0e62fb84f347b59c976bb",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

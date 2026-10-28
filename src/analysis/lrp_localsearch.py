@@ -421,7 +421,7 @@ def main():
         "mean_final_gap": sum(row["final_gap"] for row in valid) / len(valid) if valid else None,
         "max_abs_final_gap": max((abs(row["final_gap"]) for row in valid), default=None),
         "rows": rows,
-        "scope": "twelve stores, four RDC candidates, one CDC, capacity three; synthetic",
+        "scope": f"{N_STORES} stores, four RDC candidates, one CDC, capacity {CAPACITY}; synthetic",
         "limitations": [
             "Same local search is applied to both initial solutions, but it is first-improvement and may stop at different local optima.",
             "The instance is synthetic and single-product.",
