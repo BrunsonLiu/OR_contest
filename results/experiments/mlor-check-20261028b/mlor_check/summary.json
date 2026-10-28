@@ -1,0 +1,68 @@
+{
+  "shelf_life": 6.0,
+  "warehouses": [
+    {
+      "name": "W_fresh",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "age": 0.0
+    },
+    {
+      "name": "W_old",
+      "point": [
+        100.0,
+        0.0
+      ],
+      "age": 4.8
+    }
+  ],
+  "stores": [
+    {
+      "x": 110.0,
+      "y": 0.0,
+      "mlor": 1.0
+    },
+    {
+      "x": 100.0,
+      "y": 10.0,
+      "mlor": 3.0
+    },
+    {
+      "x": 0.0,
+      "y": 10.0,
+      "mlor": 1.0
+    }
+  ],
+  "age_aware_cost": 260.0,
+  "age_aware_infeasible": 0,
+  "age_aware_plan": {
+    "0": [
+      2,
+      1
+    ],
+    "1": [
+      0
+    ]
+  },
+  "age_blind_planned_cost": 220.0,
+  "age_blind_actual_cost": 420.0,
+  "age_blind_infeasible": 1,
+  "age_blind_plan": {
+    "0": [
+      2
+    ],
+    "1": [
+      0,
+      1
+    ]
+  },
+  "age_aware_better": true,
+  "scope": "two warehouses, three stores, one temperature zone, one route per warehouse, capacity two; synthetic",
+  "limitations": [
+    "Single product and single temperature zone.",
+    "One inventory age per warehouse.",
+    "Cost and penalty parameters are illustrative."
+  ]
+}

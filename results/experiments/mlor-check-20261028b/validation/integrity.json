@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "修正后的年龄感知判别：老仓近高MLOR店但剩余不足，年龄盲是否会选它",
+  "snapshot_files": 65,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T08:31:38.407380+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-check-20261028b/_runs/mlor-check/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-check-20261028b/validation/integrity.json"
+  ],
+  "manifest_sha256": "9191ebf6d9ca4f6989e425f9e91f305bec4636175e92844a28cae2839d294c1a",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

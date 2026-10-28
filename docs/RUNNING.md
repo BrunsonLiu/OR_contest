@@ -48,6 +48,7 @@ python -m unittest discover -s tests -v
 | `live-check` | 活鲜恢复—出运最小判别（2 批 1 池位，示意参数） | `live_check/` |
 | `live-scale` | 活鲜 4 批规模检验（含边际贪心） | `live_scale/` |
 | `live-scale6` | 活鲜 6 批指标策略检验 | `live_scale/` |
+| `mlor-check` | 年龄感知 vs 年龄盲的 MLOR 最小判别（2 仓 3 店） | `mlor_check/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -81,6 +82,8 @@ DFL 适用性盘点示例：`python run.py dfl-readiness --experiment dfl-readin
 局部搜索对照示例：`python run.py lrp-localsearch --experiment lrp-localsearch-v1 --purpose "同一局部搜索下顺序修复解与联合插入解是否仍有稳定差距"`。合成十二店实例，不是赛题结论。
 
 活鲜判别示例：`python run.py live-check --experiment live-check-v1 --purpose "恢复优先级是否不同于先到、状态最差和 EDD"`。2 批 1 池位示意实例，不是现场结论。
+
+MLOR 判别示例：`python run.py mlor-check --experiment mlor-check-v1 --purpose "年龄盲是否会把高 MLOR 店派给老仓，执行时剩余不足"`。2 仓 3 店示意实例，不是现场结论。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 
