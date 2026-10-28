@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "12店ALNS与精确子集DP的差距：ALNS离最优多远",
+  "snapshot_files": 70,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T10:08:47.490857+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-validate-20261028/_runs/mlor-validate/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-validate-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "f0ffaa23a0a72189192f955a653b5e37f5fae2e563d7d6cda5a0a1844773be7e",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

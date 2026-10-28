@@ -53,6 +53,7 @@ python -m unittest discover -s tests -v
 | `mlor-dp` | 8 店 3 仓精确子集 DP | `mlor_dp/` |
 | `mlor-dp12` | 12 店 3 仓精确子集 DP | `mlor_dp/` |
 | `mlor-alns` | 20 店年龄感知破坏—修复 ALNS | `mlor_alns/` |
+| `mlor-validate` | 12 店 ALNS 对精确 DP 的验证 | `mlor_validate/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -94,6 +95,8 @@ MLOR 精确 DP 示例：`python run.py mlor-dp --experiment mlor-dp-v1 --purpose
 MLOR 12 店 DP 示例：`python run.py mlor-dp12 --experiment mlor-dp12-v1 --purpose "12 店 3 仓下年龄感知与年龄盲的实际成本对比"`。合成实例，约 19 秒/实例。
 
 MLOR ALNS 示例：`python run.py mlor-alns --experiment mlor-alns-v1 --purpose "20 店年龄感知 ALNS 能否改进贪心初解"`。合成实例，不是最优性结论。
+
+MLOR 验证示例：`python run.py mlor-validate --experiment mlor-validate-v1 --purpose "12 店 ALNS 离精确 DP 多远"`。依赖 `mlor-dp12-20261028` 的结果文件。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

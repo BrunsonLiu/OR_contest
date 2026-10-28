@@ -49,6 +49,7 @@ TASKS = {
     "mlor-dp": "src/analysis/mlor_dp2.py",
     "mlor-dp12": "src/analysis/mlor_dp12.py",
     "mlor-alns": "src/analysis/mlor_alns.py",
+    "mlor-validate": "src/analysis/mlor_validate.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
