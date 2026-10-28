@@ -8,4 +8,4 @@
 
 2026-10-24 起，独立论文按[研究设计](../research/PROBLEM_DISCOVERY.md)推进：先确认新的决策问题及其必要机制，再选择并改进一个经典算法，最后用正确性核查、算法对照、机制/算法消融和政策实验支撑贡献。当前候选尚未通过新颖性与问题—模型结合检查，未确定论文标题、算法或预期正向结果。已有竞赛模型保留为基础材料；缺少真实新场景数据时可用透明合成实例，但必须限定实践解释范围。
 
-2026-10-27 新增九份材料：[论文骨架与写作标准](SKELETON.md)、[背景草案](BACKGROUND.md)、[Gap 草案](GAP.md)、[开题卡](OPENING.md)、[模型草案](MODEL.md)、[实验草案](EXPERIMENTS.md)、[换向判别卡](PIVOT.md)、[B 方向开题卡](PIVOT_B.md)和[开题条件核对](READINESS.md)。核对结论：开题条件未全部满足，尚不能开始写论文。
+2026-10-27 新增十份材料：[论文骨架与写作标准](SKELETON.md)、[背景草案](BACKGROUND.md)、[Gap 草案](GAP.md)、[开题卡](OPENING.md)、[模型草案](MODEL.md)、[实验草案](EXPERIMENTS.md)、[换向判别卡](PIVOT.md)、[B 方向开题卡](PIVOT_B.md)、[开题条件核对](READINESS.md)和[COR 2026 核对清单](COR2026_CHECKLIST.md)。核对结论：开题条件未全部满足，尚不能开始写论文。
