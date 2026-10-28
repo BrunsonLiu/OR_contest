@@ -167,10 +167,13 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | Ablation, 12 stores | Greedy gap 473.4; no unserved retry 280.9; full ALNS 15.85 |
 | Penalty sensitivity, 8 stores | Age-blind cheaper by 36.4 at penalty 0; age-aware better from penalty 50; break-even about 7 per infeasible delivery |
 | LP bound, 20 stores | Mean relative gap 9.0%, max 14.1% (weak LP relaxation, not an optimality proof) |
+| Mechanism 2×2, 8 stores | age+MLOR 1003.6 (5/5 aware better); MLOR only 74.0 (2/5); age only 581.6 (3/5); neither 0 (0/5) |
 
 Figures: [penalty sensitivity](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png) and [ALNS ablation](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png).
 
 The ablation supports the role of the unserved-retry component: old warehouses leave high-MLOR stores unserved, and only reinsertion can place them at a fresh warehouse.
+
+The 2×2 mechanism check shows that the cold-chain label alone does nothing: with both age and MLOR removed, age-aware and blind plans coincide (gap 0). Freezing MLOR leaves a spoilage effect (581.6); freezing age leaves a deadline effect (74.0); together the gap is 1003.6, larger than the sum of the parts. The interaction—matching inventory age to distance and store threshold—is the mechanism, not the label.
 
 ## 6. Discussion and limitations
 

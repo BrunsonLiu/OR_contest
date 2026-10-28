@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "2x2机制消融：年龄与MLOR各自贡献，去掉场景标签后决策差是否消失",
+  "snapshot_files": 75,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T11:21:01.046015+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-mechanism-20261028/_runs/mlor-mechanism/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-mechanism-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "b62bc0a3a50eab877aa9ddafba02d36f9c159fee13f890fc8465346ea540e961",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

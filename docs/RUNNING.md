@@ -58,6 +58,7 @@ python -m unittest discover -s tests -v
 | `mlor-sensitivity` | 8 店拒收惩罚敏感性 | `mlor_sensitivity/` |
 | `mlor-figures` | 惩罚敏感性与 ALNS 消融两幅图 | `mlor_figures/` |
 | `mlor-bound` | 20 店集合划分 LP 下界 | `mlor_bound/` |
+| `mlor-mechanism` | 年龄×MLOR 的 2×2 机制消融 | `mlor_mechanism/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -109,6 +110,8 @@ MLOR 敏感性示例：`python run.py mlor-sensitivity --experiment mlor-sensiti
 MLOR 出图示例：`python run.py mlor-figures --experiment mlor-figures-v1 --purpose "惩罚敏感性与 ALNS 消融两幅图"`。依赖两个实验的 summary.json。
 
 MLOR 下界示例：`python run.py mlor-bound --experiment mlor-bound-v1 --purpose "20 店集合划分 LP 下界与 ALNS 的差距"`。5 个种子约 9 秒。
+
+MLOR 机制示例：`python run.py mlor-mechanism --experiment mlor-mechanism-v1 --purpose "年龄×MLOR 的 2×2 机制消融"`。8 店精确 DP，约 2 秒。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

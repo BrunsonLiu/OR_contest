@@ -224,3 +224,5 @@
 - `experiments/mlor-figures-20261028/`：论文草稿的两幅图。`penalty_sensitivity.png`（惩罚 0—800 的平均差与盈亏平衡 ≈7）、`alns_ablation.png`（贪心 473.4、去重插 280.9、完整 ALNS 15.85）。
 
 - `experiments/mlor-bound-20261028/`：20 店集合划分 LP 松弛下界（分数路线/开仓，5 seeds）。与 ALNS 的平均相对差 9.0%，最大 14.1%；种子 0 下界 1092.15、ALNS 1201.71。LP 很松，不是最优性证明。
+
+- `experiments/mlor-mechanism-20261028/`：年龄×MLOR 的 2×2 机制消融（8 店 5 种子）。年龄+MLOR 平均差 1003.6（5/5）；只留 MLOR 74.0（2/5）；只留年龄 581.6（3/5）；两者都去掉 0（0/5）。标签本身不产生决策差，交互是机制。
