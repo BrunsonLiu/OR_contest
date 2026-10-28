@@ -42,6 +42,7 @@ TASKS = {
     "lrp-localsearch": "src/analysis/lrp_localsearch.py",
     "lrp-scale": "src/analysis/lrp_scale.py",
     "live-check": "src/analysis/live_check.py",
+    "live-scale": "src/analysis/live_scale.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

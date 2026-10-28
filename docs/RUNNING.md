@@ -46,6 +46,7 @@ python -m unittest discover -s tests -v
 | `lrp-check` | 最小冷链 LRP：直达、顺序、联合路线化（合成实例） | `lrp_check/` |
 | `lrp-localsearch` | 同一局部搜索下顺序修复解与联合插入解的对照（合成实例） | `lrp_localsearch/` |
 | `live-check` | 活鲜恢复—出运最小判别（2 批 1 池位，示意参数） | `live_check/` |
+| `live-scale` | 活鲜 4 批规模检验（含边际贪心） | `live_scale/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
