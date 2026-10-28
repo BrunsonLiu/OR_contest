@@ -20,7 +20,7 @@ We compare the three closest works by full text where available.
 | --- | --- | --- |
 | Rohmer, Claassen, Laporte (2019, COR 107:156–172) | Two-echelon inventory-routing: supplier, depot storage, customer delivery patterns; transport and holding costs; MILP and ALNS | Full text has no “shelf life” and no remaining-shelf-life state; no store delivery threshold |
 | Crama, Rezaei, Savelsbergh, Van Woensel (2018, TRSC) | Stochastic perishable inventory-routing with a fixed depot; store inventory by remaining shelf life k, FIFO; stockout-probability service level (TSL); freshness and waste metrics | No store-specific minimum remaining shelf life at delivery; no location decision |
-| Qiu, Qiao, Pardalos (2019, Omega) | Integrated production, replenishment, delivery, routing and inventory for perishable products | Full text not read (Semantic Scholar 404/429); residual risk |
+| Qiu, Qiao, Pardalos (2019, Omega) | Integrated production, replenishment, delivery, routing and inventory for perishable products | Full text closed access (OpenAIRE CLOSED; only a Mendeley dataset is open); residual risk |
 
 The specific relation studied here—store-specific MLOR at delivery, warehouse inventory age, and location-routing decided together—is not present in the two full texts we read. We treat it as a **difference to be verified**, not as a confirmed blank: the Omega paper has not been read.
 
@@ -43,38 +43,49 @@ The specific relation studied here—store-specific MLOR at delivery, warehouse 
 
 ### Constraints
 
-Each store is visited at most once:
+Visit each served store once:
 
 ```text
-Σ_v Σ_k x_kjv = s_j,   j ∈ J.
+Σ_v Σ_{k∈J∪{0}} x_kjv = s_j,   j ∈ J.
 ```
 
-Flow conservation for each vehicle and store; a vehicle that enters a store leaves it. Capacity:
+Flow conservation at stores and at the depot (x_j0v denotes the return arc to the vehicle's warehouse):
 
 ```text
-Σ_j d_j Σ_k x_kjv ≤ Q r_v,   v ∈ V.
+Σ_{k∈J∪{0}} x_kjv = Σ_{k∈J∪{0}} x_jkv,   j ∈ J, v ∈ V.
 ```
 
-Opening binds vehicles to warehouses, y_i ≥ r_v for i = i(v). Time propagation (MTZ):
+Capacity and vehicle activation:
 
 ```text
-T_j ≥ T_k + τ_kj − M(1 − x_kjv),
-T_j ≥ τ_i(v),j − M(1 − x_i(v),j,v).
+Σ_j d_j Σ_k x_kjv ≤ Q r_v,   v ∈ V,
+y_i(v) ≥ r_v,   v ∈ V.
 ```
 
-Remaining shelf life at delivery:
+Time propagation (MTZ; positive travel times eliminate subtours):
 
 ```text
-T_j ≤ L − a_i(v) − m_j + M(1 − x_kjv),   for the vehicle's warehouse i(v).
+T_j ≥ T_k + τ_kj − M(1 − x_kjv),   j,k ∈ J, v ∈ V,
+T_j ≥ τ_i(v),j − M(1 − x_0jv),   j ∈ J, v ∈ V.
+```
+
+Remaining shelf life at delivery, applied only for the vehicle that serves j:
+
+```text
+T_j ≤ L − a_i(v) − m_j + M(1 − Σ_{k∈J∪{0}} x_kjv),   j ∈ J, v ∈ V.
 ```
 
 Objective:
 
 ```text
-min Σ_i F_i y_i + G Σ_v r_v + Σ c_kj x_kjv + P Σ_j (1 − s_j).
+min Σ_i F_i y_i + G Σ_v r_v + Σ_{k,j,v} c_kj x_kjv + P Σ_j (1 − s_j).
 ```
 
-The model is a multi-depot vehicle-routing problem with an age-dependent arrival deadline. Without the shelf-life constraint it reduces to a standard location-routing problem; with a_i = 0 and m_j = 0 it reduces to a time-window LRP.
+All x_kjv with k = j are fixed to zero.
+
+**Lemma 1.** For a fixed serving vehicle v and store j, the shelf-life constraint is equivalent to the arrival deadline T_j ≤ L − a_i(v) − m_j. The maximum inventory age that can serve j is L − m_j − T_j, which decreases one-for-one with travel time.
+
+The model is a multi-depot vehicle-routing problem with an age-dependent arrival deadline. Without the shelf-life constraint it reduces to a standard location-routing problem; with a_i = 0 and m_j = 0 it becomes an LRP with a common deadline L; with a single warehouse and fixed routes it becomes a perishable inventory-routing problem with store-specific deadlines.
 
 ## 4. Algorithm
 
@@ -114,4 +125,4 @@ The ablation supports the role of the unserved-retry component: old warehouses l
 
 ## 7. Status
 
-Draft only. The next steps are: read Omega 2019; if the gap holds, complete the experiments section, add the exact DP formulation details and the ALNS pseudo-code, and prepare the figures. No submission before the Omega check.
+Draft only. The next steps are: obtain Omega 2019 (currently closed access; only a Mendeley dataset is open); if the gap holds, complete the experiments section, add the exact DP formulation details and the ALNS pseudo-code, and prepare the figures. No submission before the Omega check.

@@ -63,9 +63,9 @@ remaining = L − a − travel_time(i, j 的访问时刻)
 | --- | --- | --- |
 | Rohmer、Claassen、Laporte（2019，COR 107:156—172），WUR 开放全文 46 页 | 两层 IRP：供应商→仓→门店；仓库存持有；客户配送模式；目标运输+持有；MILP + ALNS | 全文 “shelf life” 0 次，没有剩余保质期、没有门店到货门槛；覆盖两层库存路径，不覆盖年龄×门槛 |
 | Crama、Rezaei、Savelsbergh、Van Woensel（2018，TRSC），Liège 开放稿 42 页 | 固定仓、多周期、随机需求的易腐 IRP；门店库存按剩余保质期 k 分层、FIFO；TSL 是缺货概率服务水平；报告货架/顾客新鲜度与废弃 | 覆盖“剩余保质期库存 + 路径”；没有“到货最低剩余保质期”约束，也没有选址 |
-| Qiu、Qiao、Pardalos（2019，Omega） | 生产、补货、配送、路径、库存联合；易腐库存 | 只拿到题录/作者；S2 404，全文未读 |
+| Qiu、Qiao、Pardalos（2019，Omega） | 生产、补货、配送、路径、库存联合；易腐库存 | OpenAIRE 标注 CLOSED；只有 Mendeley 数据集开放，全文未读 |
 
-判定：TRSC 最近，但它的 TSL 是缺货概率，不是门店到货剩余门槛；COR 无保质期。`门店 MLOR × 仓库年龄 × LRP` 仍是**差异待检验**；Omega 未读是风险。不能宣称已确认空白。
+判定：TRSC 最近，但它的 TSL 是缺货概率，不是门店到货剩余门槛；COR 无保质期。`门店 MLOR × 仓库年龄 × LRP` 仍是**差异待检验**；Omega 是 closed access，未读是风险。不能宣称已确认空白。
 
 ## 6. 风险
 
