@@ -31,10 +31,11 @@ PENALTY = 200.0
 KM_PER_DAY = 100.0
 
 
-def make_instance(seed):
+def make_instance(seed, n_stores=None):
     rng = random.Random(seed)
+    count = N_STORES if n_stores is None else n_stores
     stores = []
-    for _ in range(N_STORES):
+    for _ in range(count):
         stores.append({"x": rng.uniform(0, 300), "y": rng.uniform(0, 300), "mlor": rng.choice([1.0, 2.0, 3.0])})
     return stores
 

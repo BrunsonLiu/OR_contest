@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "20店年龄感知ALNS与贪心初解对比：破坏-修复能否降成本并服务未覆盖门店",
+  "snapshot_files": 69,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T09:42:57.762008+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-alns-20261028b/_runs/mlor-alns/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-alns-20261028b/validation/integrity.json"
+  ],
+  "manifest_sha256": "348e6cf67691d39c9e3330ecbbcf3151a6ff3acb99749a9bba7097a0f7211069",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "instances": 10,
+  "improved": 10,
+  "mean_improvement": 1280.1332440105505,
+  "rows": [
+    {
+      "seed": 0,
+      "initial": 2317.547458127056,
+      "alns": 1201.7139525025398,
+      "improvement": 1115.8335056245162
+    },
+    {
+      "seed": 1,
+      "initial": 2540.5204737822573,
+      "alns": 1218.692152243074,
+      "improvement": 1321.8283215391834
+    },
+    {
+      "seed": 2,
+      "initial": 2496.338070438168,
+      "alns": 1171.1850241729885,
+      "improvement": 1325.1530462651795
+    },
+    {
+      "seed": 3,
+      "initial": 2496.120260738834,
+      "alns": 1043.889623475485,
+      "improvement": 1452.230637263349
+    },
+    {
+      "seed": 4,
+      "initial": 2322.7902066795277,
+      "alns": 1084.5773513112072,
+      "improvement": 1238.2128553683206
+    },
+    {
+      "seed": 5,
+      "initial": 2514.2884664202047,
+      "alns": 1070.2678636033888,
+      "improvement": 1444.0206028168159
+    },
+    {
+      "seed": 6,
+      "initial": 2525.3322891910148,
+      "alns": 1141.4935396767514,
+      "improvement": 1383.8387495142633
+    },
+    {
+      "seed": 7,
+      "initial": 2118.0200803831444,
+      "alns": 1116.8397848048098,
+      "improvement": 1001.1802955783346
+    },
+    {
+      "seed": 8,
+      "initial": 2202.1978970682176,
+      "alns": 1141.9213423727024,
+      "improvement": 1060.2765546955152
+    },
+    {
+      "seed": 9,
+      "initial": 2493.865175778242,
+      "alns": 1035.107304338214,
+      "improvement": 1458.7578714400279
+    }
+  ],
+  "scope": "twenty stores, three warehouses, capacity four, age-aware ALNS; synthetic",
+  "limitations": [
+    "No exact benchmark at twenty stores.",
+    "Greedy initial solution; simple destroy-repair.",
+    "Cost parameters are illustrative."
+  ]
+}
