@@ -44,6 +44,7 @@ python -m unittest discover -s tests -v
 | `assortment-check` | 两仓八 SKU 的选品—确认成本最小检查（条件性） | `assortment_check/` |
 | `confirm-shared` | 两订单争一件替代的精确 DP 与规则族比较（不是门店策略） | `confirm_shared/` |
 | `lrp-check` | 最小冷链 LRP：直达、顺序、联合路线化（合成实例） | `lrp_check/` |
+| `lrp-localsearch` | 同一局部搜索下顺序修复解与联合插入解的对照（合成实例） | `lrp_localsearch/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -73,6 +74,8 @@ DFL 适用性盘点示例：`python run.py dfl-readiness --experiment dfl-readin
 共享替代示例：`python run.py confirm-shared --experiment confirm-shared-v1 --purpose "两个订单争一件替代时，规则族是否被完整 DP 追平"`。四节点精确 DP，规则族含访问子集、顺序、等待和分配。
 
 最小 LRP 示例：`python run.py lrp-check --experiment lrp-check-v1 --purpose "路线化是否改变开仓/分配，95% 预算是否被选择性使用"`。合成四店实例，只作机制检查，不是赛题结论。
+
+局部搜索对照示例：`python run.py lrp-localsearch --experiment lrp-localsearch-v1 --purpose "同一局部搜索下顺序修复解与联合插入解是否仍有稳定差距"`。合成十二店实例，不是赛题结论。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "同一套局部搜索下，修复后的顺序解与联合插入解是否仍有稳定差距；12店10种子合成实例",
+  "snapshot_files": 60,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T06:13:02.347053+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/lrp-localsearch-20261028/_runs/lrp-localsearch/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/lrp-localsearch-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "68caa8a6b42cf470194fb324aa97a9b0499863463f4f183cca842a94a39eac5b",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

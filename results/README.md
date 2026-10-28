@@ -191,3 +191,4 @@
 - [problem4_robust/warehouse_comparison_map.png](question4/problem4_robust/warehouse_comparison_map.png)
 - [problem4_robust/仓网业务表现文件_汇总.csv](question4/problem4_robust/仓网业务表现文件_汇总.csv)
 
+- `experiments/lrp-localsearch-20261028/`：12 店、10 种子，同一套局部搜索（改派、交换、2-opt、开关仓）分别从顺序修复解和联合插入解出发。两边都 10/10 可行；联合 9/10 更好、0 个更差，平均差 151.39，最大 763.63。合成实例，修复基线仍是贪心可行性修复，不构成最终算法结论。
