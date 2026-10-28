@@ -4,10 +4,12 @@
 
 ## 0. 文件与版本
 
-- 文件路径：
-- 版本/日期：
-- 阅读范围（页码/节）：
-- 未读部分：
+- 文件路径：`C:\Users\86185\Desktop\Integrated assortment and distribution planning in vendor-managed.pdf`（用户提供，未入库）
+- 版本/日期：COR 191 (2026) 107417，2026-02-05 上线；27 页，19,506,454 字节
+- SHA256：`8817fc7e74bfa7ce6b5cd56523287a44260ac0ad8fd6fd3f468aee71c647eb0c`
+- 阅读范围：摘要、关键词、第 1 节 gap 段、第 3 节问题定义与模型、目标函数/约束、第 5 节敏感性与鲁棒性；全文术语检索（stockout/substitution/confirm/approval/service level）
+- 未读部分：第 4 节算法细节（CBDIS/GES/ALNS 的具体算子）、附录与案例数据表
+- **判定（2026-10-28）**：已覆盖“选品 + 分销 + 缺货/选品替代”的联合决策；无门店拣货确认、无确认工时/窗口/返拣、无仓网选址；两处 “confirm” 仅指鲁棒性。Pivot B 的确认成本是新增费用项，**撤回**。
 
 ## 1. 模型边界
 
