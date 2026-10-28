@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "12店3仓精确子集DP：年龄感知与年龄盲的实际成本对比",
+  "snapshot_files": 68,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T09:23:15.191595+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-dp12-20261028/_runs/mlor-dp12/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-dp12-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "e8a2c19d72bf47b69e40eae3ffb6502e59a246f7c39cb45b17ae82468a5de900",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

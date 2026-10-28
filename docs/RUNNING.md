@@ -51,6 +51,7 @@ python -m unittest discover -s tests -v
 | `mlor-check` | 年龄感知 vs 年龄盲的 MLOR 最小判别（2 仓 3 店） | `mlor_check/` |
 | `mlor-scale` | 3 仓 8 店的插入式年龄感知/盲对比 | `mlor_scale/` |
 | `mlor-dp` | 8 店 3 仓精确子集 DP | `mlor_dp/` |
+| `mlor-dp12` | 12 店 3 仓精确子集 DP | `mlor_dp/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -88,6 +89,8 @@ DFL 适用性盘点示例：`python run.py dfl-readiness --experiment dfl-readin
 MLOR 判别示例：`python run.py mlor-check --experiment mlor-check-v1 --purpose "年龄盲是否会把高 MLOR 店派给老仓，执行时剩余不足"`。2 仓 3 店示意实例，不是现场结论。
 
 MLOR 精确 DP 示例：`python run.py mlor-dp --experiment mlor-dp-v1 --purpose "8 店 3 仓下年龄感知与年龄盲的实际成本对比"`。合成实例，不是现场结论。
+
+MLOR 12 店 DP 示例：`python run.py mlor-dp12 --experiment mlor-dp12-v1 --purpose "12 店 3 仓下年龄感知与年龄盲的实际成本对比"`。合成实例，约 19 秒/实例。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 
