@@ -144,7 +144,7 @@ def direct_cost(server, index, stores):
     return LAST_KM * distance(point_of(server), (x, y)) * w + processing * PROCESSING * w
 
 
-def sequential(stores):
+def sequential(stores, detour=0.0):
     best = None
     for mask in range(1 << len(RDCS)):
         open_set = [rdc for rdc in range(len(RDCS)) if mask & (1 << rdc)]
@@ -163,12 +163,14 @@ def sequential(stores):
             total += OPEN_COST + TRUNK_KM * distance(CDC, RDCS[rdc]) * weight[rdc]
         late_direct = 0.0
         for index, server in enumerate(assignment):
-            if distance(point_of(server), stores[index][:2]) > ON_TIME:
+            if distance(point_of(server), stores[index][:2]) * (1.0 + detour) > ON_TIME:
                 late_direct += stores[index][2]
         if late_direct > LATE_SHARE + 1e-9:
             continue
         if best is None or total < best[0]:
             best = (total, assignment)
+    if best is None:
+        return None
     assignment = best[1]
     routes = {}
     for server in set(assignment):
@@ -385,19 +387,30 @@ def local_search(routes, stores, max_rounds=20):
 
 def main():
     rows = []
+    detours = (0.0, 0.2, 0.4, 0.6, 0.8)
     for seed in range(10):
         stores = make_instance(seed)
-        seq = repair(sequential(stores), stores)
+        best_seq = None
+        for detour in detours:
+            initial = sequential(stores, detour)
+            if initial is None:
+                continue
+            repaired = repair(initial, stores)
+            if repaired is None:
+                continue
+            final = local_search(repaired, stores)
+            if best_seq is None or final[0] < best_seq[0]:
+                best_seq = (final[0], detour)
         jnt = joint(stores)
-        seq_final = None if seq is None else local_search(seq, stores)
         jnt_final = None if jnt is None else local_search(jnt, stores)
         rows.append({
             "seed": seed,
-            "sequential_before": None if seq is None else evaluate(seq, stores)[0],
-            "sequential_after": None if seq_final is None else seq_final[0],
+            "sequential_before": None if best_seq is None else best_seq[0],
+            "sequential_after": None if best_seq is None else best_seq[0],
+            "sequential_detour": None if best_seq is None else best_seq[1],
             "joint_before": None if jnt is None else evaluate(jnt, stores)[0],
             "joint_after": None if jnt_final is None else jnt_final[0],
-            "final_gap": None if (seq_final is None or jnt_final is None) else seq_final[0] - jnt_final[0],
+            "final_gap": None if (best_seq is None or jnt_final is None) else best_seq[0] - jnt_final[0],
         })
     valid = [row for row in rows if row["final_gap"] is not None]
     summary = {

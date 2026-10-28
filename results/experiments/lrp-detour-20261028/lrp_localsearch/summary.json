@@ -1,0 +1,105 @@
+{
+  "instances": 10,
+  "valid": 10,
+  "joint_better": 9,
+  "sequential_better": 0,
+  "mean_final_gap": 98.43510322774233,
+  "max_abs_final_gap": 242.65122653861408,
+  "rows": [
+    {
+      "seed": 0,
+      "sequential_before": 1273.3998608092643,
+      "sequential_after": 1273.3998608092643,
+      "sequential_detour": 0.2,
+      "joint_before": 1030.7486342706502,
+      "joint_after": 1030.7486342706502,
+      "final_gap": 242.65122653861408
+    },
+    {
+      "seed": 1,
+      "sequential_before": 1654.7225028140276,
+      "sequential_after": 1654.7225028140276,
+      "sequential_detour": 0.0,
+      "joint_before": 1733.4287318777506,
+      "joint_after": 1654.7225028140276,
+      "final_gap": 0.0
+    },
+    {
+      "seed": 2,
+      "sequential_before": 1751.910353906925,
+      "sequential_after": 1751.910353906925,
+      "sequential_detour": 0.4,
+      "joint_before": 1716.988942648229,
+      "joint_after": 1645.3052109646417,
+      "final_gap": 106.60514294228324
+    },
+    {
+      "seed": 3,
+      "sequential_before": 1467.9780459871654,
+      "sequential_after": 1467.9780459871654,
+      "sequential_detour": 0.0,
+      "joint_before": 1366.6244734277616,
+      "joint_after": 1366.6244734277616,
+      "final_gap": 101.3535725594038
+    },
+    {
+      "seed": 4,
+      "sequential_before": 2173.3081736834397,
+      "sequential_after": 2173.3081736834397,
+      "sequential_detour": 0.0,
+      "joint_before": 2168.7443404719966,
+      "joint_after": 2120.481159122984,
+      "final_gap": 52.82701456045561
+    },
+    {
+      "seed": 5,
+      "sequential_before": 1548.8917634851127,
+      "sequential_after": 1548.8917634851127,
+      "sequential_detour": 0.0,
+      "joint_before": 1519.7810287812333,
+      "joint_after": 1509.662310739251,
+      "final_gap": 39.229452745861636
+    },
+    {
+      "seed": 6,
+      "sequential_before": 743.2121300069537,
+      "sequential_after": 743.2121300069537,
+      "sequential_detour": 0.0,
+      "joint_before": 734.5046116167426,
+      "joint_after": 734.5046116167426,
+      "final_gap": 8.707518390211021
+    },
+    {
+      "seed": 7,
+      "sequential_before": 1584.8446604142387,
+      "sequential_after": 1584.8446604142387,
+      "sequential_detour": 0.0,
+      "joint_before": 1523.852306247942,
+      "joint_after": 1517.3632635361016,
+      "final_gap": 67.48139687813705
+    },
+    {
+      "seed": 8,
+      "sequential_before": 1959.1538931296845,
+      "sequential_after": 1959.1538931296845,
+      "sequential_detour": 0.0,
+      "joint_before": 1738.0339637742352,
+      "joint_after": 1738.0339637742352,
+      "final_gap": 221.11992935544936
+    },
+    {
+      "seed": 9,
+      "sequential_before": 1351.138978022345,
+      "sequential_after": 1351.138978022345,
+      "sequential_detour": 0.0,
+      "joint_before": 1206.7631997153376,
+      "joint_after": 1206.7631997153376,
+      "final_gap": 144.37577830700752
+    }
+  ],
+  "scope": "twelve stores, four RDC candidates, one CDC, capacity three; synthetic",
+  "limitations": [
+    "Same local search is applied to both initial solutions, but it is first-improvement and may stop at different local optima.",
+    "The instance is synthetic and single-product."
+  ]
+}
