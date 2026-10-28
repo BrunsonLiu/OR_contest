@@ -1,0 +1,136 @@
+{
+  "instances": 10,
+  "aware_better": 2,
+  "blind_better": 8,
+  "mean_gap": 58.04824530043786,
+  "aware_infeasible_total": 5,
+  "blind_infeasible_total": 44,
+  "rows": [
+    {
+      "seed": 0,
+      "aware_planned": 707.3848948712196,
+      "aware_actual": 707.3848948712196,
+      "aware_infeasible": 1,
+      "aware_unserved": 1,
+      "blind_planned": 684.2627741384581,
+      "blind_actual": 684.2627741384581,
+      "blind_infeasible": 2,
+      "blind_unserved": 0,
+      "gap": 23.12212073276146
+    },
+    {
+      "seed": 1,
+      "aware_planned": 811.0653183363801,
+      "aware_actual": 811.06531833638,
+      "aware_infeasible": 0,
+      "aware_unserved": 0,
+      "blind_planned": 671.6379777032607,
+      "blind_actual": 671.6379777032607,
+      "blind_infeasible": 5,
+      "blind_unserved": 0,
+      "gap": 139.42734063311923
+    },
+    {
+      "seed": 2,
+      "aware_planned": 870.4350883537595,
+      "aware_actual": 870.4350883537595,
+      "aware_infeasible": 0,
+      "aware_unserved": 0,
+      "blind_planned": 805.9453730129599,
+      "blind_actual": 805.94537301296,
+      "blind_infeasible": 6,
+      "blind_unserved": 0,
+      "gap": 64.48971534079953
+    },
+    {
+      "seed": 3,
+      "aware_planned": 799.2063803727893,
+      "aware_actual": 799.2063803727895,
+      "aware_infeasible": 1,
+      "aware_unserved": 1,
+      "blind_planned": 608.681537133462,
+      "blind_actual": 608.6815371334619,
+      "blind_infeasible": 1,
+      "blind_unserved": 0,
+      "gap": 190.52484323932754
+    },
+    {
+      "seed": 4,
+      "aware_planned": 773.7244806691532,
+      "aware_actual": 773.7244806691531,
+      "aware_infeasible": 1,
+      "aware_unserved": 1,
+      "blind_planned": 721.9542559943897,
+      "blind_actual": 721.9542559943898,
+      "blind_infeasible": 3,
+      "blind_unserved": 0,
+      "gap": 51.77022467476331
+    },
+    {
+      "seed": 5,
+      "aware_planned": 825.1392972152494,
+      "aware_actual": 825.1392972152493,
+      "aware_infeasible": 1,
+      "aware_unserved": 1,
+      "blind_planned": 709.4152323055071,
+      "blind_actual": 709.415232305507,
+      "blind_infeasible": 8,
+      "blind_unserved": 0,
+      "gap": 115.72406490974231
+    },
+    {
+      "seed": 6,
+      "aware_planned": 793.3011833550049,
+      "aware_actual": 793.3011833550049,
+      "aware_infeasible": 0,
+      "aware_unserved": 0,
+      "blind_planned": 775.6149849800036,
+      "blind_actual": 775.6149849800037,
+      "blind_infeasible": 4,
+      "blind_unserved": 0,
+      "gap": 17.686198375001254
+    },
+    {
+      "seed": 7,
+      "aware_planned": 539.6805823159616,
+      "aware_actual": 539.6805823159616,
+      "aware_infeasible": 0,
+      "aware_unserved": 0,
+      "blind_planned": 508.68472471119554,
+      "blind_actual": 508.6847247111956,
+      "blind_infeasible": 6,
+      "blind_unserved": 0,
+      "gap": 30.995857604766
+    },
+    {
+      "seed": 8,
+      "aware_planned": 721.8415394413687,
+      "aware_actual": 721.8415394413687,
+      "aware_infeasible": 0,
+      "aware_unserved": 0,
+      "blind_planned": 724.0878176716687,
+      "blind_actual": 724.0878176716689,
+      "blind_infeasible": 6,
+      "blind_unserved": 0,
+      "gap": -2.246278230300163
+    },
+    {
+      "seed": 9,
+      "aware_planned": 695.7632368135461,
+      "aware_actual": 695.7632368135462,
+      "aware_infeasible": 1,
+      "aware_unserved": 1,
+      "blind_planned": 746.774871089148,
+      "blind_actual": 746.7748710891481,
+      "blind_infeasible": 3,
+      "blind_unserved": 0,
+      "gap": -51.011634275601864
+    }
+  ],
+  "scope": "three warehouses, ten stores, age 0/2.5/4.5, MLOR 1-3, two routes per warehouse, capacity three; synthetic",
+  "limitations": [
+    "Insertion heuristic, not an exact or ALNS comparison.",
+    "Single product and single temperature zone.",
+    "Cost and penalty parameters are illustrative."
+  ]
+}

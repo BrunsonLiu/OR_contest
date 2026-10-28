@@ -45,6 +45,8 @@ TASKS = {
     "live-scale": "src/analysis/live_scale.py",
     "live-scale6": "src/analysis/live_scale6.py",
     "mlor-check": "src/analysis/mlor_check2.py",
+    "mlor-scale": "src/analysis/mlor_scale.py",
+    "mlor-dp": "src/analysis/mlor_dp2.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
