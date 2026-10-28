@@ -1,0 +1,95 @@
+{
+  "instance": "three contest RDCs, twelve nearest cities, contest last-leg rate",
+  "warehouses": [
+    {
+      "name": "guang-zhou-DC",
+      "age": 0.0,
+      "x": 66.3,
+      "y": -125.0
+    },
+    {
+      "name": "dong-guan-DC",
+      "age": 2.5,
+      "x": 115.0,
+      "y": -134.2
+    },
+    {
+      "name": "cheng-du-DC",
+      "age": 4.5,
+      "x": -864.6,
+      "y": 701.3
+    }
+  ],
+  "stores": [
+    {
+      "name": "fo-shan",
+      "mlor": 3.0,
+      "population": 743.06
+    },
+    {
+      "name": "jiang-men",
+      "mlor": 1.0,
+      "population": 451.95
+    },
+    {
+      "name": "shen-zhen",
+      "mlor": 3.0,
+      "population": 1137.87
+    },
+    {
+      "name": "hui-zhou",
+      "mlor": 2.0,
+      "population": 475.55
+    },
+    {
+      "name": "zhong-shan",
+      "mlor": 1.0,
+      "population": 320.96
+    },
+    {
+      "name": "zhu-hai",
+      "mlor": 1.0,
+      "population": 163.41
+    },
+    {
+      "name": "mian-yang",
+      "mlor": 2.0,
+      "population": 477.19
+    },
+    {
+      "name": "chong-qing",
+      "mlor": 3.0,
+      "population": 3016.55
+    },
+    {
+      "name": "jie-yang",
+      "mlor": 2.0,
+      "population": 605.89
+    },
+    {
+      "name": "shan-tou",
+      "mlor": 2.0,
+      "population": 555.21
+    },
+    {
+      "name": "gan-zhou",
+      "mlor": 3.0,
+      "population": 854.71
+    },
+    {
+      "name": "zhan-jiang",
+      "mlor": 3.0,
+      "population": 724.14
+    }
+  ],
+  "greedy_aware": 2601.5368778562306,
+  "greedy_blind": 4884.898028312596,
+  "alns_aware": 2190.94941034869,
+  "alns_improvement": 410.5874675075406,
+  "scope": "real geography, unit demand, rule-based ages and MLOR; illustrative only",
+  "limitations": [
+    "Unit demand ignores the contest demand weights.",
+    "Ages and MLOR are assigned by rule, not observed.",
+    "This is an illustration, not a case study or a field estimate."
+  ]
+}

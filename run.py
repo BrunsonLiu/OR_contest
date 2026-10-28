@@ -55,6 +55,7 @@ TASKS = {
     "mlor-figures": "src/visualization/mlor_figures.py",
     "mlor-bound": "src/analysis/mlor_bound.py",
     "mlor-mechanism": "src/analysis/mlor_mechanism.py",
+    "mlor-case": "src/analysis/mlor_case.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

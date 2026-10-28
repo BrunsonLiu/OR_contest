@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "赛题真实仓网示意：3 RDC、12 城市、1.45 元/(吨·km)，年龄感知 vs 年龄盲",
+  "snapshot_files": 76,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-28T11:39:12.294482+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-case-20261028/_runs/mlor-case/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-case-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "464990bb2bd55fd723ac104a34bed5e13ab22987d99970036dd892b7ab1c810d",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

@@ -168,12 +168,15 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | Penalty sensitivity, 8 stores | Age-blind cheaper by 36.4 at penalty 0; age-aware better from penalty 50; break-even about 7 per infeasible delivery |
 | LP bound, 20 stores | Mean relative gap 9.0%, max 14.1% (weak LP relaxation, not an optimality proof) |
 | Mechanism 2×2, 8 stores | age+MLOR 1003.6 (5/5 aware better); MLOR only 74.0 (2/5); age only 581.6 (3/5); neither 0 (0/5) |
+| Real-network illustration | Three contest RDCs, twelve cities, contest last-leg rate: greedy aware 2601.5, blind 4884.9, ALNS 2190.9 (improvement 410.6) |
 
 Figures: [penalty sensitivity](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png) and [ALNS ablation](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png).
 
 The ablation supports the role of the unserved-retry component: old warehouses leave high-MLOR stores unserved, and only reinsertion can place them at a fresh warehouse.
 
 The 2×2 mechanism check shows that the cold-chain label alone does nothing: with both age and MLOR removed, age-aware and blind plans coincide (gap 0). Freezing MLOR leaves a spoilage effect (581.6); freezing age leaves a deadline effect (74.0); together the gap is 1003.6, larger than the sum of the parts. The interaction—matching inventory age to distance and store threshold—is the mechanism, not the label.
+
+A real-network illustration uses three contest RDCs (Guangzhou, Dongguan, Chengdu), the twelve nearest contest cities, and the contest last-leg rate of 1.45 per ton-km. Ages are 0/2.5/4.5, MLOR is assigned by population terciles, and demand is unit. The greedy age-aware cost is 2601.5 versus 4884.9 for the blind plan; the ALNS reaches 2190.9, an improvement of 410.6 over greedy. This is an illustration on real geography, not a case study: unit demand ignores the contest demand weights, and ages and MLOR are rule-based.
 
 ## 6. Discussion and limitations
 
