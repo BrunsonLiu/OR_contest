@@ -201,3 +201,22 @@ A real-network illustration uses three contest RDCs (Guangzhou, Dongguan, Chengd
 ## 7. Status
 
 Draft only. The next steps are: obtain Omega 2019 (currently closed access; only a Mendeley dataset is open); if the gap holds, complete the experiments section, add the exact DP formulation details and the ALNS pseudo-code, and prepare the figures. No submission before the Omega check.
+
+## Appendix A. Evidence map
+
+All experiment outputs are under `results/experiments/<name>/`; the exact DP and ALNS implementations are in `src/analysis/mlor_dp2.py`, `src/analysis/mlor_dp12.py`, and `src/analysis/mlor_alns.py`.
+
+| Claim | Experiment | Output |
+| --- | --- | --- |
+| Minimal age-blind vs age-aware discriminator | `mlor-check-20261028b` | `mlor_check/summary.json` |
+| 8-store exact comparison | `mlor-dp-20261028` | `mlor_dp/summary.json` |
+| 12-store exact comparison | `mlor-dp12-20261028` | `mlor_dp/summary.json` |
+| ALNS quality against exact at 12 stores | `mlor-validate-20261028` | `mlor_validate/summary.json` |
+| 20-store ALNS versus greedy | `mlor-alns-20261028b` | `mlor_alns/summary.json` |
+| ALNS component ablation at 12 stores | `mlor-ablation-20261028b` | `mlor_ablation/summary.json` |
+| Age × MLOR 2×2 mechanism check | `mlor-mechanism-20261028` | `mlor_mechanism/summary.json` |
+| Rejection-penalty sensitivity | `mlor-sensitivity-20261028` | `mlor_sensitivity/summary.json` |
+| 20-store LP lower bound | `mlor-bound-20261028` | `mlor_bound/summary.json` |
+| Penalty and ablation figures | `mlor-figures-20261028` | `mlor_figures/*.png` |
+| Real-network illustration | `mlor-case-20261028` | `mlor_case/summary.json` |
+| Four-store brute-force correctness | `tests/test_mlor_bruteforce.py` | unit test |
