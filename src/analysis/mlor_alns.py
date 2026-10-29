@@ -64,7 +64,8 @@ def insert_best(routes, store, stores, enforce_age=True):
     return best
 
 
-def alns(stores, iterations=300, seed=0, enforce_age=True, retry_unserved=True):
+def alns(stores, iterations=300, seed=0, enforce_age=True, retry_unserved=True,
+         destroy_min=2, destroy_max=4, extra_min=2, extra_max=2):
     STORES_REF[0] = stores
     rng = random.Random(seed)
     _, initial_routes, _ = construct(stores, "actual", enforce_age)
@@ -82,13 +83,20 @@ def alns(stores, iterations=300, seed=0, enforce_age=True, retry_unserved=True):
         served = [(w, store) for w, route_list in trial_routes.items() for order in route_list for store in order]
         if len(served) < 3:
             break
-        removed = rng.sample(served, min(rng.randint(2, 4), len(served)))
+        removed = rng.sample(served, min(rng.randint(destroy_min, destroy_max), len(served)))
         for warehouse_index, store in removed:
             for order in trial_routes[warehouse_index]:
                 if store in order:
                     order.remove(store)
             trial_routes[warehouse_index] = [order for order in trial_routes[warehouse_index] if order]
-        extra = rng.sample(trial_unserved, min(2, len(trial_unserved))) if (retry_unserved and trial_unserved) else []
+        if retry_unserved and trial_unserved:
+            if extra_min == 2 and extra_max == 2:
+                extra_count = min(2, len(trial_unserved))
+            else:
+                extra_count = min(rng.randint(extra_min, extra_max), len(trial_unserved))
+            extra = rng.sample(trial_unserved, extra_count)
+        else:
+            extra = []
         trial_unserved = [store for store in trial_unserved if store not in extra]
         pool = [store for _, store in removed] + extra
         rng.shuffle(pool)

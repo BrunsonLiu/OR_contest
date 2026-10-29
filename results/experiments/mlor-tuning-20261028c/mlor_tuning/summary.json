@@ -1,0 +1,45 @@
+{
+  "instances": 10,
+  "settings": {
+    "iter_50": {
+      "mean_gap": 39.88263152364692,
+      "max_gap": 192.07561494424658,
+      "optimal": 5
+    },
+    "iter_100": {
+      "mean_gap": 18.40663468012708,
+      "max_gap": 124.45499435696354,
+      "optimal": 7
+    },
+    "iter_200": {
+      "mean_gap": 15.846849724920958,
+      "max_gap": 124.45499435696354,
+      "optimal": 7
+    },
+    "iter_400": {
+      "mean_gap": 15.846849724920958,
+      "max_gap": 124.45499435696354,
+      "optimal": 7
+    },
+    "destroy_1_2": {
+      "mean_gap": 38.194590883177,
+      "max_gap": 144.14096407611964,
+      "optimal": 6
+    },
+    "destroy_2_4": {
+      "mean_gap": 15.846849724920958,
+      "max_gap": 124.45499435696354,
+      "optimal": 7
+    },
+    "destroy_4_6": {
+      "mean_gap": 1.2681036240287085,
+      "max_gap": 12.681036240287085,
+      "optimal": 9
+    }
+  },
+  "scope": "twelve stores, three warehouses, capacity four; ALNS settings against exact DP",
+  "limitations": [
+    "One synthetic instance family.",
+    "Only iteration budget and destroy size are varied."
+  ]
+}

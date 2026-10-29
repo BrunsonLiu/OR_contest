@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "20店ALNS破坏规模对比：默认2-4 vs 4-6，10个种子",
+  "snapshot_files": 78,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-29T11:25:19.940776+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-tune20-20261028/_runs/mlor-tune20/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-tune20-20261028/validation/integrity.json"
+  ],
+  "manifest_sha256": "eb5d1da55ac5c7039a9d9a9c80c5007a3d1e9e3ef7648ef21a2d5a471411bbdb",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

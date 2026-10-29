@@ -174,6 +174,8 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | Exact DP, 8 stores | Age-aware better 9/10, 0 worse, 1 tie |
 | Exact DP, 12 stores | Age-aware better 7/10, 0 worse, 3 ties |
 | ALNS vs exact, 12 stores | 7/10 optimal, mean gap 15.85, mean relative gap 2.14%, max 124.45 |
+| ALNS tuning, 12 stores | Destroy 4–6: mean gap 1.27, 9/10 optimal; default 2–4: 15.85, 7/10 |
+| ALNS tuning, 20 stores | Destroy 4–6 versus default: mean improvement 20.96 (6/10 better, 2/10 worse) |
 | ALNS, 20 stores | Improves greedy 10/10, mean 1280.1 |
 | Ablation, 12 stores | Greedy gap 473.4; no unserved retry 280.9; full ALNS 15.85 |
 | Penalty sensitivity, 8 stores | Age-blind cheaper by 36.4 at penalty 0; age-aware better from penalty 50; break-even about 7 per infeasible delivery |
@@ -194,6 +196,8 @@ Figures: [penalty sensitivity](../../results/experiments/mlor-figures-20261028/m
 Data and code. The synthetic generator uses fixed seeds, and each experiment runs through the repository entry point with an isolated experiment directory. The real-network illustration reads the contest location, warehouse and order files; ages and MLOR are assigned by the rules stated above.
 
 The ablation supports the role of the unserved-retry component: old warehouses leave high-MLOR stores unserved, and only reinsertion can place them at a fresh warehouse.
+
+A parameter check shows that the default destroy size is not tuned. At 12 stores, destroying 4–6 stores lowers the mean gap from 15.85 to 1.27 and reaches 9/10 optimal; at 20 stores it improves the mean cost by 20.96, better on 6/10 seeds and worse on 2/10. We therefore report both settings rather than presenting 2.14% as the best achievable.
 
 The 2×2 mechanism check shows that the cold-chain label alone does nothing: with both age and MLOR removed, age-aware and blind plans coincide (gap 0). Freezing MLOR leaves a spoilage effect (581.6); freezing age leaves a deadline effect (74.0); together the gap is 1003.6, larger than the sum of the parts. The interaction—matching inventory age to distance and store threshold—is the mechanism, not the label.
 
@@ -221,6 +225,8 @@ All experiment outputs are under `results/experiments/<name>/`; the exact DP and
 | 8-store exact comparison | `mlor-dp-20261028` | `mlor_dp/summary.json` |
 | 12-store exact comparison | `mlor-dp12-20261028` | `mlor_dp/summary.json` |
 | ALNS quality against exact at 12 stores | `mlor-validate-20261028` | `mlor_validate/summary.json` |
+| ALNS parameter sensitivity at 12 stores | `mlor-tuning-20261028c` | `mlor_tuning/summary.json` |
+| ALNS destroy-size comparison at 20 stores | `mlor-tune20-20261028` | `mlor_tune20/summary.json` |
 | 20-store ALNS versus greedy | `mlor-alns-20261028b` | `mlor_alns/summary.json` |
 | ALNS component ablation at 12 stores | `mlor-ablation-20261028b` | `mlor_ablation/summary.json` |
 | Age × MLOR 2×2 mechanism check | `mlor-mechanism-20261028` | `mlor_mechanism/summary.json` |

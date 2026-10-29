@@ -60,6 +60,8 @@ python -m unittest discover -s tests -v
 | `mlor-bound` | 20 店集合划分 LP 下界 | `mlor_bound/` |
 | `mlor-mechanism` | 年龄×MLOR 的 2×2 机制消融 | `mlor_mechanism/` |
 | `mlor-case` | 赛题真实仓网示意（3 RDC、12 城市） | `mlor_case/` |
+| `mlor-tuning` | 12 店 ALNS 参数敏感性 | `mlor_tuning/` |
+| `mlor-tune20` | 20 店破坏规模对比 | `mlor_tune20/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -115,6 +117,10 @@ MLOR 下界示例：`python run.py mlor-bound --experiment mlor-bound-v1 --purpo
 MLOR 机制示例：`python run.py mlor-mechanism --experiment mlor-mechanism-v1 --purpose "年龄×MLOR 的 2×2 机制消融"`。8 店精确 DP，约 2 秒。
 
 MLOR 真实仓网示意：`python run.py mlor-case --experiment mlor-case-v1 --purpose "3 个赛题 RDC、12 城市、赛题费率的年龄感知对比"`。单位需求，示意。
+
+MLOR 参数敏感性：`python run.py mlor-tuning --experiment mlor-tuning-v1 --purpose "12 店 ALNS 迭代与破坏规模"`。依赖 `mlor-dp12-20261028`。
+
+MLOR 20 店破坏规模：`python run.py mlor-tune20 --experiment mlor-tune20-v1 --purpose "默认 2-4 与 4-6 的成本对比"`。无精确基准。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

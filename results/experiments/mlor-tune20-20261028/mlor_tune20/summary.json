@@ -1,0 +1,73 @@
+{
+  "instances": 10,
+  "large_better": 6,
+  "default_better": 2,
+  "mean_improvement": 20.964669432096137,
+  "rows": [
+    {
+      "seed": 0,
+      "default": 1201.7139525025398,
+      "destroy_4_6": 1196.791094140755,
+      "improvement": 4.922858361784847
+    },
+    {
+      "seed": 1,
+      "default": 1218.692152243074,
+      "destroy_4_6": 1207.9426658368118,
+      "improvement": 10.749486406262122
+    },
+    {
+      "seed": 2,
+      "default": 1171.1850241729885,
+      "destroy_4_6": 1093.0135652509714,
+      "improvement": 78.17145892201711
+    },
+    {
+      "seed": 3,
+      "default": 1043.889623475485,
+      "destroy_4_6": 1043.739998434918,
+      "improvement": 0.14962504056688886
+    },
+    {
+      "seed": 4,
+      "default": 1084.5773513112072,
+      "destroy_4_6": 1084.6441091712,
+      "improvement": -0.0667578599927765
+    },
+    {
+      "seed": 5,
+      "default": 1070.2678636033888,
+      "destroy_4_6": 1070.267863603389,
+      "improvement": -2.2737367544323206e-13
+    },
+    {
+      "seed": 6,
+      "default": 1141.4935396767514,
+      "destroy_4_6": 1110.1165209274432,
+      "improvement": 31.377018749308263
+    },
+    {
+      "seed": 7,
+      "default": 1116.8397848048098,
+      "destroy_4_6": 983.9010766265478,
+      "improvement": 132.938708178262
+    },
+    {
+      "seed": 8,
+      "default": 1141.9213423727024,
+      "destroy_4_6": 1190.5170458499492,
+      "improvement": -48.59570347724684
+    },
+    {
+      "seed": 9,
+      "default": 1035.107304338214,
+      "destroy_4_6": 1035.107304338214,
+      "improvement": 0.0
+    }
+  ],
+  "scope": "twenty stores, three warehouses, capacity four; destroy 2-4 versus 4-6",
+  "limitations": [
+    "No exact benchmark at twenty stores.",
+    "Only the destroy size is varied."
+  ]
+}
