@@ -62,6 +62,7 @@ python -m unittest discover -s tests -v
 | `mlor-case` | 赛题真实仓网示意（3 RDC、12 城市） | `mlor_case/` |
 | `mlor-tuning` | 12 店 ALNS 参数敏感性 | `mlor_tuning/` |
 | `mlor-tune20` | 20 店破坏规模对比 | `mlor_tune20/` |
+| `mlor-alns-large` | 20 店推荐参数（破坏 4—6）主结果 | `mlor_alns_large/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell
@@ -121,6 +122,8 @@ MLOR 真实仓网示意：`python run.py mlor-case --experiment mlor-case-v1 --p
 MLOR 参数敏感性：`python run.py mlor-tuning --experiment mlor-tuning-v1 --purpose "12 店 ALNS 迭代与破坏规模"`。依赖 `mlor-dp12-20261028`。
 
 MLOR 20 店破坏规模：`python run.py mlor-tune20 --experiment mlor-tune20-v1 --purpose "默认 2-4 与 4-6 的成本对比"`。无精确基准。
+
+MLOR 20 店主结果（推荐参数）：`python run.py mlor-alns-large --experiment mlor-alns-large-v1 --purpose "破坏 4-6 对贪心初解的主结果"`。无精确基准。
 
 同实验同任务拒绝覆盖，同实验禁止并发写入。不同任务仅在输出路径不冲突时共享结果，不同模型方案使用新实验名称。归档脚本不能直接作为新实验运行。源码或原始输入运行中发生变化时，实验标记异常。
 

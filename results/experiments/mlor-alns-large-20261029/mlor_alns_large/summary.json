@@ -1,0 +1,72 @@
+{
+  "instances": 10,
+  "improved": 10,
+  "mean_improvement": 1301.0979134426466,
+  "rows": [
+    {
+      "seed": 0,
+      "initial": 2317.547458127056,
+      "tuned": 1196.791094140755,
+      "improvement": 1120.756363986301
+    },
+    {
+      "seed": 1,
+      "initial": 2540.5204737822573,
+      "tuned": 1207.9426658368118,
+      "improvement": 1332.5778079454456
+    },
+    {
+      "seed": 2,
+      "initial": 2496.338070438168,
+      "tuned": 1093.0135652509714,
+      "improvement": 1403.3245051871966
+    },
+    {
+      "seed": 3,
+      "initial": 2496.120260738834,
+      "tuned": 1043.739998434918,
+      "improvement": 1452.380262303916
+    },
+    {
+      "seed": 4,
+      "initial": 2322.7902066795277,
+      "tuned": 1084.6441091712,
+      "improvement": 1238.1460975083278
+    },
+    {
+      "seed": 5,
+      "initial": 2514.2884664202047,
+      "tuned": 1070.267863603389,
+      "improvement": 1444.0206028168157
+    },
+    {
+      "seed": 6,
+      "initial": 2525.3322891910148,
+      "tuned": 1110.1165209274432,
+      "improvement": 1415.2157682635716
+    },
+    {
+      "seed": 7,
+      "initial": 2118.0200803831444,
+      "tuned": 983.9010766265478,
+      "improvement": 1134.1190037565966
+    },
+    {
+      "seed": 8,
+      "initial": 2202.1978970682176,
+      "tuned": 1190.5170458499492,
+      "improvement": 1011.6808512182683
+    },
+    {
+      "seed": 9,
+      "initial": 2493.865175778242,
+      "tuned": 1035.107304338214,
+      "improvement": 1458.7578714400279
+    }
+  ],
+  "scope": "twenty stores, three warehouses, capacity four; ALNS with destroy 4-6 against greedy",
+  "limitations": [
+    "No exact benchmark at twenty stores.",
+    "The tuned setting is not uniformly better than the default; see mlor-tune20-20261028."
+  ]
+}

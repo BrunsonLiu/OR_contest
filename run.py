@@ -58,6 +58,7 @@ TASKS = {
     "mlor-case": "src/analysis/mlor_case.py",
     "mlor-tuning": "src/analysis/mlor_tuning.py",
     "mlor-tune20": "src/analysis/mlor_tune20.py",
+    "mlor-alns-large": "src/analysis/mlor_alns_large.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
