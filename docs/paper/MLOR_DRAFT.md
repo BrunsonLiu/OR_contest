@@ -128,7 +128,7 @@ routes = greedy_age_aware()
 best = routes
 for iter = 1..N:
   pool = remove s served stores (default 2–4; recommended 4–6 after tuning)
-  pool = pool + sample 1–2 currently unserved stores
+  pool = pool + sample up to 2 currently unserved stores
   shuffle(pool)
   for store in pool:
     insert at the cheapest position across all routes and warehouses
