@@ -32,7 +32,7 @@ The contribution claimed here is therefore not the cold-chain label but the join
 
 - I: candidate warehouses; J: stores; V: vehicles, each based at one warehouse i(v).
 - L: shelf life; a_i: age of the batch held at warehouse i; m_j: store j's MLOR.
-- d_j: demand; Q: vehicle capacity (stores); τ_kj: travel time; c_kj: travel cost.
+- d_j: demand (d_j = 1 in the unit-demand abstraction); Q: vehicle capacity in demand units (stores when d_j = 1); τ_kj: travel time; c_kj: travel cost (symmetric, including the return arc).
 - F_i: opening cost; G: vehicle fixed cost; P: penalty per unserved or rejected delivery.
 
 ### Variables
@@ -56,6 +56,15 @@ Flow conservation at stores and at the depot (x_j0v denotes the return arc to th
 ```text
 Σ_{k∈J∪{0}} x_kjv = Σ_{k∈J∪{0}} x_jkv,   j ∈ J, v ∈ V.
 ```
+
+Depot flow, so that each used vehicle leaves and returns exactly once:
+
+```text
+Σ_{j∈J} x_0jv = r_v,   v ∈ V,
+Σ_{j∈J} x_j0v = r_v,   v ∈ V.
+```
+
+These depot constraints prevent one vehicle from being used as several disconnected routes.
 
 Capacity and vehicle activation:
 
@@ -140,7 +149,7 @@ The cost is opening + vehicle fixed + transport + a penalty per unserved store. 
 
 ### 5.1 Instances and parameters
 
-All instances are synthetic and share the same generator:
+The synthetic instances share the same generator (the real-network illustration is described separately):
 
 | Parameter | Value |
 | --- | --- |
@@ -162,7 +171,7 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | Experiment | Result |
 | --- | --- |
 | Minimal 2-warehouse 3-store check | Age-blind plan 220, execution 420 with one infeasible store; age-aware 260, zero infeasible |
-| Exact DP, 8 stores | Age-aware better 9/10, never worse |
+| Exact DP, 8 stores | Age-aware better 9/10, 0 worse, 1 tie |
 | Exact DP, 12 stores | Age-aware better 7/10, 0 worse, 3 ties |
 | ALNS vs exact, 12 stores | 7/10 optimal, mean gap 15.85, mean relative gap 2.14%, max 124.45 |
 | ALNS, 20 stores | Improves greedy 10/10, mean 1280.1 |
@@ -200,7 +209,7 @@ A real-network illustration uses three contest RDCs (Guangzhou, Dongguan, Chengd
 
 ## 7. Status
 
-Draft only. The next steps are: obtain Omega 2019 (currently closed access; only a Mendeley dataset is open); if the gap holds, complete the experiments section, add the exact DP formulation details and the ALNS pseudo-code, and prepare the figures. No submission before the Omega check.
+Draft only. The next steps are: obtain Omega 2019 (currently closed access; only a Mendeley dataset is open); if the gap holds, do a final consistency read, add the submission-format details, and decide the target journal. No submission before the Omega check.
 
 ## Appendix A. Evidence map
 

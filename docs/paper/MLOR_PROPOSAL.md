@@ -83,12 +83,16 @@ T_j ≤ L − a_i − m_j.
 ```text
 Σ_v Σ_{k∈J∪{0}} x_kjv = s_j,                     j ∈ J
 Σ_{k∈J∪{0}} x_kjv = Σ_{k∈J∪{0}} x_jkv,           j ∈ J, v ∈ V
+Σ_{j∈J} x_0jv = r_v,                             v ∈ V
+Σ_{j∈J} x_j0v = r_v,                             v ∈ V
 Σ_j d_j Σ_k x_kjv ≤ Q r_v,                        v ∈ V
 y_i(v) ≥ r_v,                                     v ∈ V
 T_j ≥ T_k + τ_kj − M(1 − x_kjv),                  j,k ∈ J, v ∈ V
 T_j ≥ τ_i(v),j − M(1 − x_0jv),                    j ∈ J, v ∈ V
 T_j ≤ L − a_i(v) − m_j + M(1 − Σ_k x_kjv),        j ∈ J, v ∈ V
 ```
+
+两条 depot flow 保证每辆使用车辆只从仓出发一次、回仓一次；单位需求抽象下 d_j=1，Q 为每车门店数。
 
 目标：
 
