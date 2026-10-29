@@ -24,6 +24,8 @@ We compare the three closest works by full text where available.
 
 The specific relation studied here—store-specific MLOR at delivery, warehouse inventory age, and location-routing decided together—is not present in the two full texts we read. We treat it as a **difference to be verified**, not as a confirmed blank: the Omega paper has not been read.
 
+The contribution claimed here is therefore not the cold-chain label but the joint age–distance–threshold decision: an old batch has a shorter effective radius, and the location-routing decision must match age to distance and store threshold. Whether that is sufficiently different from TRSC's shelf-life IRP is the open question.
+
 ## 3. Problem definition and model
 
 ### Sets and parameters
@@ -171,6 +173,16 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | Real-network illustration | Three contest RDCs, twelve cities, contest last-leg rate: greedy aware 2601.5, blind 4884.9, ALNS 2190.9 (improvement 410.6) |
 
 Figures: [penalty sensitivity](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png) and [ALNS ablation](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png).
+
+![Figure 1](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png)
+
+*Figure 1. Penalty sensitivity: mean gap between the age-blind and age-aware plans as the per-delivery rejection penalty grows; the break-even is about 7.*
+
+![Figure 2](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png)
+
+*Figure 2. ALNS ablation at 12 stores: mean gap to the exact optimum for greedy, no-unserved-retry, and full ALNS.*
+
+Data and code. The synthetic generator uses fixed seeds, and each experiment runs through the repository entry point with an isolated experiment directory. The real-network illustration reads the contest location, warehouse and order files; ages and MLOR are assigned by the rules stated above.
 
 The ablation supports the role of the unserved-retry component: old warehouses leave high-MLOR stores unserved, and only reinsertion can place them at a fresh warehouse.
 
