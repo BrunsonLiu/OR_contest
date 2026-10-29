@@ -64,6 +64,7 @@ python -m unittest discover -s tests -v
 | `mlor-tune20` | 20 店破坏规模对比 | `mlor_tune20/` |
 | `mlor-alns-large` | 20 店推荐参数（破坏 4—6）主结果 | `mlor_alns_large/` |
 | `mlor-network` | 8/12 店开仓与分配差异 | `mlor_network/` |
+| `mlor-policy` | 三种实用策略基线 | `mlor_policy/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell

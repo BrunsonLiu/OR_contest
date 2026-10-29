@@ -60,6 +60,7 @@ TASKS = {
     "mlor-tune20": "src/analysis/mlor_tune20.py",
     "mlor-alns-large": "src/analysis/mlor_alns_large.py",
     "mlor-network": "src/analysis/mlor_network.py",
+    "mlor-policy": "src/analysis/mlor_policy.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

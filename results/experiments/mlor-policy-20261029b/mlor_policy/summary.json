@@ -1,0 +1,49 @@
+{
+  "by_size": {
+    "8": {
+      "nearest": {
+        "mean_gap": 194.70598597934327,
+        "max_gap": 447.2993802347023,
+        "optimal": 0,
+        "unserved_total": 0
+      },
+      "freshest": {
+        "mean_gap": 36.22491180149408,
+        "max_gap": 185.06233632605142,
+        "optimal": 4,
+        "unserved_total": 0
+      },
+      "oldest": {
+        "mean_gap": 305.80905122028196,
+        "max_gap": 402.9294843141673,
+        "optimal": 0,
+        "unserved_total": 0
+      }
+    },
+    "12": {
+      "nearest": {
+        "mean_gap": 259.9325155980446,
+        "max_gap": 569.6008676323411,
+        "optimal": 0,
+        "unserved_total": 0
+      },
+      "freshest": {
+        "mean_gap": 110.6987704698297,
+        "max_gap": 220.43818262109073,
+        "optimal": 2,
+        "unserved_total": 0
+      },
+      "oldest": {
+        "mean_gap": 444.64253135677274,
+        "max_gap": 578.978192283273,
+        "optimal": 0,
+        "unserved_total": 0
+      }
+    }
+  },
+  "scope": "8/12 stores, exact optimum versus three practical policies",
+  "limitations": [
+    "Synthetic instances.",
+    "Policies assign first, then insert greedily."
+  ]
+}
