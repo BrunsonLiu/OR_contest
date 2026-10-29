@@ -4,7 +4,7 @@
 
 ## Abstract（草稿）
 
-Fresh-food warehouses hold batches of different ages, and stores often reject deliveries whose remaining shelf life is below a store-specific minimum (MLOR). We study a cold-chain location-routing problem in which opening warehouses, assigning stores, routing vehicles, and using inventory of different ages are decided together. The key relation is that travel time consumes shelf life: an old batch can only serve nearby stores or stores with a low MLOR. We formulate a mixed-integer program, solve small and medium instances exactly by subset dynamic programming, and develop an age-feasible adaptive large neighbourhood search (ALNS) for larger instances. On 8- and 12-store synthetic instances, age-aware planning is never worse than an age-blind plan and is better in 9/10 and 7/10 cases; the ALNS reaches the exact optimum in 7/10 twelve-store instances with a mean relative gap of 2.14%. A penalty sensitivity shows that age-aware planning pays once the per-delivery rejection cost exceeds about 7 in the synthetic scale. All parameters are synthetic; the results are conditional, not field estimates.
+Fresh-food warehouses hold batches of different ages, and stores often reject deliveries whose remaining shelf life is below a store-specific minimum (MLOR). We study a cold-chain location-routing problem in which opening warehouses, assigning stores, routing vehicles, and using inventory of different ages are decided together. The key relation is that travel time consumes shelf life: an old batch can only serve nearby stores or stores with a low MLOR. We formulate a mixed-integer program, solve small and medium instances exactly by subset dynamic programming, and develop an age-feasible adaptive large neighbourhood search (ALNS) for larger instances. On 8- and 12-store synthetic instances, age-aware planning is never worse than an age-blind plan and is better in 9/10 and 7/10 cases. With a tuned destroy size, the ALNS reaches the exact optimum in 9/10 twelve-store instances (mean gap 1.27); with the default setting it reaches 7/10 (mean relative gap 2.14%). At 20 stores it improves the greedy plan by 1301.1 on average. A penalty sensitivity shows that age-aware planning pays once the per-delivery rejection cost exceeds about 7 in the synthetic scale. All parameters are synthetic; the results are conditional, not field estimates.
 
 ## 1. Background
 
@@ -127,7 +127,7 @@ The route enumeration is dominated by Σ_i Σ_{|S|≤Q} C(J,|S|) |S|!, and the c
 routes = greedy_age_aware()
 best = routes
 for iter = 1..N:
-  pool = remove 2–4 served stores
+  pool = remove s served stores (default 2–4; recommended 4–6 after tuning)
   pool = pool + sample 1–2 currently unserved stores
   shuffle(pool)
   for store in pool:
@@ -139,7 +139,7 @@ for iter = 1..N:
 return best
 ```
 
-The greedy initial solution inserts stores in decreasing MLOR order. The repair step is the only place where age feasibility is enforced; it is also the component that can move a high-MLOR store from an old warehouse to a fresh one.
+The greedy initial solution inserts stores in decreasing MLOR order. The repair step is the only place where age feasibility is enforced; it is also the component that can move a high-MLOR store from an old warehouse to a fresh one. The destroy size is the sensitive parameter: 4–6 is the recommended setting, while 2–4 is kept as the default for the earlier runs and the ablation.
 
 ### 4.3 Cost and acceptance
 
