@@ -10,7 +10,7 @@ Fresh-food warehouses hold batches of different ages, and stores often reject de
 
 Two-echelon cold-chain networks move fresh products from a central warehouse or supplier to regional warehouses and then to stores. Warehouses hold inventory, and inventory is not homogeneous: batches have different production dates and therefore different remaining shelf life. Stores commonly impose a minimum remaining shelf life (MLOR) at delivery, either as a contractual acceptance rule or as a markdown trigger. A delivery that arrives too late, or after a long route, may be rejected even if the vehicle arrives within the time window.
 
-The operational decision is therefore not only where to open warehouses and how to route vehicles, but also which inventory age serves which store. Travel time is a shelf-life tax: if a batch of age a leaves warehouse i and reaches store j after t minutes, the remaining shelf life is L − a − t, and it must be at least MLOR_j. Old inventory has a shorter effective service radius.
+The operational decision is therefore not only where to open warehouses and how to route vehicles, but also which inventory age serves which store. Travel time is a shelf-life tax: if a batch of age a leaves warehouse i and reaches store j after time t, the remaining shelf life is L − a − t, and it must be at least MLOR_j. Old inventory has a shorter effective service radius.
 
 ## 2. Literature and gap
 
