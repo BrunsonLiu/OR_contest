@@ -1,6 +1,6 @@
 # Inventory age and store minimum remaining shelf life in warehouse-to-store distribution
 
-> 应用/扩展稿，目标 AOR / ITOR / CIE 一类；不投 EJOR Theory & Methodology（见 MLOR_POSITIONING.md）。
+> Working manuscript. Application/extension positioning; target journals AOR, ITOR, or CIE.
 
 ## Abstract
 
@@ -187,6 +187,12 @@ At 8 stores, the age-aware plan is better in 9 of 10 instances, with one tie and
 
 At 12 stores, we use a hold-out tuning protocol. The destroy size is selected on development seeds 5–9: default 2–4 has mean gap 31.69 and 2/5 optima, destroy 1–2 has 76.39 and 1/5, and destroy 4–6 and 6–8 both have 0.0 and 5/5; the tie is broken in favour of 4–6. On held-out seeds 10–19, destroy 4–6 has mean gap 1.78, maximum 17.81 and 9/10 optima, while the default has mean gap 13.43, maximum 116.45 and 8/10 optima. The 95% confidence interval of the tuned gap is [−2.25, 5.81], consistent with zero; the paired difference (default minus tuned) is 11.65 with interval [−14.70, 37.99], so with ten test instances the tuning improvement is numerically positive but not statistically significant. An earlier selection on seeds 0–4 was uninformative because the default was already optimal on all five development instances; it is documented but not used. The earlier in-sample figure of 1.27 on seeds 0–9 is therefore superseded by the held-out 1.78. At 20 stores, the tuned setting improves the greedy plan in 10 of 10 instances by 1301.1 on average, compared with 1280.1 for the default setting. The tuned setting is not uniformly better seed by seed—it is better on 6 of 10 and worse on 2 of 10 in the direct comparison—so we report both settings rather than presenting a single gap as the best achievable.
 
+The component ablation at 12 stores uses the default setting: the greedy construction has mean gap 473.4, removing the unserved-store retry gives 280.9, and the full ALNS gives 15.85. The retry is the largest contributor, which is consistent with the mechanism: an old warehouse leaves high-MLOR stores unserved, and only reinsertion can move them to a fresh warehouse. The ablation is not re-run under the tuned destroy size, so it should be read as a component check rather than as a tuned-configuration result.
+
+![Figure 2](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png)
+
+*Figure 2. ALNS ablation at 12 stores: mean gap to the exact optimum for greedy, no-unserved-retry, and full ALNS.*
+
 ### 5.4 Practical policies and larger instances
 
 The three policies are evaluated against the exact optimum at 8 and 12 stores. At 8 stores, the mean gaps are 194.7 for nearest feasible, 36.2 for freshest feasible and 305.8 for oldest feasible; at 12 stores they are 259.9, 110.7 and 444.6. The freshest-feasible rule is the best simple policy and reaches the optimum in 4 of 10 eight-store instances and 2 of 10 twelve-store instances.
@@ -205,6 +211,10 @@ The rejection penalty is varied from 0 to 800. At penalty 0, the age-blind plan 
 
 At 20 stores, an LP relaxation of the set-partitioning model provides a lower bound. The LP allows fractional routes and fractional opening; the mean relative gap between the ALNS cost and this bound is 9.0%, with a maximum of 14.1%. Because the relaxation is weak, this is a loose upper bound on the true gap, not an optimality proof.
 
+![Figure 1](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png)
+
+*Figure 1. Penalty sensitivity: mean gap between the age-blind and age-aware plans as the per-delivery rejection penalty grows; the break-even is about 7.*
+
 ### 5.7 Real-network illustration
 
 On the real-network instance, the greedy age-aware plan costs 2601.5, the blind plan costs 4884.9, and the ALNS reaches 2190.9, an improvement of 410.6 over greedy. The illustration shows that the mechanism survives on real geography and contest cost rates. It does not show that the model applies to real demand: the instance uses unit demand and rule-based ages and thresholds.
@@ -212,6 +222,18 @@ On the real-network instance, the greedy age-aware plan costs 2601.5, the blind 
 ### 5.8 What the experiments do and do not show
 
 The experiments support three claims: the age-aware plan is never worse than the age-blind plan on the tested instances; the ALNS is close to the exact optimum at 12 stores and improves greedy at 20 stores; and the age–distance–threshold interaction, rather than the cold-chain label, drives the difference. They do not support claims about optimality at 20 stores, about real demand, about multi-period inventory dynamics, or about a confirmed literature gap. Two qualifications follow from the intervals. The exact age-aware advantage is clearly positive at 8 and 12 stores (95% intervals [577, 1526] and [417, 1819]). The held-out ALNS gap and the tuning improvement are not statistically significant with ten instances; they are numerical, not proven.
+
+**Table 2. Means and 95% confidence intervals for the main comparisons.**
+
+| Comparison | Mean | 95% interval |
+| --- | --- | --- |
+| Exact age-aware advantage, 8 stores | 1051.3 | [576.96, 1525.64] |
+| Exact age-aware advantage, 12 stores | 1117.8 | [416.98, 1818.56] |
+| Held-out ALNS gap, destroy 4–6 | 1.78 | [−2.25, 5.81] |
+| Held-out default gap | 13.43 | [−12.78, 39.63] |
+| Paired difference, default minus tuned | 11.65 | [−14.70, 37.99] |
+| Rule plus local search, 8 stores | 7.30 | [−7.42, 22.02] |
+| Rule plus local search, 12 stores | 67.10 | [22.93, 111.28] |
 
 ### 5.9 Managerial implications
 
@@ -224,6 +246,24 @@ We studied a location-routing problem in which warehouse inventory age and a sto
 The results are conditional. The model is single-period, deterministic, single-echelon and unit-demand; stores have no inventory state, and the rejection penalty is a model device rather than an observed cost. A demand-weighted trial with contest demands (50–100 tons per day) degenerated because one visit per store cannot carry a city's demand, and it was reverted. Extending the model to split deliveries, multiple trips, store inventory, a second echelon, or multiple periods would change both the formulation and the solution methods.
 
 The literature position is also conditional. The MLOR concept has been studied in an operations–marketing setting, and perishable inventory-routing models already track remaining shelf life; the closest location-routing work does not include a store delivery threshold, but the full text of one integrated production–distribution paper could not be obtained. Until that comparison is complete, the contribution should be read as a conditional decision mechanism, not as a confirmed new problem.
+
+## Appendix A. Evidence map
+
+| Claim | Experiment |
+| --- | --- |
+| Exact age-aware versus age-blind, 8/12 stores | `mlor-dp-20261028`, `mlor-dp12-20261028` |
+| Held-out ALNS and tuning | `mlor-holdout2-20261031`, `mlor-dp12-ext-20261031`, `mlor-dp12-ext2-20261031` |
+| Strong baseline: rule plus local search | `mlor-policy-ls-20261031` |
+| 2×2 mechanism check | `mlor-mechanism-20261028` |
+| Network-design difference | `mlor-network-20261029` |
+| Penalty sensitivity | `mlor-sensitivity-20261028` |
+| LP bound, 20 stores | `mlor-bound-20261028` |
+| Sequencing counterexamples | `mlor-sequence-20261031` |
+| Confidence intervals | `mlor-stats-20261031b` |
+| Real-network illustration | `mlor-case-20261028` |
+| Four-store brute-force correctness | `tests/test_mlor_bruteforce.py` |
+
+All experiment outputs are under `results/experiments/<name>/`; the DP and ALNS implementations are in `src/analysis/mlor_dp2.py`, `src/analysis/mlor_dp12.py` and `src/analysis/mlor_alns.py`.
 
 ## References
 
