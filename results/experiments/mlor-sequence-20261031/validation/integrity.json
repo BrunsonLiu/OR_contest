@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "检验按MLOR降序访问是否总可行；为路由可行性NP-complete提供反例",
+  "snapshot_files": 88,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-30T17:24:48.609165+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-sequence-20261031/_runs/mlor-sequence/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-sequence-20261031/validation/integrity.json"
+  ],
+  "manifest_sha256": "c6b3ead7d5c73aed7958d084c55439603fe04eb2cffba55cfd3e01b8b2b3780a",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

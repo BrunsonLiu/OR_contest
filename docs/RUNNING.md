@@ -67,6 +67,7 @@ python -m unittest discover -s tests -v
 | `mlor-policy` | 三种实用策略基线 | `mlor_policy/` |
 | `mlor-policy-ls` | 最新鲜规则 + 2-opt/relocate 强基线 | `mlor_policy_ls/` |
 | `mlor-stats` | 关键差距的 95% 置信区间 | `mlor_stats/` |
+| `mlor-sequence` | MLOR 降序排序反例 | `mlor_sequence/` |
 | `mlor-dp12-ext` | 12 店精确 DP：种子 10—14 | `mlor_dp/` |
 | `mlor-dp12-ext2` | 12 店精确 DP：种子 15—19 | `mlor_dp/` |
 | `mlor-holdout` | 开发 0—4、测试 5—14（开发太易，未用） | `mlor_holdout/` |

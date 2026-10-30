@@ -110,6 +110,12 @@ All x_kjv with k = j are fixed to zero.
 
 The lemma is immediate from the constraint, but it is the reason the problem is not a standard location-routing problem: the feasible assignment of stores to warehouses depends on route time through the deadline. The problem is NP-hard, since it contains the vehicle-routing problem when only one warehouse is available and all thresholds are zero. Adding MLOR does not change the complexity class; it changes the feasible set.
 
+**Proposition 1.** Given a warehouse and a store set S, deciding whether S admits an order that meets all deadlines is NP-complete.
+
+*Proof sketch.* Set m_j = m for all j, so all deadlines become the common D = L − a − m. With travel time 1 on the edges of a graph and 2 otherwise, an order meets D = |S| − 1 iff it uses only 1-edges, i.e. iff the graph has a Hamiltonian path. The subproblem is therefore NP-complete even for one warehouse and equal thresholds. Consequently no simple sequencing rule is generally valid: a descending-MLOR order is not always feasible when some order is. In a random check of 44 feasible sets of size 3–4, 23 had an infeasible descending-MLOR order.
+
+This proposition is why the exact method enumerates permutations for each subset and why the ALNS repair checks the full route after every insertion, rather than sorting stores by threshold.
+
 The mixed-integer formulation has O(V J² + I + J) variables and O(J² V) constraints. With V bounded by J, both are O(J³). The formulation is compact; the difficulty is integrality and symmetry, not model size.
 
 ## 4. Solution methods

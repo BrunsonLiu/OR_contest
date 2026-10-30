@@ -241,6 +241,7 @@ All experiment outputs are under `results/experiments/<name>/`; the exact DP and
 | Practical policy baselines | `mlor-policy-20261029b` | `mlor_policy/summary.json` |
 | Rule plus local-search baseline | `mlor-policy-ls-20261031` | `mlor_policy_ls/summary.json` |
 | Confidence intervals | `mlor-stats-20261031b` | `mlor_stats/summary.json` |
+| Sequencing counterexamples | `mlor-sequence-20261031` | `mlor_sequence/summary.json` |
 | Hold-out tuning, 12 stores | `mlor-holdout2-20261031` | `mlor_holdout2/summary.json` |
 | Exact 12-store test seeds 10–19 | `mlor-dp12-ext-20261031`, `mlor-dp12-ext2-20261031` | `mlor_dp/summary.json` |
 | Rejection-penalty sensitivity | `mlor-sensitivity-20261028` | `mlor_sensitivity/summary.json` |
