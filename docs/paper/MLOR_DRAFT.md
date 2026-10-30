@@ -1,5 +1,7 @@
 # Age-aware cold-chain location-routing with store minimum remaining shelf life
 
+> 旧草稿，已被 [MLOR_MANUSCRIPT.md](MLOR_MANUSCRIPT.md) 取代；保留作过程记录。
+
 > 草稿，2026-10-28。文献：COR 2019 与 TRSC 2018 已读全文，Omega 2019 未读；在 Omega 核对前，不宣称“首次”。
 
 ## Abstract（草稿）
