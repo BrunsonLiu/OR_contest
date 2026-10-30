@@ -4,7 +4,7 @@
 
 ## Abstract（草稿）
 
-Fresh-food warehouses hold batches of different ages, and stores often reject deliveries whose remaining shelf life is below a store-specific minimum (MLOR). We study a cold-chain location-routing problem in which opening warehouses, assigning stores, routing vehicles, and using inventory of different ages are decided together. The key relation is that travel time consumes shelf life: an old batch can only serve nearby stores or stores with a low MLOR. We formulate a mixed-integer program, solve small and medium instances exactly by subset dynamic programming, and develop an age-feasible adaptive large neighbourhood search (ALNS) for larger instances. On 8- and 12-store synthetic instances, age-aware planning is never worse than an age-blind plan and is better in 9/10 and 7/10 cases. With a tuned destroy size, the ALNS reaches the exact optimum in 9/10 twelve-store instances (mean gap 1.27); with the default setting it reaches 7/10 (mean relative gap 2.14%). At 20 stores it improves the greedy plan by 1301.1 on average. A penalty sensitivity shows that age-aware planning pays once the per-delivery rejection cost exceeds about 7 in the synthetic scale. All parameters are synthetic; the results are conditional, not field estimates.
+Fresh-food warehouses hold batches of different ages, and stores often reject deliveries whose remaining shelf life is below a store-specific minimum (MLOR). We study a cold-chain location-routing problem in which opening warehouses, assigning stores, routing vehicles, and using inventory of different ages are decided together. The key relation is that travel time consumes shelf life: an old batch can only serve nearby stores or stores with a low MLOR. We formulate a mixed-integer program, solve small and medium instances exactly by subset dynamic programming, and develop an age-feasible adaptive large neighbourhood search (ALNS) for larger instances. On 8- and 12-store synthetic instances, age-aware planning is never worse than an age-blind plan and is better in 9/10 and 7/10 cases. With a destroy size selected on a development set, the ALNS reaches the exact optimum in 9/10 held-out twelve-store instances (mean gap 1.78); the default setting reaches 8/10 (mean gap 13.43). At 20 stores it improves the greedy plan by 1301.1 on average. A penalty sensitivity shows that age-aware planning pays once the per-delivery rejection cost exceeds about 7 in the synthetic scale. All parameters are synthetic; the results are conditional, not field estimates.
 
 ## 1. Background
 
@@ -173,8 +173,8 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | Minimal 2-warehouse 3-store check | Age-blind plan 220, execution 420 with one infeasible store; age-aware 260, zero infeasible |
 | Exact DP, 8 stores | Age-aware better 9/10, 0 worse, 1 tie |
 | Exact DP, 12 stores | Age-aware better 7/10, 0 worse, 3 ties |
-| ALNS vs exact, 12 stores | 7/10 optimal, mean gap 15.85, mean relative gap 2.14%, max 124.45 |
-| ALNS tuning, 12 stores | Destroy 4–6: mean gap 1.27, 9/10 optimal; default 2–4: 15.85, 7/10 |
+| ALNS vs exact, 12 stores (full-sample default) | 7/10 optimal, mean gap 15.85, mean relative gap 2.14%, max 124.45 |
+| ALNS tuning, 12 stores (hold-out) | Dev 5–9 selects destroy 4–6; test 10–19: 4–6 mean gap 1.78, 9/10; default 13.43, 8/10 |
 | ALNS tuning, 20 stores | Destroy 4–6 versus default: mean improvement 20.96 (6/10 better, 2/10 worse) |
 | ALNS, 20 stores | Default 2–4: 10/10 improve, mean 1280.1; tuned 4–6: 10/10, mean 1301.1 |
 | Ablation, 12 stores | Greedy gap 473.4; no unserved retry 280.9; full ALNS 15.85 |
@@ -199,13 +199,13 @@ Data and code. The synthetic generator uses fixed seeds, and each experiment run
 
 The ablation supports the role of the unserved-retry component: old warehouses leave high-MLOR stores unserved, and only reinsertion can place them at a fresh warehouse.
 
-A parameter check shows that the default destroy size is not tuned. At 12 stores, destroying 4–6 stores lowers the mean gap from 15.85 to 1.27 and reaches 9/10 optimal; at 20 stores it improves the mean cost by 20.96, better on 6/10 seeds and worse on 2/10. We therefore report both settings rather than presenting 2.14% as the best achievable. With destroy 4–6 as the main tuned setting, the 20-store improvement over greedy is 1301.1 (10/10).
+A hold-out tuning protocol replaces the earlier in-sample comparison. On development seeds 5–9, default 2–4 has mean gap 31.69 and 2/5 optima, destroy 1–2 has 76.39 and 1/5, and destroy 4–6 has 0.0 and 5/5; on held-out seeds 10–19, 4–6 has mean gap 1.78 and 9/10 optima, while the default has 13.43 and 8/10. An earlier selection on seeds 0–4 was uninformative because the default was already optimal there. The in-sample 1.27 on seeds 0–9 is superseded by the held-out 1.78. At 20 stores, 4–6 improves greedy 10/10 by 1301.1 versus 1280.1 for the default; it is better on 6/10 and worse on 2/10 seed by seed.
 
 The 2×2 mechanism check shows that the cold-chain label alone does nothing: with both age and MLOR removed, age-aware and blind plans coincide (gap 0). Freezing MLOR leaves a spoilage effect (581.6); freezing age leaves a deadline effect (74.0); together the gap is 1003.6, larger than the sum of the parts. The interaction—matching inventory age to distance and store threshold—is the mechanism, not the label.
 
 Age also changes network design, not only routes. At 8 stores, the age-aware plan opens the fresh warehouse in 10/10 instances, while the blind plan opens an old warehouse in 7/10; the open sets differ in 7/10 and the store-to-warehouse assignments differ in 7/10. At 12 stores the open sets differ in 6/10 and the age-aware plan opens the fresh warehouse 10/10 versus 4/10 for the blind plan. This is the decision consequence that makes the problem more than a routing constraint.
 
-Three practical policies—nearest feasible, freshest feasible, and oldest feasible (FEFO-like)—are compared with the exact optimum. The freshest-feasible rule is the best simple policy, with a mean gap of 36.2 at 8 stores and 110.7 at 12; oldest-feasible is the worst (305.8 and 444.6), and nearest-feasible sits in between (194.7 and 259.9). The tuned ALNS reaches 1.27 at 12, so a sensible rule is not enough.
+Three practical policies—nearest feasible, freshest feasible, and oldest feasible (FEFO-like)—are compared with the exact optimum. The freshest-feasible rule is the best simple policy, with a mean gap of 36.2 at 8 stores and 110.7 at 12; oldest-feasible is the worst (305.8 and 444.6), and nearest-feasible sits in between (194.7 and 259.9). The tuned ALNS reaches a held-out 1.78 at 12, so a sensible rule is not enough.
 
 A real-network illustration uses three contest RDCs (Guangzhou, Dongguan, Chengdu), the twelve nearest contest cities, and the contest last-leg rate of 1.45 per ton-km. Ages are 0/2.5/4.5, MLOR is assigned by population terciles, and demand is unit. The greedy age-aware cost is 2601.5 versus 4884.9 for the blind plan; the ALNS reaches 2190.9, an improvement of 410.6 over greedy. This is an illustration on real geography, not a case study: unit demand ignores the contest demand weights, and ages and MLOR are rule-based.
 
@@ -239,6 +239,8 @@ All experiment outputs are under `results/experiments/<name>/`; the exact DP and
 | Age × MLOR 2×2 mechanism check | `mlor-mechanism-20261028` | `mlor_mechanism/summary.json` |
 | Network-design difference | `mlor-network-20261029` | `mlor_network/summary.json` |
 | Practical policy baselines | `mlor-policy-20261029b` | `mlor_policy/summary.json` |
+| Hold-out tuning, 12 stores | `mlor-holdout2-20261031` | `mlor_holdout2/summary.json` |
+| Exact 12-store test seeds 10–19 | `mlor-dp12-ext-20261031`, `mlor-dp12-ext2-20261031` | `mlor_dp/summary.json` |
 | Rejection-penalty sensitivity | `mlor-sensitivity-20261028` | `mlor_sensitivity/summary.json` |
 | 20-store LP lower bound | `mlor-bound-20261028` | `mlor_bound/summary.json` |
 | Penalty and ablation figures | `mlor-figures-20261028` | `mlor_figures/*.png` |

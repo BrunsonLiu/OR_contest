@@ -1,0 +1,55 @@
+{
+  "instances": 5,
+  "aware_better": 4,
+  "blind_better": 0,
+  "mean_gap": -742.1052873834722,
+  "blind_infeasible_total": 19,
+  "rows": [
+    {
+      "seed": 10,
+      "aware_cost": 777.7391139084125,
+      "blind_planned": 761.7079159088747,
+      "blind_actual": 1761.7079159088748,
+      "blind_infeasible": 5,
+      "gap": -983.9688020004623
+    },
+    {
+      "seed": 11,
+      "aware_cost": 719.9825214553853,
+      "blind_planned": 708.9029613214204,
+      "blind_actual": 908.9029613214204,
+      "blind_infeasible": 1,
+      "gap": -188.92043986603517
+    },
+    {
+      "seed": 12,
+      "aware_cost": 724.7667364291166,
+      "blind_planned": 724.7667364291166,
+      "blind_actual": 724.7667364291166,
+      "blind_infeasible": 0,
+      "gap": 0.0
+    },
+    {
+      "seed": 13,
+      "aware_cost": 842.6507602703143,
+      "blind_planned": 822.1914296995552,
+      "blind_actual": 3222.191429699555,
+      "blind_infeasible": 12,
+      "gap": -2379.5406694292406
+    },
+    {
+      "seed": 14,
+      "aware_cost": 778.4031586933759,
+      "blind_planned": 736.499684314999,
+      "blind_actual": 936.499684314999,
+      "blind_infeasible": 1,
+      "gap": -158.09652562162307
+    }
+  ],
+  "scope": "twelve stores, three warehouses, capacity four, exact subset DP; synthetic",
+  "limitations": [
+    "Single product and single temperature zone.",
+    "One route order per subset is chosen by minimum cost.",
+    "Cost and penalty parameters are illustrative."
+  ]
+}

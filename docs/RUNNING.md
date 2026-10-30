@@ -65,6 +65,10 @@ python -m unittest discover -s tests -v
 | `mlor-alns-large` | 20 店推荐参数（破坏 4—6）主结果 | `mlor_alns_large/` |
 | `mlor-network` | 8/12 店开仓与分配差异 | `mlor_network/` |
 | `mlor-policy` | 三种实用策略基线 | `mlor_policy/` |
+| `mlor-dp12-ext` | 12 店精确 DP：种子 10—14 | `mlor_dp/` |
+| `mlor-dp12-ext2` | 12 店精确 DP：种子 15—19 | `mlor_dp/` |
+| `mlor-holdout` | 开发 0—4、测试 5—14（开发太易，未用） | `mlor_holdout/` |
+| `mlor-holdout2` | 开发 5—9、测试 10—19 的 holdout 调参 | `mlor_holdout2/` |
 | `plot-comparison` | 成本与求解质量比较 | `question4/problem4_robust/` |
 
 ```powershell

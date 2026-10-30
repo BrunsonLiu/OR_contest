@@ -61,6 +61,10 @@ TASKS = {
     "mlor-alns-large": "src/analysis/mlor_alns_large.py",
     "mlor-network": "src/analysis/mlor_network.py",
     "mlor-policy": "src/analysis/mlor_policy.py",
+    "mlor-dp12-ext": "src/analysis/mlor_dp12_ext.py",
+    "mlor-holdout": "src/analysis/mlor_holdout.py",
+    "mlor-dp12-ext2": "src/analysis/mlor_dp12_ext2.py",
+    "mlor-holdout2": "src/analysis/mlor_holdout2.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

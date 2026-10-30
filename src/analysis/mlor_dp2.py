@@ -95,9 +95,9 @@ def solve(routes):
     return best_cost, chosen
 
 
-def main():
+def main(seeds=range(10), label="eight stores"):
     rows = []
-    for seed in range(10):
+    for seed in seeds:
         stores = make_instance(seed)
         aware_routes = best_routes(stores, "actual", True)
         blind_routes = best_routes(stores, "zero", False)
@@ -124,7 +124,7 @@ def main():
         "mean_gap": sum(row["gap"] for row in rows) / len(rows),
         "blind_infeasible_total": sum(row["blind_infeasible"] for row in rows),
         "rows": rows,
-        "scope": "eight stores, three warehouses, capacity four, exact subset DP; synthetic",
+        "scope": f"{label}, three warehouses, capacity four, exact subset DP; synthetic",
         "limitations": [
             "Single product and single temperature zone.",
             "One route order per subset is chosen by minimum cost.",
