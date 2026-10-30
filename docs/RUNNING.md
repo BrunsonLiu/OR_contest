@@ -66,6 +66,7 @@ python -m unittest discover -s tests -v
 | `mlor-network` | 8/12 店开仓与分配差异 | `mlor_network/` |
 | `mlor-policy` | 三种实用策略基线 | `mlor_policy/` |
 | `mlor-policy-ls` | 最新鲜规则 + 2-opt/relocate 强基线 | `mlor_policy_ls/` |
+| `mlor-stats` | 关键差距的 95% 置信区间 | `mlor_stats/` |
 | `mlor-dp12-ext` | 12 店精确 DP：种子 10—14 | `mlor_dp/` |
 | `mlor-dp12-ext2` | 12 店精确 DP：种子 15—19 | `mlor_dp/` |
 | `mlor-holdout` | 开发 0—4、测试 5—14（开发太易，未用） | `mlor_holdout/` |

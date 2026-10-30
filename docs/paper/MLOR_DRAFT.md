@@ -199,7 +199,7 @@ Data and code. The synthetic generator uses fixed seeds, and each experiment run
 
 The ablation supports the role of the unserved-retry component: old warehouses leave high-MLOR stores unserved, and only reinsertion can place them at a fresh warehouse.
 
-A hold-out tuning protocol replaces the earlier in-sample comparison. On development seeds 5–9, default 2–4 has mean gap 31.69 and 2/5 optima, destroy 1–2 has 76.39 and 1/5, and destroy 4–6 has 0.0 and 5/5; on held-out seeds 10–19, 4–6 has mean gap 1.78 and 9/10 optima, while the default has 13.43 and 8/10. An earlier selection on seeds 0–4 was uninformative because the default was already optimal there. The in-sample 1.27 on seeds 0–9 is superseded by the held-out 1.78. At 20 stores, 4–6 improves greedy 10/10 by 1301.1 versus 1280.1 for the default; it is better on 6/10 and worse on 2/10 seed by seed.
+A hold-out tuning protocol replaces the earlier in-sample comparison. On development seeds 5–9, default 2–4 has mean gap 31.69 and 2/5 optima, destroy 1–2 has 76.39 and 1/5, and destroy 4–6 has 0.0 and 5/5; on held-out seeds 10–19, 4–6 has mean gap 1.78 and 9/10 optima, while the default has 13.43 and 8/10. An earlier selection on seeds 0–4 was uninformative because the default was already optimal there. The in-sample 1.27 on seeds 0–9 is superseded by the held-out 1.78. At 20 stores, 4–6 improves greedy 10/10 by 1301.1 versus 1280.1 for the default; it is better on 6/10 and worse on 2/10 seed by seed. The 95% interval of the held-out tuned gap is [−2.25, 5.81], and the paired difference to the default is 11.65 with interval [−14.70, 37.99], so the tuning gain is numerical, not statistically significant at ten instances. The exact age-aware advantage is clearly positive at 8 and 12 stores (intervals [577, 1526] and [417, 1819]).
 
 The 2×2 mechanism check shows that the cold-chain label alone does nothing: with both age and MLOR removed, age-aware and blind plans coincide (gap 0). Freezing MLOR leaves a spoilage effect (581.6); freezing age leaves a deadline effect (74.0); together the gap is 1003.6, larger than the sum of the parts. The interaction—matching inventory age to distance and store threshold—is the mechanism, not the label.
 
@@ -240,6 +240,7 @@ All experiment outputs are under `results/experiments/<name>/`; the exact DP and
 | Network-design difference | `mlor-network-20261029` | `mlor_network/summary.json` |
 | Practical policy baselines | `mlor-policy-20261029b` | `mlor_policy/summary.json` |
 | Rule plus local-search baseline | `mlor-policy-ls-20261031` | `mlor_policy_ls/summary.json` |
+| Confidence intervals | `mlor-stats-20261031b` | `mlor_stats/summary.json` |
 | Hold-out tuning, 12 stores | `mlor-holdout2-20261031` | `mlor_holdout2/summary.json` |
 | Exact 12-store test seeds 10–19 | `mlor-dp12-ext-20261031`, `mlor-dp12-ext2-20261031` | `mlor_dp/summary.json` |
 | Rejection-penalty sensitivity | `mlor-sensitivity-20261028` | `mlor_sensitivity/summary.json` |
