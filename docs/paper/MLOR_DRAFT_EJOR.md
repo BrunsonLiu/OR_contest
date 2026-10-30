@@ -181,7 +181,9 @@ At 12 stores, we use a hold-out tuning protocol. The destroy size is selected on
 
 ### 5.4 Practical policies and larger instances
 
-The three policies are evaluated against the exact optimum at 8 and 12 stores. At 8 stores, the mean gaps are 194.7 for nearest feasible, 36.2 for freshest feasible and 305.8 for oldest feasible; at 12 stores they are 259.9, 110.7 and 444.6. The freshest-feasible rule is the best simple policy and reaches the optimum in 4 of 10 eight-store instances and 2 of 10 twelve-store instances. The tuned ALNS reaches 1.27 at 12 stores. A sensible rule is therefore not sufficient, but it is also not negligible: the comparison is against informed policies, not only against an age-blind plan.
+The three policies are evaluated against the exact optimum at 8 and 12 stores. At 8 stores, the mean gaps are 194.7 for nearest feasible, 36.2 for freshest feasible and 305.8 for oldest feasible; at 12 stores they are 259.9, 110.7 and 444.6. The freshest-feasible rule is the best simple policy and reaches the optimum in 4 of 10 eight-store instances and 2 of 10 twelve-store instances.
+
+A stronger baseline adds 2-opt and relocate moves to the freshest-feasible solution, using the same age-feasibility check. At 8 stores it reaches a mean gap of 7.30 with 7/10 optima, so a rule plus local search nearly solves the small instances. At 12 stores it reaches 67.10 with 2/10 optima, while the held-out ALNS reaches 1.78 with 9/10. The comparison is therefore against an informed rule with local improvement, not only against an age-blind plan or a myopic rule, and the ALNS advantage survives at 12 stores.
 
 ### 5.5 Mechanism and network design
 
@@ -205,7 +207,7 @@ The experiments support three claims: the age-aware plan is never worse than the
 
 ## 6. Conclusions
 
-We studied a location-routing problem in which warehouse inventory age and a store-specific minimum remaining shelf life determine whether a delivery is acceptable. The shelf-life condition is an arrival deadline that depends on the serving warehouse's age; as a result, old inventory has a shorter effective service radius, and the assignment of stores to warehouses cannot be separated from route time. The exact subset dynamic program solves 8- and 12-store instances, and the age-feasible ALNS reaches the exact optimum in 9 of 10 twelve-store instances with a tuned destroy size. The mechanism check shows that the effect disappears when both age and MLOR are removed and is superadditive when both are present.
+We studied a location-routing problem in which warehouse inventory age and a store-specific minimum remaining shelf life determine whether a delivery is acceptable. The shelf-life condition is an arrival deadline that depends on the serving warehouse's age; as a result, old inventory has a shorter effective service radius, and the assignment of stores to warehouses cannot be separated from route time. The exact subset dynamic program solves 8- and 12-store instances, and the age-feasible ALNS reaches the exact optimum in 9 of 10 held-out twelve-store instances with a destroy size selected on a development set. The mechanism check shows that the effect disappears when both age and MLOR are removed and is superadditive when both are present.
 
 The results are conditional. The model is single-period, deterministic, single-echelon and unit-demand; stores have no inventory state, and the rejection penalty is a model device rather than an observed cost. A demand-weighted trial with contest demands (50–100 tons per day) degenerated because one visit per store cannot carry a city's demand, and it was reverted. Extending the model to split deliveries, multiple trips, store inventory, a second echelon, or multiple periods would change both the formulation and the solution methods.
 

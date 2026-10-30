@@ -65,6 +65,7 @@ TASKS = {
     "mlor-holdout": "src/analysis/mlor_holdout.py",
     "mlor-dp12-ext2": "src/analysis/mlor_dp12_ext2.py",
     "mlor-holdout2": "src/analysis/mlor_holdout2.py",
+    "mlor-policy-ls": "src/analysis/mlor_policy_ls.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 

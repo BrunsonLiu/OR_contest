@@ -182,7 +182,7 @@ The 12- and 20-store runs use the same generator with more stores; the ages and 
 | LP bound, 20 stores | Mean relative gap 9.0%, max 14.1% (weak LP relaxation, not an optimality proof) |
 | Mechanism 2×2, 8 stores | age+MLOR 1003.6 (5/5 aware better); MLOR only 74.0 (2/5); age only 581.6 (3/5); neither 0 (0/5) |
 | Network design, 8/12 stores | Open sets differ 7/10 and 6/10; age-aware opens fresh W0 10/10, blind 3/10 and 4/10 |
-| Policy baselines, 8/12 stores | Nearest 194.7/259.9; freshest 36.2/110.7; oldest 305.8/444.6 (mean gap) |
+| Policy baselines, 8/12 stores | Nearest 194.7/259.9; freshest 36.2/110.7; oldest 305.8/444.6; freshest + 2-opt/relocate 7.30/67.10 (mean gap) |
 | Real-network illustration | Three contest RDCs, twelve cities, contest last-leg rate: greedy aware 2601.5, blind 4884.9, ALNS 2190.9 (improvement 410.6) |
 
 Figures: [penalty sensitivity](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png) and [ALNS ablation](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png).
@@ -205,7 +205,7 @@ The 2×2 mechanism check shows that the cold-chain label alone does nothing: wit
 
 Age also changes network design, not only routes. At 8 stores, the age-aware plan opens the fresh warehouse in 10/10 instances, while the blind plan opens an old warehouse in 7/10; the open sets differ in 7/10 and the store-to-warehouse assignments differ in 7/10. At 12 stores the open sets differ in 6/10 and the age-aware plan opens the fresh warehouse 10/10 versus 4/10 for the blind plan. This is the decision consequence that makes the problem more than a routing constraint.
 
-Three practical policies—nearest feasible, freshest feasible, and oldest feasible (FEFO-like)—are compared with the exact optimum. The freshest-feasible rule is the best simple policy, with a mean gap of 36.2 at 8 stores and 110.7 at 12; oldest-feasible is the worst (305.8 and 444.6), and nearest-feasible sits in between (194.7 and 259.9). The tuned ALNS reaches a held-out 1.78 at 12, so a sensible rule is not enough.
+Three practical policies—nearest feasible, freshest feasible, and oldest feasible (FEFO-like)—are compared with the exact optimum. The freshest-feasible rule is the best simple policy, with a mean gap of 36.2 at 8 stores and 110.7 at 12; oldest-feasible is the worst (305.8 and 444.6), and nearest-feasible sits in between (194.7 and 259.9). Adding 2-opt and relocate moves to the freshest rule yields a mean gap of 7.30 with 7/10 optima at 8 stores, but 67.10 with 2/10 at 12, while the held-out ALNS reaches 1.78 with 9/10. A sensible rule with local improvement nearly solves the small instances but not the 12-store ones.
 
 A real-network illustration uses three contest RDCs (Guangzhou, Dongguan, Chengdu), the twelve nearest contest cities, and the contest last-leg rate of 1.45 per ton-km. Ages are 0/2.5/4.5, MLOR is assigned by population terciles, and demand is unit. The greedy age-aware cost is 2601.5 versus 4884.9 for the blind plan; the ALNS reaches 2190.9, an improvement of 410.6 over greedy. This is an illustration on real geography, not a case study: unit demand ignores the contest demand weights, and ages and MLOR are rule-based.
 
@@ -239,6 +239,7 @@ All experiment outputs are under `results/experiments/<name>/`; the exact DP and
 | Age × MLOR 2×2 mechanism check | `mlor-mechanism-20261028` | `mlor_mechanism/summary.json` |
 | Network-design difference | `mlor-network-20261029` | `mlor_network/summary.json` |
 | Practical policy baselines | `mlor-policy-20261029b` | `mlor_policy/summary.json` |
+| Rule plus local-search baseline | `mlor-policy-ls-20261031` | `mlor_policy_ls/summary.json` |
 | Hold-out tuning, 12 stores | `mlor-holdout2-20261031` | `mlor_holdout2/summary.json` |
 | Exact 12-store test seeds 10–19 | `mlor-dp12-ext-20261031`, `mlor-dp12-ext2-20261031` | `mlor_dp/summary.json` |
 | Rejection-penalty sensitivity | `mlor-sensitivity-20261028` | `mlor_sensitivity/summary.json` |
