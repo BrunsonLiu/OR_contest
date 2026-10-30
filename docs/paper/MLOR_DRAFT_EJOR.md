@@ -1,0 +1,224 @@
+# Inventory age and store minimum remaining shelf life in cold-chain location-routing
+
+## Abstract
+
+Retail cold-chain warehouses hold batches of different ages, and stores often reject deliveries whose remaining shelf life is below a store-specific minimum (MLOR). Because travel time consumes shelf life, the age of the inventory at a warehouse determines which stores that warehouse can serve. We study a single-period, deterministic location-routing problem in which opening warehouses, assigning stores, routing vehicles, and selecting the inventory age are decided together. The problem is formulated as a mixed-integer program; the shelf-life condition reduces to an arrival deadline that depends on the serving warehouse's age and the store's threshold. We solve small and medium instances exactly by subset dynamic programming and develop an age-feasible adaptive large neighbourhood search (ALNS) for larger instances. On 8- and 12-store synthetic instances, an age-aware plan is never worse than an age-blind plan and is better in 9/10 and 7/10 cases. With a tuned destroy size, the ALNS reaches the exact optimum in 9/10 twelve-store instances (mean gap 1.27); with the default setting it reaches 7/10 (mean relative gap 2.14%). At 20 stores it improves a greedy plan by 1301.1 on average. Three practical policies are consistently worse than the exact and ALNS solutions, and a 2×2 check shows that the age–distance–threshold interaction, rather than the cold-chain label, drives the difference. All parameters are synthetic; the results are conditional and do not constitute field estimates.
+
+## 1. Introduction
+
+A cold-chain distribution network moves fresh products from warehouses to retail stores. The inventory at a warehouse is not homogeneous: batches differ in production date and therefore in remaining shelf life. Stores commonly impose a minimum remaining shelf life at delivery, either as a contractual acceptance rule or as a markdown trigger. A delivery that arrives after a long route may be rejected even when the vehicle arrives within its time window, because the product has spent too much of its shelf life in transit.
+
+The operational consequence is that travel time acts as a shelf-life tax. If a batch of age a leaves warehouse i and reaches store j after time t, the remaining shelf life is L − a − t, and it must be at least the store's threshold m_j. An old batch therefore has a shorter effective service radius: it can serve nearby stores, or stores with a low threshold, but not distant stores with a high threshold. This relation couples decisions that are often studied separately: which warehouses to open, which store is assigned to which warehouse, in what order a vehicle visits its stores, and which inventory age is used.
+
+We study this coupling in a single-period, deterministic setting. The question is not whether shelf life matters—it obviously does—but whether the age–distance–threshold relation changes the network design in a way that a planner who ignores age would miss. We formulate the problem as a mixed-integer program, solve small and medium instances exactly by subset dynamic programming, and develop an age-feasible ALNS for larger instances. The experiments compare age-aware and age-blind plans, three practical assignment policies, and an exact lower bound at 20 stores.
+
+The paper is positioned against three literatures. Perishable inventory-routing models track remaining shelf life and freshness but typically keep the depot fixed (Coelho and Laporte, 2014; Crama et al., 2018). Two-echelon inventory-routing and location-routing models decide network structure and routes but do not model a store-specific delivery threshold (Govindan et al., 2014; Rohmer et al., 2019). The MLOR concept itself has been studied in an operations–marketing setting (Singh and Kuthambalayan, 2022), but not, to our knowledge, inside a location-routing model. The precise difference—warehouse age, store-specific threshold, and location-routing decided together—remains to be verified against the closest work, including Qiu et al. (2019), whose full text we could not obtain.
+
+Our contributions are therefore modest and specific. First, we formulate a location-routing model in which the shelf-life condition is an arrival deadline determined jointly by warehouse age and store threshold. Second, we give an exact subset dynamic program for small and medium instances and an age-feasible ALNS for larger ones, and we compare both with practical policies rather than only with an age-blind straw man. Third, we isolate the mechanism: removing age and MLOR together eliminates the decision difference, while removing either one alone leaves a smaller effect. We do not claim a new problem class; the evidence supports a conditional decision mechanism, not a field recommendation.
+
+## 2. Related work
+
+### 2.1 Perishable inventory routing
+
+Perishable inventory-routing models combine replenishment, inventory and routing decisions when product quality decays over time. Coelho and Laporte (2014) study joint replenishment, delivery and inventory policies for perishable products and show that age-dependent inventory materially changes the cost structure. Crama et al. (2018) model a stochastic inventory-routing problem in which store inventory is disaggregated by remaining shelf life, issuing follows FIFO, and a stockout-probability service level is imposed; they report freshness and waste metrics in addition to profit. Their model is multi-period and keeps the depot fixed. Our setting is single-period and includes location decisions, and the threshold applies at delivery rather than as a stockout-probability service level.
+
+### 2.2 Two-echelon inventory routing and location-routing
+
+Two-echelon inventory-routing models decide how much to ship from a supplier to an intermediate depot and from the depot to customers. Rohmer et al. (2019) formulate a two-echelon inventory-routing problem with depot storage, customer delivery patterns, transport and holding costs, and solve it with a mixed-integer program and an ALNS. Their full text contains no remaining-shelf-life state and no store delivery threshold. Govindan et al. (2014) study a two-echelon location-routing problem with time windows for perishable food, focusing on network design and sustainability. Neither model makes the delivered shelf life a function of warehouse age and route time.
+
+### 2.3 Minimum remaining shelf life
+
+The MLOR concept appears in retail practice and in adjacent OR work. Singh and Kuthambalayan (2022) integrate operations and marketing decisions when consumers require a target minimum remaining shelf life; their focus is on the operations–marketing interface rather than on location and routing. Qiu et al. (2019) integrate production, replenishment, delivery, routing and inventory for perishable products, but the full text is closed access and we have not been able to verify whether a store-level remaining-shelf-life constraint is present. We therefore treat the location-routing version as a difference to be verified, not as a confirmed gap.
+
+### 2.4 Positioning
+
+The model in this paper combines three standard components: a single-echelon location-routing structure, an age-dependent shelf-life state, and a store-specific delivery threshold. The combination is deliberate but not novel in any of its parts. What can be evaluated is whether the combination produces a decision consequence that the components do not produce separately. Section 5 reports such a consequence: age-aware and age-blind plans open different warehouses and assign stores differently, not merely route them differently.
+
+## 3. Problem formulation
+
+### 3.1 Setting and assumptions
+
+A single planner decides, for one period, which candidate warehouses to open, which store is served by which open warehouse, the route of each vehicle, and which warehouse age serves each store. Demand is deterministic and unit-sized; each store is visited at most once. Each warehouse holds one batch of known age a_i. A store j accepts a delivery only if the remaining shelf life at arrival is at least m_j. The objective includes opening, vehicle, transport and unserved penalties.
+
+The assumptions are explicit because they define the scope of the results. The model is single-period and deterministic; inventory age does not evolve within the period. The network is single-echelon, from warehouses to stores; the contest background includes a central warehouse, but no CDC-to-RDC leg is modeled. Demand is unit-sized, so vehicle capacity is expressed as a number of stores. Stores have no inventory state; MLOR is a delivery acceptance condition, not the shelf life at which the product is sold. Travel time is deterministic and proportional to distance. These choices are summarized in Table 1.
+
+**Table 1. Modeled and unmodeled dimensions.**
+
+| Dimension | Modeled | Not modeled |
+| --- | --- | --- |
+| Time | Single period, deterministic | Multi-period age evolution, replenishment |
+| Network | Warehouse to store | CDC to RDC |
+| Inventory | One batch and one age per warehouse | Batch mixing, FIFO issuing |
+| Demand | Unit demand, one visit per store | Tons, split delivery, multiple trips |
+| MLOR | Hard delivery threshold | Store inventory, shelf life at sale |
+| Costs | Opening, vehicle, distance, unserved penalty | Holding, waste, markdown, stockout |
+| Uncertainty | None | Random demand, travel time, age |
+
+### 3.2 Mixed-integer formulation
+
+Let I be the set of candidate warehouses, J the set of stores, and V the set of vehicles, each based at one warehouse i(v). Let L be the shelf life, a_i the age at warehouse i, m_j the store threshold, d_j the demand (d_j = 1 in the unit-demand abstraction), Q the vehicle capacity in demand units, τ_kj the travel time, c_kj the travel cost, F_i the opening cost, G the vehicle fixed cost, and P the penalty per unserved store.
+
+Variables are y_i ∈ {0,1} for opening, r_v ∈ {0,1} for vehicle use, x_kjv ∈ {0,1} for traveling from k to j on vehicle v (k = 0 denotes the vehicle's warehouse), T_j ≥ 0 for arrival time, and s_j ∈ {0,1} for service.
+
+Each served store is visited once:
+
+```text
+Σ_v Σ_{k∈J∪{0}} x_kjv = s_j,   j ∈ J.
+```
+
+Flow conservation at stores, and one departure and one return per used vehicle:
+
+```text
+Σ_{k∈J∪{0}} x_kjv = Σ_{k∈J∪{0}} x_jkv,   j ∈ J, v ∈ V,
+Σ_{j∈J} x_0jv = r_v,   v ∈ V,
+Σ_{j∈J} x_j0v = r_v,   v ∈ V.
+```
+
+Capacity and opening:
+
+```text
+Σ_j d_j Σ_k x_kjv ≤ Q r_v,   v ∈ V,
+y_i(v) ≥ r_v,   v ∈ V.
+```
+
+Time propagation:
+
+```text
+T_j ≥ T_k + τ_kj − M(1 − x_kjv),   j,k ∈ J, v ∈ V,
+T_j ≥ τ_i(v),j − M(1 − x_0jv),   j ∈ J, v ∈ V.
+```
+
+Remaining shelf life at delivery, applied only for the vehicle that serves j:
+
+```text
+T_j ≤ L − a_i(v) − m_j + M(1 − Σ_{k∈J∪{0}} x_kjv),   j ∈ J, v ∈ V.
+```
+
+The objective is
+
+```text
+min Σ_i F_i y_i + G Σ_v r_v + Σ_{k,j,v} c_kj x_kjv + P Σ_j (1 − s_j).
+```
+
+All x_kjv with k = j are fixed to zero.
+
+### 3.3 Structural observation and complexity
+
+**Lemma 1.** For a fixed serving vehicle v and store j, the shelf-life constraint is equivalent to the arrival deadline T_j ≤ L − a_i(v) − m_j. The maximum inventory age that can serve j is L − m_j − T_j, which decreases one-for-one with travel time.
+
+The lemma is immediate from the constraint, but it is the reason the problem is not a standard location-routing problem: the feasible assignment of stores to warehouses depends on route time through the deadline. The problem is NP-hard, since it contains the vehicle-routing problem when only one warehouse is available and all thresholds are zero. Adding MLOR does not change the complexity class; it changes the feasible set.
+
+The mixed-integer formulation has O(V J² + I + J) variables and O(J² V) constraints. With V bounded by J, both are O(J³). The formulation is compact; the difficulty is integrality and symmetry, not model size.
+
+## 4. Solution methods
+
+### 4.1 Exact subset dynamic programming
+
+For each warehouse i and each store subset S with |S| ≤ Q, we enumerate the permutations of S and retain the cheapest order that satisfies every store's deadline. A second dynamic program covers stores and opened warehouses.
+
+```text
+for i in I:
+  for S ⊆ J with 1 ≤ |S| ≤ Q:
+    route[i,S] = argmin over π ∈ Perm(S) of cost(i,π)
+                 subject to T_j(π) ≤ L − a_i − m_j for all j ∈ S
+dp[0,0] = 0
+for mask, openmask:
+  for i in I, S ⊆ J \ mask:
+    if route[i,S] exists:
+      dp[mask ∪ S, openmask ∪ {i}] =
+        min(dp[...], dp[mask, openmask] + cost(route[i,S])
+            + (F_i if i ∉ openmask else 0))
+return min over openmask of dp[J, openmask]
+```
+
+The route enumeration is O(I J^Q) for fixed Q; the covering DP has O(2^J 2^I) states and O(2^J 2^I J^Q) transitions in the worst case. We use this method for 8 and 12 stores. A four-store brute-force enumeration over set partitions, warehouse assignments and route orders matches the DP cost, which provides an independent correctness check.
+
+### 4.2 Age-feasible ALNS
+
+For larger instances we use an adaptive large neighbourhood search with an age-feasible repair step.
+
+```text
+routes = greedy_age_aware()
+best = routes
+for iter = 1..N:
+  pool = remove s served stores (default 2–4; recommended 4–6)
+  pool = pool + sample up to 2 currently unserved stores
+  shuffle(pool)
+  for store in pool:
+    insert at the cheapest position across all routes and warehouses
+      such that every store on the route still meets its deadline;
+      otherwise open a new route; otherwise leave unserved
+  if cost(routes) < cost(best):
+    best = routes
+return best
+```
+
+The greedy construction inserts stores in decreasing MLOR order. The repair step is the only place where age feasibility is enforced, and it is the component that can move a high-MLOR store from an old warehouse to a fresh one. The destroy size is the sensitive parameter: 4–6 is the recommended setting; 2–4 is retained as the default for the ablation and earlier runs.
+
+### 4.3 Baselines
+
+We compare against four baselines. The age-blind plan solves the same routing and covering problem with age zero and no MLOR, then is evaluated under the real ages and thresholds; it represents a planner with the same optimization capability but no age information. Three practical policies assign each store to a warehouse by a rule—nearest feasible, freshest feasible, or oldest feasible (FEFO-like)—and insert it greedily into that warehouse's routes. The greedy age-aware construction is the initial solution of the ALNS. These baselines are deliberately different in strength: the age-blind plan is strong but uninformed, while the policies are informed but myopic.
+
+## 5. Computational experiments
+
+### 5.1 Design
+
+All synthetic instances use the same generator. Shelf life is 6 days; warehouse ages are 0, 2.5 and 4.5 days; store thresholds are 1, 2 or 3 days; vehicle capacity is 4 stores; opening cost is 100; vehicle fixed cost is 50; transport cost is 0.5 per km; speed is 100 km per day; the unserved penalty is 200, varied in the sensitivity; store coordinates are uniform on [0,300]². The 12- and 20-store runs use the same generator with more stores. Each experiment is run through the repository entry point with an isolated output directory, and the reported numbers are taken from those outputs.
+
+The real-network illustration is separate: it uses three contest regional warehouses (Guangzhou, Dongguan, Chengdu), the twelve nearest contest cities, the contest last-leg rate of 1.45 per ton-km, unit demand, and rule-based ages and thresholds. It is an illustration on real geography, not a case study.
+
+### 5.2 Exact small and medium instances
+
+The minimal two-warehouse, three-store instance is constructed so that the age-blind plan assigns a high-threshold store to an old warehouse. The blind plan costs 220 in planning and 420 in execution, with one infeasible delivery; the age-aware plan costs 260 with no infeasible delivery.
+
+At 8 stores, the age-aware plan is better in 9 of 10 instances, with one tie and no loss. At 12 stores, it is better in 7 of 10, with three ties and no loss. The average advantage is 1051.3 at 8 stores and 1117.8 at 12 stores. These comparisons are exact on both sides: the age-aware cost is the optimal feasible cost, and the age-blind cost is the optimal age-zero plan evaluated under the real ages.
+
+### 5.3 ALNS quality and tuning
+
+At 12 stores, the default ALNS reaches the exact optimum in 7 of 10 instances, with a mean gap of 15.85, a mean relative gap of 2.14% and a maximum gap of 124.45. A parameter check shows that the default destroy size is not tuned: destroying 4–6 stores lowers the mean gap to 1.27 and reaches 9 of 10 optima, while the iteration budget has already converged at 200. At 20 stores, the tuned setting improves the greedy plan in 10 of 10 instances by 1301.1 on average, compared with 1280.1 for the default setting. The tuned setting is not uniformly better seed by seed—it is better on 6 of 10 and worse on 2 of 10 in the direct comparison—so we report both settings rather than presenting 2.14% as the best achievable.
+
+### 5.4 Practical policies and larger instances
+
+The three policies are evaluated against the exact optimum at 8 and 12 stores. At 8 stores, the mean gaps are 194.7 for nearest feasible, 36.2 for freshest feasible and 305.8 for oldest feasible; at 12 stores they are 259.9, 110.7 and 444.6. The freshest-feasible rule is the best simple policy and reaches the optimum in 4 of 10 eight-store instances and 2 of 10 twelve-store instances. The tuned ALNS reaches 1.27 at 12 stores. A sensible rule is therefore not sufficient, but it is also not negligible: the comparison is against informed policies, not only against an age-blind plan.
+
+### 5.5 Mechanism and network design
+
+The 2×2 check separates the two components. With both age and MLOR removed, the age-aware and age-blind plans coincide, so the cold-chain label alone produces no decision difference. With MLOR only (all warehouses fresh), the mean difference is 74.0; with age only (all thresholds zero), it is 581.6; with both, it is 1003.6, larger than the sum of the parts. The interaction—matching inventory age to distance and store threshold—is the mechanism, not either component alone.
+
+The difference is also visible in network design. At 8 stores, the age-aware plan opens the fresh warehouse in 10 of 10 instances, while the blind plan opens an old warehouse in 7 of 10; the open sets differ in 7 of 10 and the store-to-warehouse assignments differ in 7 of 10. At 12 stores, the open sets differ in 6 of 10, and the age-aware plan opens the fresh warehouse in 10 of 10 versus 4 of 10 for the blind plan. This is the decision consequence that makes the problem more than a routing constraint, although the three-warehouse design (one fresh, two old) makes the result less surprising than it would be with a richer age distribution.
+
+### 5.6 Sensitivity and lower bound
+
+The rejection penalty is varied from 0 to 800. At penalty 0, the age-blind plan is cheaper by 36.4 because it avoids the extra transport; from penalty 50 onward, the age-aware plan is better in all five instances (223.6 at 50, 483.6 at 100, 1003.6 at 200). With about 5.2 infeasible deliveries per instance, the break-even penalty is about 7 per delivery. The break-even is a model quantity, not an observed markdown cost.
+
+At 20 stores, an LP relaxation of the set-partitioning model provides a lower bound. The LP allows fractional routes and fractional opening; the mean relative gap between the ALNS cost and this bound is 9.0%, with a maximum of 14.1%. Because the relaxation is weak, this is a loose upper bound on the true gap, not an optimality proof.
+
+### 5.7 Real-network illustration
+
+On the real-network instance, the greedy age-aware plan costs 2601.5, the blind plan costs 4884.9, and the ALNS reaches 2190.9, an improvement of 410.6 over greedy. The illustration shows that the mechanism survives on real geography and contest cost rates. It does not show that the model applies to real demand: the instance uses unit demand and rule-based ages and thresholds.
+
+### 5.8 What the experiments do and do not show
+
+The experiments support three claims: the age-aware plan is never worse than the age-blind plan on the tested instances; the ALNS is close to the exact optimum at 12 stores and improves greedy at 20 stores; and the age–distance–threshold interaction, rather than the cold-chain label, drives the difference. They do not support claims about optimality at 20 stores, about real demand, about multi-period inventory dynamics, or about a confirmed literature gap.
+
+## 6. Conclusions
+
+We studied a location-routing problem in which warehouse inventory age and a store-specific minimum remaining shelf life determine whether a delivery is acceptable. The shelf-life condition is an arrival deadline that depends on the serving warehouse's age; as a result, old inventory has a shorter effective service radius, and the assignment of stores to warehouses cannot be separated from route time. The exact subset dynamic program solves 8- and 12-store instances, and the age-feasible ALNS reaches the exact optimum in 9 of 10 twelve-store instances with a tuned destroy size. The mechanism check shows that the effect disappears when both age and MLOR are removed and is superadditive when both are present.
+
+The results are conditional. The model is single-period, deterministic, single-echelon and unit-demand; stores have no inventory state, and the rejection penalty is a model device rather than an observed cost. A demand-weighted trial with contest demands (50–100 tons per day) degenerated because one visit per store cannot carry a city's demand, and it was reverted. Extending the model to split deliveries, multiple trips, store inventory, a second echelon, or multiple periods would change both the formulation and the solution methods.
+
+The literature position is also conditional. The MLOR concept has been studied in an operations–marketing setting, and perishable inventory-routing models already track remaining shelf life; the closest location-routing work does not include a store delivery threshold, but the full text of one integrated production–distribution paper could not be obtained. Until that comparison is complete, the contribution should be read as a conditional decision mechanism, not as a confirmed new problem.
+
+## References
+
+Coelho, L.C., Laporte, G., 2014. Optimal joint replenishment, delivery and inventory management policies for perishable products. Computers & Operations Research 47, 42–52.
+
+Crama, Y., Rezaei, M., Savelsbergh, M., Van Woensel, T., 2018. Stochastic inventory routing for perishable products. Transportation Science.
+
+Govindan, K., Jafarian, A., Khodaverdi, R., Devika, K., 2014. Two-echelon multiple-vehicle location–routing problem with time windows for optimization of sustainable supply chain network of perishable food. International Journal of Production Economics 152, 9–28.
+
+Qiu, Y., Qiao, J., Pardalos, P.M., 2019. Optimal production, replenishment, delivery, routing and inventory management policies for products with perishable inventory. Omega.
+
+Rohmer, S.U.K., Claassen, G.D.H., Laporte, G., 2019. A two-echelon inventory routing problem for perishable products. Computers & Operations Research 107, 156–172.
+
+Singh, N.K., Kuthambalayan, T.S., 2022. Integrating operations and marketing decisions to manage perishability risks with target minimum remaining shelf-life available to consumers. Computers & Industrial Engineering 164, 107812.
