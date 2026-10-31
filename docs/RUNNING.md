@@ -72,6 +72,7 @@ python -m unittest discover -s tests -v
 | `mlor-tabu` | 同评估预算的 tabu search 对比 | `mlor_tabu/` |
 | `mlor-ga` | 同评估预算的遗传算法对比 | `mlor_ga/` |
 | `mlor-runtime` | DP 与四种启发式的实际运行时间 | `mlor_runtime/` |
+| `mlor-robustness` | 仓库年龄偏差下的计划鲁棒性 | `mlor_robustness/` |
 | `mlor-dp12-ext` | 12 店精确 DP：种子 10—14 | `mlor_dp/` |
 | `mlor-dp12-ext2` | 12 店精确 DP：种子 15—19 | `mlor_dp/` |
 | `mlor-holdout` | 开发 0—4、测试 5—14（开发太易，未用） | `mlor_holdout/` |

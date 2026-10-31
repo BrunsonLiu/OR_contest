@@ -247,3 +247,4 @@
 - `experiments/mlor-tabu-20261031/`：同评估预算（约 4041 次/实例）的 tabu search（tenure 7）。ALNS 平均差 1.27、9/10；Tabu 85.21、2/10；ALNS 8/10 更好、Tabu 0/10、2 平。指示性对比。
 - `experiments/mlor-ga-20261031/`：同评估预算（约 4041 次/实例）的遗传算法（种群 20、路线交叉、年龄可行修复）。ALNS 平均差 1.27、9/10；GA 72.02、2/10；ALNS 8/10 更好、GA 0/10、2 平。指示性对比。
 - `experiments/mlor-runtime-20261031/`：同机单进程运行时间（8/12/20 店，3 种子）。12 店 DP 5.96 s，ALNS 0.10 s，SA 0.04 s，Tabu 0.02 s，GA 0.19 s；20 店启发式 ≤0.26 s。时间排名不等于质量排名。
+- `experiments/mlor-robustness-20261031/`：仓库年龄 ±0.5 天、每实例 50 情景。age-aware 均值 805.9，age-blind 2610.7；aware 100% 情景更好；不可行交付 0.29 vs 7.32。计划不重新优化，需求/旅行时间仍确定。

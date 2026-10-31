@@ -65,7 +65,7 @@ def insert_best(routes, store, stores, enforce_age=True):
 
 
 def alns(stores, iterations=300, seed=0, enforce_age=True, retry_unserved=True,
-         destroy_min=2, destroy_max=4, extra_min=2, extra_max=2):
+         destroy_min=2, destroy_max=4, extra_min=2, extra_max=2, return_routes=False):
     STORES_REF[0] = stores
     rng = random.Random(seed)
     _, initial_routes, _ = construct(stores, "actual", enforce_age)
@@ -115,6 +115,8 @@ def alns(stores, iterations=300, seed=0, enforce_age=True, retry_unserved=True,
                 best_routes = copy.deepcopy(trial_routes)
                 best_unserved = list(trial_unserved)
                 best_cost = trial_cost
+    if return_routes:
+        return best_cost, best_routes, best_unserved
     return best_cost, initial_cost(initial_routes, initial_unserved)
 
 

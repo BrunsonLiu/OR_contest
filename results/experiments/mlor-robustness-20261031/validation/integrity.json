@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "仓库年龄±0.5天扰动下，名义age-aware与age-blind计划的鲁棒性",
+  "snapshot_files": 93,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-31T04:39:52.457089+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-robustness-20261031/_runs/mlor-robustness/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-robustness-20261031/validation/integrity.json"
+  ],
+  "manifest_sha256": "f4efb208936725a5d6ed88c28939a60fefd886acda149fe85b48f97c5f70c443",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}

@@ -38,7 +38,7 @@ Legend: ✅ satisfied; ⚠️ satisfied with a stated limitation; ❌ not satisf
 | Size sensitivity | ✅ | 8, 12, 20 stores |
 | Statistical variability | ✅ | 95% intervals; non-significant results reported as such |
 | Runtime table | ✅ | Table 6: DP 5.96 s at 12 stores; heuristics below 0.3 s at 20 stores; single-process, machine-dependent |
-| Robustness under uncertainty | ❌ | deterministic model; no scenario analysis |
+| Robustness under uncertainty | ⚠️ | age-error scenarios (±0.5 days): aware 805.9 vs blind 2610.7, 100% wins; demand and travel time still deterministic |
 | Real industrial data | ❌ | synthetic instances plus a real-geography illustration with unit demand |
 | Tuning separated from testing | ✅ | development seeds 5–9, test seeds 10–19; earlier in-sample run documented as superseded |
 | Failed runs retained | ✅ | demand-weighted trial reverted and documented |

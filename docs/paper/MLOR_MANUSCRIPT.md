@@ -263,6 +263,8 @@ The difference is also visible in network design. At 8 stores, the age-aware pla
 
 The rejection penalty is varied from 0 to 800. At penalty 0, the age-blind plan is cheaper by 36.4 because it avoids the extra transport; from penalty 50 onward, the age-aware plan is better in all five instances (223.6 at 50, 483.6 at 100, 1003.6 at 200). With about 5.2 infeasible deliveries per instance, the break-even penalty is about 7 per delivery. The break-even is a model quantity, not an observed markdown cost.
 
+Robustness to age estimation error. The nominal plans are also evaluated when warehouse ages are misestimated. For ten twelve-store instances and 50 scenarios, each warehouse age is shifted independently by a uniform draw on [-0.5, 0.5] days, and the age-aware and age-blind plans are re-evaluated without re-optimization. The age-aware plan has mean cost 805.9 versus 2610.7 for the blind plan and is better in 100% of scenarios; infeasible deliveries average 0.29 versus 7.32 per scenario. The check is one-sided: travel time and demand remain deterministic, so it supports plan robustness to age error, not a stochastic optimization claim.
+
 At 20 stores, an LP relaxation of the set-partitioning model provides a lower bound. The LP allows fractional routes and fractional opening; the mean relative gap between the ALNS cost and this bound is 9.0%, with a maximum of 14.1%. Because the relaxation is weak, this is a loose upper bound on the true gap, not an optimality proof.
 
 ![Figure 2](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png)
