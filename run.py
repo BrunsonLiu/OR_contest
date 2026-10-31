@@ -74,6 +74,7 @@ TASKS = {
     "mlor-runtime": "src/analysis/mlor_runtime.py",
     "mlor-robustness": "src/analysis/mlor_robustness.py",
     "mlor-robustness-tt": "src/analysis/mlor_robustness_tt.py",
+    "mlor-milp": "src/analysis/mlor_milp.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
