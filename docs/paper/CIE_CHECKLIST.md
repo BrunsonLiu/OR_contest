@@ -48,7 +48,7 @@ Legend: ✅ satisfied; ⚠️ satisfied with a stated limitation; ❌ not satisf
 | Item | Status | Evidence / note |
 | --- | --- | --- |
 | Highlights | ✅ | 5 items, 62–79 characters each |
-| Abstract self-contained | ✅ | 230 words, includes numbers and scope |
+| Abstract self-contained | ✅ | 250 words, includes exact, heuristic, alternative-method and robustness findings |
 | Keywords | ✅ | 5 keywords |
 | Declaration of competing interest | ✅ | present |
 | Data availability statement | ✅ | present; synthetic generator and repository outputs |
