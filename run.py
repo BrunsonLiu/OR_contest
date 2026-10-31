@@ -70,6 +70,7 @@ TASKS = {
     "mlor-sequence": "src/analysis/mlor_sequence.py",
     "mlor-sa": "src/analysis/mlor_sa.py",
     "mlor-tabu": "src/analysis/mlor_tabu.py",
+    "mlor-ga": "src/analysis/mlor_ga.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
