@@ -234,7 +234,7 @@ The component ablation at 12 stores uses the default setting: the greedy constru
 
 To test whether the advantage is specific to the ALNS neighborhood, we ran three alternative metaheuristics under the same number of solution evaluations as the ALNS on each instance. Simulated annealing uses a geometric cooling schedule; tabu search uses all feasible relocations and insertions with a fixed tenure of 7; the genetic algorithm uses a population of 20, route-based crossover, mutation by random moves and age-feasible repair. At 12 stores, SA reaches a mean gap of 63.95 with 4/10 optima, tabu search 85.21 with 2/10, and the GA 72.02 with 2/10, while the tuned ALNS reaches 1.27 with 9/10. ALNS is better than SA on 5/10 instances, than tabu search on 8/10 and than the GA on 8/10; SA wins 1/10, tabu search 0/10 and the GA 0/10, with the remaining ties. None of the alternatives is tuned beyond its basic schedule, tenure or population, and the evaluation count is not a full operation count, so the comparison is indicative rather than a definitive ranking; it does show that the ALNS neighborhood is not trivially replaceable by generic local search or a standard evolutionary scheme.
 
-**Table 5. Alternative metaheuristics at the same solution-evaluation budget (12 stores).**
+**Table 4. Alternative metaheuristics at the same solution-evaluation budget (12 stores).**
 
 | Method | Mean gap | Optimal | Better than ALNS |
 | --- | --- | --- | --- |
@@ -277,7 +277,7 @@ On the real-network instance, the greedy age-aware plan costs 2601.5, the blind 
 
 The experiments support three claims: the age-aware plan is never worse than the age-blind plan on the tested instances; the ALNS is close to the exact optimum at 12 stores and improves greedy at 20 stores; and the age–distance–threshold interaction, rather than the cold-chain label, drives the difference. They do not support claims about optimality at 20 stores, about real demand, about multi-period inventory dynamics, or about a confirmed literature gap. Two qualifications follow from the intervals. The exact age-aware advantage is clearly positive at 8 and 12 stores (95% intervals [577, 1526] and [417, 1819]). The held-out ALNS gap and the tuning improvement are not statistically significant with ten instances; they are numerical, not proven.
 
-**Table 4. Means and 95% confidence intervals for the main comparisons.**
+**Table 5. Means and 95% confidence intervals for the main comparisons.**
 
 | Comparison | Mean | 95% interval |
 | --- | --- | --- |

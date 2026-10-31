@@ -14,3 +14,4 @@
 2026-10-31 新增 [应用定位改写稿](MLOR_MANUSCRIPT.md)：按“问题—缺口—模型—算法—实验—结论”的论证顺序完整重写，保留全部数字与边界；未附 EJOR 参考论文，因此没有做样本风格分析，只按 OR 论文通用规范与两篇最近邻重写。
 2026-10-31 新增 [定位备忘录](MLOR_POSITIONING.md)：现有证据适合应用/扩展论文（AOR/ITOR/CIE 一类），不适合 EJOR Theory & Methodology；EJOR 级贡献需补多项式特例/结构定理/两层多周期/真实数据。
 2026-10-31 新增 LaTeX 投稿稿：[MLOR_MANUSCRIPT.tex](MLOR_MANUSCRIPT.tex) 与编译后的 [PDF](MLOR_MANUSCRIPT.pdf)（elsarticle，18 页，4 表 2 图）；图在 `figures/`。
+2026-10-31 新增 [CIE cover letter](MLOR_COVER_LETTER.md)：问题、方法、证据、定位、合规声明；作者/日期为占位。
