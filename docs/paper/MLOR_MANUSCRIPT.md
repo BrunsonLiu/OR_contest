@@ -317,6 +317,8 @@ The literature position is also conditional. The MLOR concept has been studied i
 | Real-network illustration | `mlor-case-20261028` |
 | Four-store brute-force correctness | `tests/test_mlor_bruteforce.py` |
 
+Full experiment directory names carry a date suffix (for example, `mlor-dp-20261028`); the table lists task names.
+
 All experiment outputs are under `results/experiments/<name>/`; the DP and ALNS implementations are in `src/analysis/mlor_dp2.py`, `src/analysis/mlor_dp12.py` and `src/analysis/mlor_alns.py`.
 
 ## Declaration of competing interest
