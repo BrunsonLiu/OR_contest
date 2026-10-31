@@ -26,7 +26,7 @@ SETTINGS = {
 
 
 def main():
-    reference = _REPO_ROOT / "results/experiments/mlor-dp12-20261028/mlor_dp/summary.json"
+    reference = _REPO_ROOT / "results/experiments/mlor-dp12-r2-20261031/mlor_dp/summary.json"
     exact_rows = json.loads(reference.read_text(encoding="utf-8"))["rows"]
     results = {name: [] for name in SETTINGS}
     for seed in range(10):

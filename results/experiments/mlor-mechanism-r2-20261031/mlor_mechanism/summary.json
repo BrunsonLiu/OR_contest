@@ -1,0 +1,26 @@
+{
+  "instances": 5,
+  "configs": {
+    "age+mlor": {
+      "mean_gap": 874.5349776458233,
+      "aware_better": 5
+    },
+    "mlor_only": {
+      "mean_gap": 195.63607297053773,
+      "aware_better": 5
+    },
+    "age_only": {
+      "mean_gap": 579.4978254302869,
+      "aware_better": 3
+    },
+    "neither": {
+      "mean_gap": 0.0,
+      "aware_better": 0
+    }
+  },
+  "scope": "eight stores, three warehouses, capacity four, exact subset DP; synthetic",
+  "limitations": [
+    "The blind plan is a single route set per seed, evaluated under each configuration.",
+    "Synthetic parameters."
+  ]
+}
