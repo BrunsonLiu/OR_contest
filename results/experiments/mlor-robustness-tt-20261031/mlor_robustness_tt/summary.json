@@ -1,0 +1,107 @@
+{
+  "instances": 10,
+  "scenarios_per_instance": 50,
+  "speed_shift_fraction": 0.1,
+  "aware_mean": 787.0621192071627,
+  "blind_mean": 2641.1195375198777,
+  "aware_win_rate": 1.0,
+  "aware_violations": 0.194,
+  "blind_violations": 7.4719999999999995,
+  "rows": [
+    {
+      "seed": 0,
+      "aware_mean": 725.7191050101371,
+      "blind_mean": 2229.8294600685085,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.2,
+      "blind_violations": 6.0
+    },
+    {
+      "seed": 1,
+      "aware_mean": 752.1832575528923,
+      "blind_mean": 2791.722742934624,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.54,
+      "blind_violations": 7.44
+    },
+    {
+      "seed": 2,
+      "aware_mean": 834.8134435657045,
+      "blind_mean": 3116.3368071897708,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.08,
+      "blind_violations": 10.0
+    },
+    {
+      "seed": 3,
+      "aware_mean": 815.3247008884729,
+      "blind_mean": 2275.4916860045237,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.0,
+      "blind_violations": 6.14
+    },
+    {
+      "seed": 4,
+      "aware_mean": 912.5162918227053,
+      "blind_mean": 2489.12492962856,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.56,
+      "blind_violations": 6.26
+    },
+    {
+      "seed": 5,
+      "aware_mean": 845.3542314641921,
+      "blind_mean": 2957.7107012434108,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.16,
+      "blind_violations": 8.82
+    },
+    {
+      "seed": 6,
+      "aware_mean": 731.4519665606708,
+      "blind_mean": 2687.088524853821,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.0,
+      "blind_violations": 7.4
+    },
+    {
+      "seed": 7,
+      "aware_mean": 671.4667470430392,
+      "blind_mean": 2821.503941798893,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.0,
+      "blind_violations": 9.48
+    },
+    {
+      "seed": 8,
+      "aware_mean": 752.6597463358253,
+      "blind_mean": 2431.7297417817376,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.12,
+      "blind_violations": 5.7
+    },
+    {
+      "seed": 9,
+      "aware_mean": 829.1317018279873,
+      "blind_mean": 2610.656839694925,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.28,
+      "blind_violations": 7.48
+    }
+  ],
+  "scope": "twelve stores, global speed shock, nominal plans not re-optimized",
+  "limitations": [
+    "Travel time shock is global, not edge-specific.",
+    "Demand remains deterministic."
+  ]
+}
