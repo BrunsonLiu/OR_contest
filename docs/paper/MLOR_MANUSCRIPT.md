@@ -2,6 +2,14 @@
 
 > Working manuscript. Application/extension positioning; target journals AOR, ITOR, or CIE.
 
+## Highlights
+
+- Inventory age and store MLOR create an age–distance–threshold matching problem.
+- Age-aware plans can open different warehouses and assign stores differently.
+- Exact subset DP solves 8- and 12-store instances; ALNS is near-optimal at 12.
+- A freshest-first rule is a reasonable default; oldest-first is not.
+- Gains are conditional on rejection cost and unit-demand scope.
+
 ## Abstract
 
 Retail cold-chain warehouses hold batches of different ages, and stores often reject deliveries whose remaining shelf life is below a store-specific minimum (MLOR). Because travel time consumes shelf life, the age of the inventory at a warehouse determines which stores that warehouse can serve. We study a single-period, deterministic, single-echelon, unit-demand location-routing problem in which opening warehouses, assigning stores, routing vehicles, and selecting the inventory age are decided together. The problem is formulated as a mixed-integer program; the shelf-life condition reduces to an arrival deadline that depends on the serving warehouse's age and the store's threshold. We solve small and medium instances exactly by subset dynamic programming and develop an age-feasible adaptive large neighbourhood search (ALNS) for larger instances. On 8- and 12-store synthetic instances, an age-aware plan is never worse than an age-blind plan and is better in 9/10 and 7/10 cases. With a destroy size selected on a development set, the ALNS reaches the exact optimum in 9/10 held-out twelve-store instances (mean gap 1.78); the default setting reaches 8/10 (mean gap 13.43). At 20 stores it improves a greedy plan by 1301.1 on average. Three practical policies are worse on average than the exact and ALNS solutions, and a 2×2 check shows that the age–distance–threshold interaction, rather than the cold-chain label, drives the difference. All parameters are synthetic; the results are conditional and do not constitute field estimates.
@@ -16,7 +24,7 @@ We study this coupling in a single-period, deterministic setting. The question i
 
 The paper is positioned against three literatures. Perishable inventory-routing models track remaining shelf life and freshness but typically keep the depot fixed (Coelho and Laporte, 2014; Crama et al., 2018). Two-echelon inventory-routing and location-routing models decide network structure and routes but do not model a store-specific delivery threshold (Govindan et al., 2014; Rohmer et al., 2019). The MLOR concept itself has been studied in an operations–marketing setting (Singh and Kuthambalayan, 2022), but not, to our knowledge, inside a location-routing model. The precise difference—warehouse age, store-specific threshold, and location-routing decided together—remains to be verified against the closest work, including Qiu et al. (2019), whose full text we could not obtain.
 
-Our contributions are therefore modest and specific. First, we formulate a location-routing model in which the shelf-life condition is an arrival deadline determined jointly by warehouse age and store threshold. Second, we give an exact subset dynamic program for small and medium instances and an age-feasible ALNS for larger ones, and we compare both with practical policies rather than only with an age-blind straw man. Third, we isolate the mechanism: removing age and MLOR together eliminates the decision difference, while removing either one alone leaves a smaller effect. We do not claim a new problem class; the evidence supports a conditional decision mechanism, not a field recommendation.
+Three contributions follow. (i) Modeling: we formulate a location-routing model in which the shelf-life condition is an arrival deadline determined jointly by warehouse age and store threshold, and we state the operational assumptions that delimit its scope. (ii) Method: we give an exact subset dynamic program for small and medium instances and an age-feasible ALNS for larger ones; the ALNS neighborhood is chosen because cross-warehouse reassignment, not route reordering, is the move that the mechanism requires. (iii) Empirical: we compare against an age-blind exact plan, three practical policies and a rule-plus-local-search baseline, isolate the age–MLOR interaction with a 2×2 check, and report confidence intervals rather than only point estimates. We do not claim a new problem class; the evidence supports a conditional decision mechanism, not a field recommendation.
 
 ## 2. Related work
 
@@ -36,6 +44,8 @@ The MLOR concept appears in retail practice and in adjacent OR work. Singh and K
 
 The model in this paper combines three standard components: a single-echelon location-routing structure, an age-dependent shelf-life state, and a store-specific delivery threshold. The combination is deliberate but not novel in any of its parts. What can be evaluated is whether the combination produces a decision consequence that the components do not produce separately. Section 5 reports such a consequence: age-aware and age-blind plans open different warehouses and assign stores differently, not merely route them differently.
 
+Two gaps follow. The **problem gap** is that a store-specific delivery threshold has not been embedded in a location-routing model in the full texts we read; the threshold is not a stockout-probability service level and is not a time window. The **method gap** is that the resulting route-feasibility subproblem is NP-complete, so neither a sorting rule nor a route-level local search is sufficient; the solution method must enumerate orders or repair them explicitly. We provide evidence for the first gap and a proof for the second within the stated scope, not a claim that no related model exists.
+
 **Source note.** The full texts of Crama et al. (2018) and Rohmer et al. (2019) were read. The descriptions of Coelho and Laporte (2014) and Govindan et al. (2014) are based on abstracts and metadata, not full-text reading. Qiu et al. (2019) and Singh and Kuthambalayan (2022) are cited from metadata because their full texts are closed access. These citations must be verified before submission.
 
 ## 3. Problem formulation
@@ -44,9 +54,25 @@ The model in this paper combines three standard components: a single-echelon loc
 
 A single planner decides, for one period, which candidate warehouses to open, which store is served by which open warehouse, the route of each vehicle, and which warehouse age serves each store. Demand is deterministic and unit-sized; each store is visited at most once. Each warehouse holds one batch of known age a_i. A store j accepts a delivery only if the remaining shelf life at arrival is at least m_j. The objective includes opening, vehicle, transport and unserved penalties.
 
-The assumptions are explicit because they define the scope of the results. The model is single-period and deterministic; inventory age does not evolve within the period. The network is single-echelon, from warehouses to stores; the contest background includes a central warehouse, but no CDC-to-RDC leg is modeled. Demand is unit-sized, so vehicle capacity is expressed as a number of stores. Stores have no inventory state; MLOR is a delivery acceptance condition, not the shelf life at which the product is sold. Travel time is deterministic and proportional to distance. These choices are summarized in Table 1.
+The assumptions are explicit because they define the scope of the results. The model is single-period and deterministic; inventory age does not evolve within the period. The network is single-echelon, from warehouses to stores; the contest background includes a central warehouse, but no CDC-to-RDC leg is modeled. Demand is unit-sized, so vehicle capacity is expressed as a number of stores. Stores have no inventory state; MLOR is a delivery acceptance condition, not the shelf life at which the product is sold. Travel time is deterministic and proportional to distance. These choices are summarized in Table 2.
 
-**Table 1. Modeled and unmodeled dimensions.**
+**Table 1. Notation.**
+
+| Symbol | Meaning |
+| --- | --- |
+| I, J, V | Candidate warehouses, stores, vehicles |
+| L | Shelf life |
+| a_i | Age of the batch at warehouse i |
+| m_j | Store j's minimum remaining shelf life |
+| d_j | Demand (d_j = 1 in the unit-demand abstraction) |
+| Q | Vehicle capacity in demand units |
+| τ_kj, c_kj | Travel time and cost from k to j |
+| F_i, G, P | Opening, vehicle fixed, unserved penalty |
+| y_i, r_v | Warehouse open, vehicle used |
+| x_kjv | Vehicle v travels from k to j |
+| T_j, s_j | Arrival time, store served |
+
+**Table 2. Modeled and unmodeled dimensions.**
 
 | Dimension | Modeled | Not modeled |
 | --- | --- | --- |
@@ -167,6 +193,8 @@ The greedy construction inserts stores in decreasing MLOR order. The repair step
 
 The choice of ALNS follows from the decision structure rather than from a claim of superiority over other metaheuristics. The mechanism identifies cross-warehouse reassignment as the critical move: an old warehouse leaves high-MLOR stores unserved, and a route-level local search cannot move them to a fresh warehouse. The destroy step removes a set of served and unserved stores, and the repair reinserts them across all warehouses and routes; this is the smallest neighbourhood that contains the relevant move. The ablation supports the link: removing the unserved retry raises the mean gap from 15.85 to 280.9 at 12 stores, and a freshest-first rule with 2-opt and relocate—without a cross-warehouse destroy—remains at 67.10. We do not claim that ALNS dominates genetic algorithms, simulated annealing, tabu search or VNS; an alternative-metaheuristic comparison is not part of this study and is a limitation for any claim of algorithmic superiority.
 
+Feasibility is maintained by discarding any candidate route whose arrival times violate a store deadline. The procedure stops after the iteration budget and returns the best feasible solution seen. One iteration costs O(k n²) in the worst case for k removed stores and n stores, and the memory footprint is O(n). No commercial solver is used inside the loop, so the reported runtimes are the algorithm's own.
+
 ### 4.3 Baselines
 
 We compare against four baselines. The age-blind plan solves the same routing and covering problem with age zero and no MLOR, then is evaluated under the real ages and thresholds; it represents a planner with the same optimization capability but no age information. Three practical policies assign each store to a warehouse by a rule—nearest feasible, freshest feasible, or oldest feasible (FEFO-like)—and insert it greedily into that warehouse's routes. The greedy age-aware construction is the initial solution of the ALNS. These baselines are deliberately different in strength: the age-blind plan is strong but uninformed, while the policies are informed but myopic.
@@ -176,6 +204,19 @@ We compare against four baselines. The age-blind plan solves the same routing an
 ### 5.1 Design
 
 All synthetic instances use the same generator. Shelf life is 6 days; warehouse ages are 0, 2.5 and 4.5 days; store thresholds are 1, 2 or 3 days; vehicle capacity is 4 stores; opening cost is 100; vehicle fixed cost is 50; transport cost is 0.5 per km; speed is 100 km per day; the unserved penalty is 200, varied in the sensitivity; store coordinates are uniform on [0,300]². The 12- and 20-store runs use the same generator with more stores. Each experiment is run through the repository entry point with an isolated output directory, and the reported numbers are taken from those outputs.
+
+**Table 3. Experimental settings.**
+
+| Element | Setting |
+| --- | --- |
+| Instances | 8, 12 and 20 stores; 3 warehouses; coordinates uniform on [0,300]² |
+| Shelf life, ages, MLOR | 6 days; 0, 2.5, 4.5 days; 1, 2, 3 days |
+| Vehicle capacity | 4 stores |
+| Costs | opening 100; vehicle 50; transport 0.5 per km; penalty 200 (sensitivity 0–800) |
+| ALNS | 200 iterations; destroy 2–4 default, 4–6 tuned; up to 2 unserved retries |
+| Exact DP | all orders for subsets of up to 4 stores; 12 stores about 19 s |
+| Seeds | 0–9 full sample; 5–9 development; 10–19 test |
+| Environment | Python 3, single-threaded; no commercial solver in the loop |
 
 The real-network illustration is separate: it uses three contest regional warehouses (Guangzhou, Dongguan, Chengdu), the twelve nearest contest cities, the contest last-leg rate of 1.45 per ton-km, unit demand, and rule-based ages and thresholds. It is an illustration on real geography, not a case study.
 
@@ -225,7 +266,7 @@ On the real-network instance, the greedy age-aware plan costs 2601.5, the blind 
 
 The experiments support three claims: the age-aware plan is never worse than the age-blind plan on the tested instances; the ALNS is close to the exact optimum at 12 stores and improves greedy at 20 stores; and the age–distance–threshold interaction, rather than the cold-chain label, drives the difference. They do not support claims about optimality at 20 stores, about real demand, about multi-period inventory dynamics, or about a confirmed literature gap. Two qualifications follow from the intervals. The exact age-aware advantage is clearly positive at 8 and 12 stores (95% intervals [577, 1526] and [417, 1819]). The held-out ALNS gap and the tuning improvement are not statistically significant with ten instances; they are numerical, not proven.
 
-**Table 2. Means and 95% confidence intervals for the main comparisons.**
+**Table 4. Means and 95% confidence intervals for the main comparisons.**
 
 | Comparison | Mean | 95% interval |
 | --- | --- | --- |
@@ -266,6 +307,10 @@ The literature position is also conditional. The MLOR concept has been studied i
 | Four-store brute-force correctness | `tests/test_mlor_bruteforce.py` |
 
 All experiment outputs are under `results/experiments/<name>/`; the DP and ALNS implementations are in `src/analysis/mlor_dp2.py`, `src/analysis/mlor_dp12.py` and `src/analysis/mlor_alns.py`.
+
+## Data availability
+
+All synthetic instances are generated by the code described in this paper. The real-network illustration uses the contest location, warehouse and order files. No confidential or proprietary data were used. The experiment outputs are stored under `results/experiments/` in the project repository.
 
 ## References
 
