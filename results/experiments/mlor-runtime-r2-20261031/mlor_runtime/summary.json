@@ -1,0 +1,304 @@
+{
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "sizes": [
+    8,
+    12,
+    20
+  ],
+  "machine": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "rows": [
+    {
+      "size": 8,
+      "seed": 0,
+      "method": "DP",
+      "seconds": 0.1609919999991689
+    },
+    {
+      "size": 8,
+      "seed": 1,
+      "method": "DP",
+      "seconds": 0.1584536999998818
+    },
+    {
+      "size": 8,
+      "seed": 2,
+      "method": "DP",
+      "seconds": 0.2835173000003124
+    },
+    {
+      "size": 12,
+      "seed": 0,
+      "method": "DP",
+      "seconds": 13.40875220000089
+    },
+    {
+      "size": 12,
+      "seed": 1,
+      "method": "DP",
+      "seconds": 15.737459199999648
+    },
+    {
+      "size": 12,
+      "seed": 2,
+      "method": "DP",
+      "seconds": 15.419301400001132
+    },
+    {
+      "size": 8,
+      "seed": 0,
+      "method": "ALNS",
+      "seconds": 0.18138149999867892,
+      "evaluations": 3617
+    },
+    {
+      "size": 8,
+      "seed": 0,
+      "method": "SA",
+      "seconds": 0.07312300000012328
+    },
+    {
+      "size": 8,
+      "seed": 0,
+      "method": "Tabu",
+      "seconds": 0.03472959999999148
+    },
+    {
+      "size": 8,
+      "seed": 0,
+      "method": "GA",
+      "seconds": 0.3699612000000343
+    },
+    {
+      "size": 8,
+      "seed": 1,
+      "method": "ALNS",
+      "seconds": 0.32237179999901855,
+      "evaluations": 4267
+    },
+    {
+      "size": 8,
+      "seed": 1,
+      "method": "SA",
+      "seconds": 0.12650360000043293
+    },
+    {
+      "size": 8,
+      "seed": 1,
+      "method": "Tabu",
+      "seconds": 0.06544030000077328
+    },
+    {
+      "size": 8,
+      "seed": 1,
+      "method": "GA",
+      "seconds": 0.38146819999928994
+    },
+    {
+      "size": 8,
+      "seed": 2,
+      "method": "ALNS",
+      "seconds": 0.2000810999998066,
+      "evaluations": 3921
+    },
+    {
+      "size": 8,
+      "seed": 2,
+      "method": "SA",
+      "seconds": 0.0808458999999857
+    },
+    {
+      "size": 8,
+      "seed": 2,
+      "method": "Tabu",
+      "seconds": 0.04657039999983681
+    },
+    {
+      "size": 8,
+      "seed": 2,
+      "method": "GA",
+      "seconds": 0.3730844000001525
+    },
+    {
+      "size": 12,
+      "seed": 0,
+      "method": "ALNS",
+      "seconds": 0.2345670999984577,
+      "evaluations": 3910
+    },
+    {
+      "size": 12,
+      "seed": 0,
+      "method": "SA",
+      "seconds": 0.09359150000091176
+    },
+    {
+      "size": 12,
+      "seed": 0,
+      "method": "Tabu",
+      "seconds": 0.028713100000459235
+    },
+    {
+      "size": 12,
+      "seed": 0,
+      "method": "GA",
+      "seconds": 0.45496909999928903
+    },
+    {
+      "size": 12,
+      "seed": 1,
+      "method": "ALNS",
+      "seconds": 0.28936240000075486,
+      "evaluations": 4768
+    },
+    {
+      "size": 12,
+      "seed": 1,
+      "method": "SA",
+      "seconds": 0.11461810000037076
+    },
+    {
+      "size": 12,
+      "seed": 1,
+      "method": "Tabu",
+      "seconds": 0.046186600000510225
+    },
+    {
+      "size": 12,
+      "seed": 1,
+      "method": "GA",
+      "seconds": 0.4608736999998655
+    },
+    {
+      "size": 12,
+      "seed": 2,
+      "method": "ALNS",
+      "seconds": 0.28099379999912344,
+      "evaluations": 5463
+    },
+    {
+      "size": 12,
+      "seed": 2,
+      "method": "SA",
+      "seconds": 0.12451800000053481
+    },
+    {
+      "size": 12,
+      "seed": 2,
+      "method": "Tabu",
+      "seconds": 0.045956900001328904
+    },
+    {
+      "size": 12,
+      "seed": 2,
+      "method": "GA",
+      "seconds": 0.43616219999967143
+    },
+    {
+      "size": 20,
+      "seed": 0,
+      "method": "ALNS",
+      "seconds": 0.3083167999993748,
+      "evaluations": 4128
+    },
+    {
+      "size": 20,
+      "seed": 0,
+      "method": "SA",
+      "seconds": 0.10058089999984077
+    },
+    {
+      "size": 20,
+      "seed": 0,
+      "method": "Tabu",
+      "seconds": 0.02982969999902707
+    },
+    {
+      "size": 20,
+      "seed": 0,
+      "method": "GA",
+      "seconds": 0.47681980000015756
+    },
+    {
+      "size": 20,
+      "seed": 1,
+      "method": "ALNS",
+      "seconds": 0.3036138999996183,
+      "evaluations": 3965
+    },
+    {
+      "size": 20,
+      "seed": 1,
+      "method": "SA",
+      "seconds": 0.1034341000013228
+    },
+    {
+      "size": 20,
+      "seed": 1,
+      "method": "Tabu",
+      "seconds": 0.026529000000664382
+    },
+    {
+      "size": 20,
+      "seed": 1,
+      "method": "GA",
+      "seconds": 0.5583635000002687
+    },
+    {
+      "size": 20,
+      "seed": 2,
+      "method": "ALNS",
+      "seconds": 0.5339843000001565,
+      "evaluations": 5352
+    },
+    {
+      "size": 20,
+      "seed": 2,
+      "method": "SA",
+      "seconds": 0.16251780000129656
+    },
+    {
+      "size": 20,
+      "seed": 2,
+      "method": "Tabu",
+      "seconds": 0.05005350000101316
+    },
+    {
+      "size": 20,
+      "seed": 2,
+      "method": "GA",
+      "seconds": 0.8650216000005457
+    }
+  ],
+  "means": {
+    "8": {
+      "DP": 0.20098766666645437,
+      "ALNS": 0.23461146666583468,
+      "SA": 0.09349083333351398,
+      "Tabu": 0.04891343333353385,
+      "GA": 0.3748379333331589
+    },
+    "12": {
+      "DP": 14.85517093333389,
+      "ALNS": 0.268307766666112,
+      "SA": 0.11090920000060578,
+      "Tabu": 0.040285533334099455,
+      "GA": 0.450668333332942
+    },
+    "20": {
+      "ALNS": 0.3819716666663832,
+      "SA": 0.12217760000082005,
+      "Tabu": 0.035470733333568205,
+      "GA": 0.6334016333336573
+    }
+  },
+  "scope": "single-process wall-clock; same machine; ALNS 200 iterations, alternatives same evaluation budget",
+  "limitations": [
+    "Times depend on the Python implementation and machine.",
+    "No compiler-level optimization or parallelization."
+  ]
+}

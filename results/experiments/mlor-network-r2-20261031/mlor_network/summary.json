@@ -1,0 +1,350 @@
+{
+  "instances": 20,
+  "by_size": {
+    "8": {
+      "open_differs": 6,
+      "assignment_differs": 6,
+      "aware_opens_0": 10,
+      "blind_opens_0": 4,
+      "blind_infeasible_total": 49,
+      "mean_gap": -879.2415766732807
+    },
+    "12": {
+      "open_differs": 6,
+      "assignment_differs": 6,
+      "aware_opens_0": 10,
+      "blind_opens_0": 4,
+      "blind_infeasible_total": 71,
+      "mean_gap": -1370.2389681006782
+    }
+  },
+  "rows": [
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 934.5290024823787,
+      "blind_actual": 2442.16356236818,
+      "gap": -1507.6345598858013,
+      "blind_infeasible": 8,
+      "n_stores": 8,
+      "seed": 0
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        1
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 926.5612811092814,
+      "blind_actual": 1947.533527742713,
+      "gap": -1020.9722466334316,
+      "blind_infeasible": 6,
+      "n_stores": 8,
+      "seed": 1
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 932.4212651866541,
+      "blind_actual": 2404.005045636932,
+      "gap": -1471.583780450278,
+      "blind_infeasible": 8,
+      "n_stores": 8,
+      "seed": 2
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 860.3753275962279,
+      "blind_actual": 1169.9171301106715,
+      "gap": -309.5418025144436,
+      "blind_infeasible": 2,
+      "n_stores": 8,
+      "seed": 3
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 877.5042162971631,
+      "blind_actual": 940.446715042325,
+      "gap": -62.942498745161856,
+      "blind_infeasible": 1,
+      "n_stores": 8,
+      "seed": 4
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 756.5815527972516,
+      "blind_actual": 2325.0186783892636,
+      "gap": -1568.437125592012,
+      "blind_infeasible": 8,
+      "n_stores": 8,
+      "seed": 5
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 842.5732024581881,
+      "blind_actual": 1372.8318761250396,
+      "gap": -530.2586736668515,
+      "blind_infeasible": 3,
+      "n_stores": 8,
+      "seed": 6
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        1
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 776.2805339526651,
+      "blind_actual": 1892.4345057978478,
+      "gap": -1116.1539718451827,
+      "blind_infeasible": 6,
+      "n_stores": 8,
+      "seed": 7
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 866.1910596585097,
+      "blind_actual": 1200.7526279973029,
+      "gap": -334.5615683387931,
+      "blind_infeasible": 2,
+      "n_stores": 8,
+      "seed": 8
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        1
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 976.761688682305,
+      "blind_actual": 1847.0912277431557,
+      "gap": -870.3295390608507,
+      "blind_infeasible": 5,
+      "n_stores": 8,
+      "seed": 9
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 1009.1028208968098,
+      "blind_actual": 3383.7690856679865,
+      "gap": -2374.6662647711764,
+      "blind_infeasible": 12,
+      "n_stores": 12,
+      "seed": 0
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 989.4948867356297,
+      "blind_actual": 1389.4948867356297,
+      "gap": -400.0,
+      "blind_infeasible": 2,
+      "n_stores": 12,
+      "seed": 1
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        1,
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 1110.8384759281892,
+      "blind_actual": 3032.9272070609827,
+      "gap": -1922.0887311327936,
+      "blind_infeasible": 10,
+      "n_stores": 12,
+      "seed": 2
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 1151.890690034116,
+      "blind_actual": 1437.6518449507555,
+      "gap": -285.7611549166395,
+      "blind_infeasible": 2,
+      "n_stores": 12,
+      "seed": 3
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        1,
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 1127.7719288558765,
+      "blind_actual": 2811.0636126163463,
+      "gap": -1683.2916837604698,
+      "blind_infeasible": 9,
+      "n_stores": 12,
+      "seed": 4
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 1096.68879852998,
+      "blind_actual": 3479.8901679821574,
+      "gap": -2383.2013694521775,
+      "blind_infeasible": 12,
+      "n_stores": 12,
+      "seed": 5
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 987.9135317654639,
+      "blind_actual": 1178.172493150483,
+      "gap": -190.25896138501912,
+      "blind_infeasible": 1,
+      "n_stores": 12,
+      "seed": 6
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        1
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 981.932264577638,
+      "blind_actual": 2707.241788186716,
+      "gap": -1725.309523609078,
+      "blind_infeasible": 9,
+      "n_stores": 12,
+      "seed": 7
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        0
+      ],
+      "open_differs": false,
+      "assignment_differs": false,
+      "aware_cost": 1064.149112861374,
+      "blind_actual": 1452.795728856464,
+      "gap": -388.64661599508986,
+      "blind_infeasible": 2,
+      "n_stores": 12,
+      "seed": 8
+    },
+    {
+      "open_aware": [
+        0
+      ],
+      "open_blind": [
+        2
+      ],
+      "open_differs": true,
+      "assignment_differs": true,
+      "aware_cost": 1034.1285355880723,
+      "blind_actual": 3383.29391157241,
+      "gap": -2349.1653759843375,
+      "blind_infeasible": 12,
+      "n_stores": 12,
+      "seed": 9
+    }
+  ],
+  "scope": "eight and twelve stores, three warehouses, capacity four; exact subset DP",
+  "limitations": [
+    "Synthetic instances.",
+    "Only three warehouses, one of which is fresh."
+  ]
+}

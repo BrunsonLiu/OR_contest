@@ -1,0 +1,127 @@
+{
+  "instances": 10,
+  "scenarios_per_instance": 50,
+  "age_shift_days": 0.5,
+  "aware_mean": 1140.9371203230523,
+  "blind_mean": 3136.2711601795627,
+  "aware_win_rate": 1.0,
+  "aware_violations": 0.40800000000000003,
+  "blind_violations": 8.414,
+  "rows": [
+    {
+      "seed": 0,
+      "aware_nominal": 1009.1028208968098,
+      "blind_nominal": 2854.530356130622,
+      "aware_mean": 1061.1028208968098,
+      "blind_mean": 2822.5303561306223,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.26,
+      "blind_violations": 6.84
+    },
+    {
+      "seed": 1,
+      "aware_nominal": 989.4948867356297,
+      "blind_nominal": 2916.992447550704,
+      "aware_mean": 1109.4948867356297,
+      "blind_mean": 2872.992447550704,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.6,
+      "blind_violations": 6.78
+    },
+    {
+      "seed": 2,
+      "aware_nominal": 1130.3438486588575,
+      "blind_nominal": 3234.4305473162626,
+      "aware_mean": 1286.3438486588575,
+      "blind_mean": 3374.430547316262,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.78,
+      "blind_violations": 10.7
+    },
+    {
+      "seed": 3,
+      "aware_nominal": 1151.8906900341162,
+      "blind_nominal": 3185.389827396846,
+      "aware_mean": 1187.8906900341162,
+      "blind_mean": 3061.389827396846,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.18,
+      "blind_violations": 7.38
+    },
+    {
+      "seed": 4,
+      "aware_nominal": 1127.7719288558765,
+      "blind_nominal": 2961.082904515856,
+      "aware_mean": 1279.7719288558765,
+      "blind_mean": 3025.082904515856,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.76,
+      "blind_violations": 7.32
+    },
+    {
+      "seed": 5,
+      "aware_nominal": 1096.68879852998,
+      "blind_nominal": 3660.1989685089657,
+      "aware_mean": 1152.68879852998,
+      "blind_mean": 3704.198968508966,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.28,
+      "blind_violations": 11.22
+    },
+    {
+      "seed": 6,
+      "aware_nominal": 1007.8683164921694,
+      "blind_nominal": 3282.008306885554,
+      "aware_mean": 1043.8683164921695,
+      "blind_mean": 3282.008306885554,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.18,
+      "blind_violations": 9.0
+    },
+    {
+      "seed": 7,
+      "aware_nominal": 981.932264577638,
+      "blind_nominal": 3167.407228181787,
+      "aware_mean": 981.932264577638,
+      "blind_mean": 3187.407228181787,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.0,
+      "blind_violations": 10.1
+    },
+    {
+      "seed": 8,
+      "aware_nominal": 1064.1491128613743,
+      "blind_nominal": 3193.146930105083,
+      "aware_mean": 1112.1491128613743,
+      "blind_mean": 3129.1469301050834,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.24,
+      "blind_violations": 7.68
+    },
+    {
+      "seed": 9,
+      "aware_nominal": 1034.1285355880723,
+      "blind_nominal": 2879.524085203947,
+      "aware_mean": 1194.1285355880723,
+      "blind_mean": 2903.524085203947,
+      "aware_wins": 50,
+      "scenarios": 50,
+      "aware_violations": 0.8,
+      "blind_violations": 7.12
+    }
+  ],
+  "scope": "twelve stores, nominal plans not re-optimized, warehouse age uncertainty only",
+  "limitations": [
+    "Travel time and demand are deterministic.",
+    "The age shift is symmetric and independent across warehouses."
+  ]
+}

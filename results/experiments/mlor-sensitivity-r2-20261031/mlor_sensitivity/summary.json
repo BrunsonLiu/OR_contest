@@ -1,0 +1,34 @@
+{
+  "instances": 5,
+  "penalties": {
+    "0.0": {
+      "mean_gap": -116.5449255649357,
+      "aware_better": 0
+    },
+    "50.0": {
+      "mean_gap": 133.45507443506432,
+      "aware_better": 4
+    },
+    "100.0": {
+      "mean_gap": 383.4550744350643,
+      "aware_better": 4
+    },
+    "200.0": {
+      "mean_gap": 883.4550744350643,
+      "aware_better": 5
+    },
+    "400.0": {
+      "mean_gap": 1883.4550744350643,
+      "aware_better": 5
+    },
+    "800.0": {
+      "mean_gap": 3883.4550744350645,
+      "aware_better": 5
+    }
+  },
+  "scope": "eight stores, three warehouses, capacity four, exact subset DP; synthetic",
+  "limitations": [
+    "Single synthetic instance family.",
+    "Penalty is a modelling parameter, not an observed markdown cost."
+  ]
+}

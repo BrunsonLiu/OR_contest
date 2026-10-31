@@ -1,0 +1,53 @@
+{
+  "instances": 5,
+  "valid": 5,
+  "mean_relative_gap": 0.1448269789727722,
+  "max_relative_gap": 0.19141529683327554,
+  "rows": [
+    {
+      "seed": 0,
+      "routes": 1064,
+      "lp_bound": 1605.1930157454674,
+      "alns": 1912.4515133290868,
+      "relative_gap": 0.19141529683327554,
+      "lp_message": "ok"
+    },
+    {
+      "seed": 1,
+      "routes": 1020,
+      "lp_bound": 1613.141081957431,
+      "alns": 1912.6721963173095,
+      "relative_gap": 0.18568190824104425,
+      "lp_message": "ok"
+    },
+    {
+      "seed": 2,
+      "routes": 1754,
+      "lp_bound": 1448.9259244470456,
+      "alns": 1642.1083992125343,
+      "relative_gap": 0.13332805459962557,
+      "lp_message": "ok"
+    },
+    {
+      "seed": 3,
+      "routes": 1602,
+      "lp_bound": 1531.8652796460947,
+      "alns": 1709.0856563325856,
+      "relative_gap": 0.11568927048691512,
+      "lp_message": "ok"
+    },
+    {
+      "seed": 4,
+      "routes": 1225,
+      "lp_bound": 1499.573708667363,
+      "alns": 1646.562470489969,
+      "relative_gap": 0.09802036470300052,
+      "lp_message": "ok"
+    }
+  ],
+  "scope": "twenty stores, three warehouses, capacity four; LP relaxation versus ALNS",
+  "limitations": [
+    "LP relaxation is weak: fractional routes and fractional opening are allowed.",
+    "ALNS cost includes penalties for any unserved stores; the LP assumes all stores served."
+  ]
+}
