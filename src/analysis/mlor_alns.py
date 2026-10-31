@@ -68,7 +68,7 @@ def alns(stores, iterations=300, seed=0, enforce_age=True, retry_unserved=True,
          destroy_min=2, destroy_max=4, extra_min=2, extra_max=2, return_routes=False):
     STORES_REF[0] = stores
     rng = random.Random(seed)
-    _, initial_routes, _ = construct(stores, "actual", enforce_age)
+    _, initial_routes, _ = construct(stores, "actual", True)
     served_initial = {store for route_list in initial_routes.values() for order in route_list for store in order}
     initial_unserved = [store for store in range(len(stores)) if store not in served_initial]
     best_routes = copy.deepcopy(initial_routes)
@@ -128,7 +128,7 @@ def main():
     rows = []
     for seed in range(10):
         stores = make_instance(seed, 20)
-        _, initial_routes, _ = construct(stores, "actual", enforce_age)
+        _, initial_routes, _ = construct(stores, "actual", True)
         served_initial = {store for route_list in initial_routes.values() for order in route_list for store in order}
         initial_unserved = [store for store in range(len(stores)) if store not in served_initial]
         initial = solution_cost(initial_routes, initial_unserved, stores)
