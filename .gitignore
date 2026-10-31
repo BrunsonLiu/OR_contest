@@ -9,3 +9,9 @@ Thumbs.db
 .env.*
 !.env.example
 # 输入数据和已有实验结果有复现价值，默认不忽略。
+*.aux
+*.out
+*.spl
+*.bbl
+*.blg
+*.synctex.gz
