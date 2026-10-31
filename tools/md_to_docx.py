@@ -128,7 +128,7 @@ def convert(source, target):
             index += 1
             continue
 
-        if stripped.startswith("*") and stripped.endswith("*") and len(stripped) > 2:
+        if stripped.startswith("*") and stripped.endswith("*") and not stripped.startswith("**") and len(stripped) > 2:
             paragraph = document.add_paragraph()
             run = paragraph.add_run(stripped[1:-1])
             run.italic = True

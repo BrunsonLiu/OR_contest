@@ -243,9 +243,9 @@ To test whether the advantage is specific to the ALNS neighborhood, we ran three
 | Tabu (tenure 7) | 85.21 | 2/10 | 0/10 |
 | GA (population 20) | 72.02 | 2/10 | 0/10 |
 
-![Figure 2](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png)
+![Figure 1](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png)
 
-*Figure 2. ALNS ablation at 12 stores: mean gap to the exact optimum for greedy, no-unserved-retry, and full ALNS.*
+*Figure 1. ALNS ablation at 12 stores: mean gap to the exact optimum for greedy, no-unserved-retry, and full ALNS.*
 
 ### 5.4 Practical policies and larger instances
 
@@ -265,9 +265,9 @@ The rejection penalty is varied from 0 to 800. At penalty 0, the age-blind plan 
 
 At 20 stores, an LP relaxation of the set-partitioning model provides a lower bound. The LP allows fractional routes and fractional opening; the mean relative gap between the ALNS cost and this bound is 9.0%, with a maximum of 14.1%. Because the relaxation is weak, this is a loose upper bound on the true gap, not an optimality proof.
 
-![Figure 1](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png)
+![Figure 2](../../results/experiments/mlor-figures-20261028/mlor_figures/penalty_sensitivity.png)
 
-*Figure 1. Penalty sensitivity: mean gap between the age-blind and age-aware plans as the per-delivery rejection penalty grows; the break-even is about 7.*
+*Figure 2. Penalty sensitivity: mean gap between the age-blind and age-aware plans as the per-delivery rejection penalty grows; the break-even is about 7.*
 
 ### 5.7 Real-network illustration
 
