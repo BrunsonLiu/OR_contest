@@ -25,11 +25,11 @@ def rows(path):
 def main():
     base = _REPO_ROOT / "results/experiments"
     dp12 = {row["seed"]: row["aware_cost"]
-            for row in rows(base / "mlor-dp12-20261028/mlor_dp/summary.json")}
+            for row in rows(base / "mlor-dp12-r2-20261031/mlor_dp/summary.json")}
     ext = {row["seed"]: row["aware_cost"]
-           for row in rows(base / "mlor-dp12-ext-20261031/mlor_dp/summary.json")}
+           for row in rows(base / "mlor-dp12-ext-r2-20261031/mlor_dp/summary.json")}
     ext2 = {row["seed"]: row["aware_cost"]
-            for row in rows(base / "mlor-dp12-ext2-20261031/mlor_dp/summary.json")}
+            for row in rows(base / "mlor-dp12-ext2-r2-20261031/mlor_dp/summary.json")}
     exact = {**dp12, **ext, **ext2}
     development = list(range(5, 10))
     test = list(range(10, 20))
