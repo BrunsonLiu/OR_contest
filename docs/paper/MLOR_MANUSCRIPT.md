@@ -232,6 +232,8 @@ At 12 stores, we use a hold-out tuning protocol. The destroy size is selected on
 
 The component ablation at 12 stores uses the default setting: the greedy construction has mean gap 473.4, removing the unserved-store retry gives 280.9, and the full ALNS gives 15.85. The retry is the largest contributor, which is consistent with the mechanism: an old warehouse leaves high-MLOR stores unserved, and only reinsertion can move them to a fresh warehouse. The ablation is not re-run under the tuned destroy size, so it should be read as a component check rather than as a tuned-configuration result.
 
+To test whether the advantage is specific to the ALNS neighborhood, we ran a simulated annealing baseline with a geometric cooling schedule, starting from the same greedy solution and using the same number of solution evaluations as the ALNS on each instance. At 12 stores, SA reaches a mean gap of 63.95 with 4/10 optima, while the tuned ALNS reaches 1.27 with 9/10; ALNS is better on 5/10 instances, SA on 1/10, and they tie on 4/10. SA is not tuned beyond the cooling schedule, and the evaluation count is not a full operation count, so the comparison is indicative rather than a definitive ranking; it does show that the ALNS neighborhood is not trivially replaceable by a generic local search.
+
 ![Figure 2](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png)
 
 *Figure 2. ALNS ablation at 12 stores: mean gap to the exact optimum for greedy, no-unserved-retry, and full ALNS.*

@@ -68,6 +68,7 @@ TASKS = {
     "mlor-policy-ls": "src/analysis/mlor_policy_ls.py",
     "mlor-stats": "src/analysis/mlor_stats.py",
     "mlor-sequence": "src/analysis/mlor_sequence.py",
+    "mlor-sa": "src/analysis/mlor_sa.py",
     "plot-comparison": "src/visualization/visualize_comparison.py",
 }
 
