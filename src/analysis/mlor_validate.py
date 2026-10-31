@@ -13,7 +13,7 @@ from src.runtime import results_root
 
 
 def main():
-    reference = _REPO_ROOT / "results/experiments/mlor-dp12-20261028/mlor_dp/summary.json"
+    reference = _REPO_ROOT / "results/experiments/mlor-dp12-r2-20261031/mlor_dp/summary.json"
     rows = json.loads(reference.read_text(encoding="utf-8"))["rows"]
     output = []
     for seed in range(10):

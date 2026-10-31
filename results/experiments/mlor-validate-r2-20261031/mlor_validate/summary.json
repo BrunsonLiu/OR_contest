@@ -1,0 +1,94 @@
+{
+  "instances": 10,
+  "optimal": 4,
+  "mean_gap": 18.06168224071114,
+  "max_gap": 68.89069530147708,
+  "mean_relative_gap": 0.017133892880455574,
+  "rows": [
+    {
+      "seed": 0,
+      "initial": 1354.7705800050808,
+      "alns": 1037.5387913361342,
+      "exact": 1009.1028208968098,
+      "gap_to_exact": 28.435970439324365,
+      "relative_gap": 0.02817945788126204
+    },
+    {
+      "seed": 1,
+      "initial": 1386.7265998784183,
+      "alns": 989.4948867356297,
+      "exact": 989.4948867356297,
+      "gap_to_exact": 0.0,
+      "relative_gap": 0.0
+    },
+    {
+      "seed": 2,
+      "initial": 1557.514379693539,
+      "alns": 1127.6318953185448,
+      "exact": 1110.8384759281892,
+      "gap_to_exact": 16.793419390355666,
+      "relative_gap": 0.015117786927864108
+    },
+    {
+      "seed": 3,
+      "initial": 1719.6763052790006,
+      "alns": 1151.8906900341162,
+      "exact": 1151.890690034116,
+      "gap_to_exact": 2.2737367544323206e-13,
+      "relative_gap": 1.973917120872796e-16
+    },
+    {
+      "seed": 4,
+      "initial": 1467.695366415202,
+      "alns": 1145.7873694447592,
+      "exact": 1127.7719288558765,
+      "gap_to_exact": 18.01544058888271,
+      "relative_gap": 0.015974365142391297
+    },
+    {
+      "seed": 5,
+      "initial": 1677.959216057127,
+      "alns": 1165.579493831457,
+      "exact": 1096.68879852998,
+      "gap_to_exact": 68.89069530147708,
+      "relative_gap": 0.06281699548114225
+    },
+    {
+      "seed": 6,
+      "initial": 1457.5352466593242,
+      "alns": 1007.8683164921692,
+      "exact": 987.9135317654639,
+      "gap_to_exact": 19.954784726705384,
+      "relative_gap": 0.02019891831124625
+    },
+    {
+      "seed": 7,
+      "initial": 1834.89121398159,
+      "alns": 1010.4587765380037,
+      "exact": 981.932264577638,
+      "gap_to_exact": 28.526511960365724,
+      "relative_gap": 0.029051405060649408
+    },
+    {
+      "seed": 8,
+      "initial": 1439.1094372200032,
+      "alns": 1064.1491128613743,
+      "exact": 1064.149112861374,
+      "gap_to_exact": 2.2737367544323206e-13,
+      "relative_gap": 2.136671192929443e-16
+    },
+    {
+      "seed": 9,
+      "initial": 1514.88254482651,
+      "alns": 1034.1285355880723,
+      "exact": 1034.1285355880723,
+      "gap_to_exact": 0.0,
+      "relative_gap": 0.0
+    }
+  ],
+  "scope": "twelve stores, three warehouses, capacity four; ALNS versus exact subset DP",
+  "limitations": [
+    "Same synthetic instances as mlor-dp12.",
+    "ALNS has no tuning or ablation here."
+  ]
+}

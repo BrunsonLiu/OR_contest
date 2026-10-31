@@ -126,7 +126,7 @@ def solve(stores, time_limit=TIME_LIMIT, debug=False, force_served=None):
 
 def main():
     rows = []
-    cases = ((8, "mlor-dp-20261028", range(3)), (12, "mlor-dp12-20261028", range(3)),
+    cases = ((8, "mlor-dp-r2-20261031", range(3)), (12, "mlor-dp12-r2-20261031", range(3)),
              (20, None, range(1)))
     for size, exact_dir, seeds in cases:
         exact = {}

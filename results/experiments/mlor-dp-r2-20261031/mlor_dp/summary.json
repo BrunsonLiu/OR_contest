@@ -1,0 +1,95 @@
+{
+  "instances": 10,
+  "aware_better": 10,
+  "blind_better": 0,
+  "mean_gap": -895.5427617424912,
+  "blind_infeasible_total": 49,
+  "rows": [
+    {
+      "seed": 0,
+      "aware_cost": 917.7978947101334,
+      "blind_planned": 842.16356236818,
+      "blind_actual": 2442.16356236818,
+      "blind_infeasible": 8,
+      "gap": -1524.3656676580467
+    },
+    {
+      "seed": 1,
+      "aware_cost": 926.5612811092814,
+      "blind_planned": 747.5335277427131,
+      "blind_actual": 1947.533527742713,
+      "blind_infeasible": 6,
+      "gap": -1020.9722466334316
+    },
+    {
+      "seed": 2,
+      "aware_cost": 904.5518890126943,
+      "blind_planned": 804.0050456369321,
+      "blind_actual": 2404.005045636932,
+      "blind_infeasible": 8,
+      "gap": -1499.4531566242379
+    },
+    {
+      "seed": 3,
+      "aware_cost": 860.3753275962279,
+      "blind_planned": 769.9171301106715,
+      "blind_actual": 1169.9171301106715,
+      "blind_infeasible": 2,
+      "gap": -309.5418025144436
+    },
+    {
+      "seed": 4,
+      "aware_cost": 877.5042162971631,
+      "blind_planned": 740.446715042325,
+      "blind_actual": 940.446715042325,
+      "blind_infeasible": 1,
+      "gap": -62.942498745161856
+    },
+    {
+      "seed": 5,
+      "aware_cost": 756.5815527972516,
+      "blind_planned": 725.0186783892636,
+      "blind_actual": 2325.0186783892636,
+      "blind_infeasible": 8,
+      "gap": -1568.437125592012
+    },
+    {
+      "seed": 6,
+      "aware_cost": 842.5732024581881,
+      "blind_planned": 772.8318761250396,
+      "blind_actual": 1372.8318761250396,
+      "blind_infeasible": 3,
+      "gap": -530.2586736668515
+    },
+    {
+      "seed": 7,
+      "aware_cost": 776.2805339526651,
+      "blind_planned": 692.4345057978478,
+      "blind_actual": 1892.4345057978478,
+      "blind_infeasible": 6,
+      "gap": -1116.1539718451827
+    },
+    {
+      "seed": 8,
+      "aware_cost": 866.1910596585097,
+      "blind_planned": 800.7526279973029,
+      "blind_actual": 1200.7526279973029,
+      "blind_infeasible": 2,
+      "gap": -334.5615683387931
+    },
+    {
+      "seed": 9,
+      "aware_cost": 858.3503219364053,
+      "blind_planned": 847.0912277431557,
+      "blind_actual": 1847.0912277431557,
+      "blind_infeasible": 5,
+      "gap": -988.7409058067504
+    }
+  ],
+  "scope": "eight stores, three warehouses, capacity four, exact subset DP; synthetic",
+  "limitations": [
+    "Single product and single temperature zone.",
+    "One route order per subset is chosen by minimum cost.",
+    "Cost and penalty parameters are illustrative."
+  ]
+}

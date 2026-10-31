@@ -1,0 +1,93 @@
+{
+  "rows": [
+    {
+      "size": 8,
+      "seed": 0,
+      "exact": 917.7978947101334,
+      "status": 2,
+      "solved": true,
+      "objective": 917.7978947101333,
+      "bound": 917.7978947101333,
+      "gap": 0.0,
+      "runtime": 0.9819998741149902,
+      "time_limit": 30.0
+    },
+    {
+      "size": 8,
+      "seed": 1,
+      "exact": 926.5612811092814,
+      "status": 2,
+      "solved": true,
+      "objective": 926.5612811092815,
+      "bound": 926.5612811092815,
+      "gap": 0.0,
+      "runtime": 1.2650001049041748,
+      "time_limit": 30.0
+    },
+    {
+      "size": 8,
+      "seed": 2,
+      "exact": 904.5518890126943,
+      "status": 2,
+      "solved": true,
+      "objective": 904.5518890126943,
+      "bound": 904.5518890126943,
+      "gap": 0.0,
+      "runtime": 3.1640000343322754,
+      "time_limit": 30.0
+    },
+    {
+      "size": 12,
+      "seed": 0,
+      "exact": 1009.1028208968098,
+      "status": 2,
+      "solved": true,
+      "objective": 1009.1028208968096,
+      "bound": 1009.1028208968096,
+      "gap": 0.0,
+      "runtime": 22.118000030517578,
+      "time_limit": 30.0
+    },
+    {
+      "size": 12,
+      "seed": 1,
+      "exact": 989.4948867356297,
+      "status": 2,
+      "solved": true,
+      "objective": 989.49488673563,
+      "bound": 989.49488673563,
+      "gap": 0.0,
+      "runtime": 9.667999982833862,
+      "time_limit": 30.0
+    },
+    {
+      "size": 12,
+      "seed": 2,
+      "exact": 1110.8384759281892,
+      "status": 9,
+      "solved": true,
+      "objective": 1130.3438486588575,
+      "bound": 991.2255161277976,
+      "gap": 0.1230761176752742,
+      "runtime": 30.0,
+      "time_limit": 30.0
+    },
+    {
+      "size": 20,
+      "seed": 0,
+      "exact": null,
+      "status": 9,
+      "solved": true,
+      "objective": 1722.3485916352602,
+      "bound": 1398.3595717056055,
+      "gap": 0.1881088540979081,
+      "runtime": 30.016000032424927,
+      "time_limit": 30.0
+    }
+  ],
+  "scope": "Gurobi MILP, one thread, 30 s limit, 3 seeds per size",
+  "limitations": [
+    "The MILP uses six vehicles per warehouse.",
+    "A time limit means some rows may be feasible but not proven optimal."
+  ]
+}
