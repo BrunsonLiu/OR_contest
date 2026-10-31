@@ -37,7 +37,7 @@ Legend: ✅ satisfied; ⚠️ satisfied with a stated limitation; ❌ not satisf
 | Sensitivity analysis | ✅ | rejection penalty 0–800; break-even ≈ 7 |
 | Size sensitivity | ✅ | 8, 12, 20 stores |
 | Statistical variability | ✅ | 95% intervals; non-significant results reported as such |
-| Runtime table | ❌ | only DP 12 ≈ 19 s is reported; no systematic runtime comparison |
+| Runtime table | ✅ | Table 6: DP 5.96 s at 12 stores; heuristics below 0.3 s at 20 stores; single-process, machine-dependent |
 | Robustness under uncertainty | ❌ | deterministic model; no scenario analysis |
 | Real industrial data | ❌ | synthetic instances plus a real-geography illustration with unit demand |
 | Tuning separated from testing | ✅ | development seeds 5–9, test seeds 10–19; earlier in-sample run documented as superseded |
@@ -62,11 +62,10 @@ Legend: ✅ satisfied; ⚠️ satisfied with a stated limitation; ❌ not satisf
 
 ## 5. Highest-risk items for review
 
-1. **No runtime comparison.** CIE computational papers commonly report solution time. Add a runtime table at 8/12/20 stores before submission.
-2. **Synthetic data only.** The real-network illustration is geography, not demand. Frame the paper as a model-based study, or add a real case.
-3. **Alternative metaheuristics are basic versions.** The equal-budget comparison is indicative; a reviewer may ask for tuned GA/tabu or a second budget level.
-4. **Full-text coverage.** Qiu et al. (2019) and Singh and Kuthambalayan (2022) remain closed; the MLOR-in-LRP gap is stated as "to be verified", not confirmed.
-5. **Author-dependent items.** Names, affiliations, CRediT and funding cannot be completed without the authors.
+1. **Synthetic data only.** The real-network illustration is geography, not demand. Frame the paper as a model-based study, or add a real case.
+2. **Alternative metaheuristics are basic versions.** The equal-budget comparison is indicative; a reviewer may ask for tuned GA/tabu or a second budget level.
+3. **Full-text coverage.** Qiu et al. (2019) and Singh and Kuthambalayan (2022) remain closed; the MLOR-in-LRP gap is stated as "to be verified", not confirmed.
+4. **Author-dependent items.** Names, affiliations, CRediT and funding cannot be completed without the authors.
 
 ## 6. What is already defensible
 

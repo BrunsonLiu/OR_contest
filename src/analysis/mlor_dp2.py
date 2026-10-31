@@ -95,7 +95,7 @@ def solve(routes):
     return best_cost, chosen
 
 
-def main(seeds=range(10), label="eight stores"):
+def main(seeds=range(10), label="eight stores", write=True):
     rows = []
     for seed in seeds:
         stores = make_instance(seed)
@@ -131,14 +131,16 @@ def main(seeds=range(10), label="eight stores"):
             "Cost and penalty parameters are illustrative.",
         ],
     }
-    out_dir = results_root() / "mlor_dp"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False),
-                                          encoding="utf-8")
+    if write:
+        out_dir = results_root() / "mlor_dp"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False),
+                                              encoding="utf-8")
     print(json.dumps({key: summary[key] for key in
                       ("instances", "aware_better", "blind_better", "mean_gap", "blind_infeasible_total")},
                      ensure_ascii=False))
-    print("Outputs:", out_dir)
+    if write:
+        print("Outputs:", out_dir)
 
 
 if __name__ == "__main__":

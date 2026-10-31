@@ -260,7 +260,7 @@ Shelf life, ages, MLOR & 6 days; 0, 2.5, 4.5 days; 1, 2, 3 days \\
 Vehicle capacity & 4 stores \\
 Costs & opening 100; vehicle 50; transport 0.5 per km; penalty 200 (sensitivity 0--800) \\
 ALNS & 200 iterations; destroy 2--4 default, 4--6 tuned; up to 2 unserved retries \\
-Exact DP & all orders for subsets of up to 4 stores; 12 stores about 19 s \\
+Exact DP & all orders for subsets of up to 4 stores; 12 stores about 6 s \\
 Seeds & 0--9 full sample; 5--9 development; 10--19 test \\
 Environment & Python 3, single-threaded; no commercial solver in the loop \\
 \bottomrule
@@ -356,6 +356,23 @@ Held-out default gap & 13.43 & $[-12.78,39.63]$ \\
 Paired difference, default minus tuned & 11.65 & $[-14.70,37.99]$ \\
 Rule plus local search, 8 stores & 7.30 & $[-7.42,22.02]$ \\
 Rule plus local search, 12 stores & 67.10 & $[22.93,111.28]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:runtime} reports single-process wall-clock time for three seeds per size. The exact DP is already slower than every heuristic at 12 stores (5.96 s versus at most 0.19 s), and it is not run at 20 stores. The four heuristics remain below 0.3 s at 20 stores. The ranking of heuristic times is not the ranking of solution quality: SA and tabu are faster than the ALNS but produce worse plans (Table~\ref{tab:meta}). Times are implementation- and machine-dependent and are not a hardware-independent benchmark.
+
+\begin{table}[t]
+\centering
+\caption{Wall-clock runtime (seconds, mean over three seeds).}
+\label{tab:runtime}
+\begin{tabular}{lrrrrr}
+\toprule
+Stores & DP & ALNS & SA & Tabu & GA \\
+\midrule
+8 & 0.06 & 0.08 & 0.04 & 0.03 & 0.16 \\
+12 & 5.96 & 0.10 & 0.04 & 0.02 & 0.19 \\
+20 & -- & 0.18 & 0.06 & 0.01 & 0.26 \\
 \bottomrule
 \end{tabular}
 \end{table}

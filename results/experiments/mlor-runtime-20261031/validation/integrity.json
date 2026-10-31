@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "purpose": "测量DP与四种启发式的单进程实际运行时间，8/12/20店各3个种子",
+  "snapshot_files": 92,
+  "artifacts": 1,
+  "integrity": "verified",
+  "scientific_validation": "Requires task-specific model/data checks.",
+  "checked_at_utc": "2026-10-31T04:25:14.243111+00:00",
+  "command": [
+    "D:\\Python3.12\\python.exe",
+    "tools/check_experiment.py",
+    "results/experiments/mlor-runtime-20261031/_runs/mlor-runtime/run.json",
+    "--require-success",
+    "--report",
+    "results/experiments/mlor-runtime-20261031/validation/integrity.json"
+  ],
+  "manifest_sha256": "0ce5e51e2e2f36f49556283bc8e379a52e696edaaf5094ca7a8196c8141e0427",
+  "verifier_sha256": {
+    "tools/check_experiment.py": "2a0bbf55c80dfd4d4a50916311449cf093304c94e0a7d4c4733dc1762ab62806",
+    "src/experiment_tracking.py": "261a0b02e87e0fe4fdfa665f88001a92ed146c83a877ca189ed25af175bf6124"
+  }
+}
