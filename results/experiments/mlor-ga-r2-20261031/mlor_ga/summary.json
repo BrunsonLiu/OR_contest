@@ -1,0 +1,106 @@
+{
+  "instances": 10,
+  "alns_mean_gap": 3.946015745737429,
+  "ga_mean_gap": 81.28127796332735,
+  "alns_optimal": 8,
+  "ga_optimal": 4,
+  "alns_better": 5,
+  "ga_better": 1,
+  "rows": [
+    {
+      "seed": 0,
+      "evaluations": 3910,
+      "alns": 1009.1028208968098,
+      "ga": 1130.9800408180681,
+      "exact": 1009.1028208968098,
+      "alns_gap": 0.0,
+      "ga_gap": 121.8772199212583
+    },
+    {
+      "seed": 1,
+      "evaluations": 4768,
+      "alns": 989.4948867356297,
+      "ga": 1201.6426352108936,
+      "exact": 989.4948867356297,
+      "alns_gap": 0.0,
+      "ga_gap": 212.14774847526382
+    },
+    {
+      "seed": 2,
+      "evaluations": 5463,
+      "alns": 1130.3438486588575,
+      "ga": 1122.3610409327357,
+      "exact": 1110.8384759281892,
+      "alns_gap": 19.50537273066834,
+      "ga_gap": 11.52256500454655
+    },
+    {
+      "seed": 3,
+      "evaluations": 4539,
+      "alns": 1151.8906900341162,
+      "ga": 1151.890690034116,
+      "exact": 1151.890690034116,
+      "alns_gap": 2.2737367544323206e-13,
+      "ga_gap": 0.0
+    },
+    {
+      "seed": 4,
+      "evaluations": 4671,
+      "alns": 1127.7719288558765,
+      "ga": 1127.7719288558765,
+      "exact": 1127.7719288558765,
+      "alns_gap": 0.0,
+      "ga_gap": 0.0
+    },
+    {
+      "seed": 5,
+      "evaluations": 4396,
+      "alns": 1096.68879852998,
+      "ga": 1254.0414871627647,
+      "exact": 1096.68879852998,
+      "alns_gap": 0.0,
+      "ga_gap": 157.35268863278475
+    },
+    {
+      "seed": 6,
+      "evaluations": 4253,
+      "alns": 1007.8683164921694,
+      "ga": 1097.40585540121,
+      "exact": 987.9135317654639,
+      "alns_gap": 19.954784726705498,
+      "ga_gap": 109.49232363574606
+    },
+    {
+      "seed": 7,
+      "evaluations": 5401,
+      "alns": 981.932264577638,
+      "ga": 981.932264577638,
+      "exact": 981.932264577638,
+      "alns_gap": 0.0,
+      "ga_gap": 0.0
+    },
+    {
+      "seed": 8,
+      "evaluations": 4725,
+      "alns": 1064.1491128613743,
+      "ga": 1264.5693468250481,
+      "exact": 1064.149112861374,
+      "alns_gap": 2.2737367544323206e-13,
+      "ga_gap": 200.42023396367404
+    },
+    {
+      "seed": 9,
+      "evaluations": 3877,
+      "alns": 1034.1285355880723,
+      "ga": 1034.1285355880723,
+      "exact": 1034.1285355880723,
+      "alns_gap": 0.0,
+      "ga_gap": 0.0
+    }
+  ],
+  "scope": "twelve stores, three warehouses, equal solution-evaluation budget",
+  "limitations": [
+    "GA is not tuned beyond population and tournament size.",
+    "Equal evaluations is only one fairness notion."
+  ]
+}

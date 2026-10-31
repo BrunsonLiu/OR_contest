@@ -73,7 +73,7 @@ def policy_solution(stores, mode):
 
 
 def exact_costs(n_stores, seeds):
-    name = "mlor-dp-20261028" if n_stores == 8 else "mlor-dp12-20261028"
+    name = "mlor-dp-r2-20261031" if n_stores == 8 else "mlor-dp12-r2-20261031"
     path = _REPO_ROOT / "results/experiments" / name / "mlor_dp/summary.json"
     rows = json.loads(path.read_text(encoding="utf-8"))["rows"]
     return {row["seed"]: row["aware_cost"] for row in rows if row["seed"] in seeds}

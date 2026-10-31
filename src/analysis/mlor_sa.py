@@ -122,7 +122,7 @@ def sa(stores, budget, seed):
 
 
 def main():
-    exact_path = _REPO_ROOT / "results/experiments/mlor-dp12-20261028/mlor_dp/summary.json"
+    exact_path = _REPO_ROOT / "results/experiments/mlor-dp12-r2-20261031/mlor_dp/summary.json"
     exact = {row["seed"]: row["aware_cost"] for row in json.loads(exact_path.read_text(encoding="utf-8"))["rows"]}
     rows = []
     for seed in range(10):

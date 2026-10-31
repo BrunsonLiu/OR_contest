@@ -1,0 +1,106 @@
+{
+  "instances": 10,
+  "alns_mean_gap": 3.946015745737429,
+  "tabu_mean_gap": 263.47218417905094,
+  "alns_optimal": 8,
+  "tabu_optimal": 0,
+  "alns_better": 10,
+  "tabu_better": 0,
+  "rows": [
+    {
+      "seed": 0,
+      "evaluations": 3910,
+      "alns": 1009.1028208968098,
+      "tabu": 1354.7705800050808,
+      "exact": 1009.1028208968098,
+      "alns_gap": 0.0,
+      "tabu_gap": 345.66775910827096
+    },
+    {
+      "seed": 1,
+      "evaluations": 4768,
+      "alns": 989.4948867356297,
+      "tabu": 1201.6426352108936,
+      "exact": 989.4948867356297,
+      "alns_gap": 0.0,
+      "tabu_gap": 212.14774847526382
+    },
+    {
+      "seed": 2,
+      "evaluations": 5463,
+      "alns": 1130.3438486588575,
+      "tabu": 1517.2830550303788,
+      "exact": 1110.8384759281892,
+      "alns_gap": 19.50537273066834,
+      "tabu_gap": 406.44457910218966
+    },
+    {
+      "seed": 3,
+      "evaluations": 4539,
+      "alns": 1151.8906900341162,
+      "tabu": 1542.3132306941416,
+      "exact": 1151.890690034116,
+      "alns_gap": 2.2737367544323206e-13,
+      "tabu_gap": 390.42254066002556
+    },
+    {
+      "seed": 4,
+      "evaluations": 4671,
+      "alns": 1127.7719288558765,
+      "tabu": 1224.993464222065,
+      "exact": 1127.7719288558765,
+      "alns_gap": 0.0,
+      "tabu_gap": 97.22153536618862
+    },
+    {
+      "seed": 5,
+      "evaluations": 4396,
+      "alns": 1096.68879852998,
+      "tabu": 1185.1507918612879,
+      "exact": 1096.68879852998,
+      "alns_gap": 0.0,
+      "tabu_gap": 88.4619933313079
+    },
+    {
+      "seed": 6,
+      "evaluations": 4253,
+      "alns": 1007.8683164921694,
+      "tabu": 1296.6880732202048,
+      "exact": 987.9135317654639,
+      "alns_gap": 19.954784726705498,
+      "tabu_gap": 308.774541454741
+    },
+    {
+      "seed": 7,
+      "evaluations": 5401,
+      "alns": 981.932264577638,
+      "tabu": 1394.614345422613,
+      "exact": 981.932264577638,
+      "alns_gap": 0.0,
+      "tabu_gap": 412.6820808449751
+    },
+    {
+      "seed": 8,
+      "evaluations": 4725,
+      "alns": 1064.1491128613743,
+      "tabu": 1264.5693468250483,
+      "exact": 1064.149112861374,
+      "alns_gap": 2.2737367544323206e-13,
+      "tabu_gap": 200.42023396367426
+    },
+    {
+      "seed": 9,
+      "evaluations": 3877,
+      "alns": 1034.1285355880723,
+      "tabu": 1206.607365071945,
+      "exact": 1034.1285355880723,
+      "alns_gap": 0.0,
+      "tabu_gap": 172.4788294838727
+    }
+  ],
+  "scope": "twelve stores, three warehouses, equal solution-evaluation budget",
+  "limitations": [
+    "Tabu tenure is fixed at 7.",
+    "Equal evaluations is only one fairness notion."
+  ]
+}

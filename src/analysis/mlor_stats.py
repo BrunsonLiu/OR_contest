@@ -28,8 +28,8 @@ def load(rel):
 
 
 def main():
-    dp8 = load("mlor-dp-20261028/mlor_dp/summary.json")["rows"]
-    dp12 = load("mlor-dp12-20261028/mlor_dp/summary.json")["rows"]
+    dp8 = load("mlor-dp-r2-20261031/mlor_dp/summary.json")["rows"]
+    dp12 = load("mlor-dp12-r2-20261031/mlor_dp/summary.json")["rows"]
     holdout = load("mlor-holdout2-20261031/mlor_holdout2/summary.json")
     policy_ls = load("mlor-policy-ls-20261031/mlor_policy_ls/summary.json")
     tuned = holdout["test"]["destroy_4_6"]["gaps"]
