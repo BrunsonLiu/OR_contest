@@ -234,6 +234,15 @@ The component ablation at 12 stores uses the default setting: the greedy constru
 
 To test whether the advantage is specific to the ALNS neighborhood, we ran three alternative metaheuristics under the same number of solution evaluations as the ALNS on each instance. Simulated annealing uses a geometric cooling schedule; tabu search uses all feasible relocations and insertions with a fixed tenure of 7; the genetic algorithm uses a population of 20, route-based crossover, mutation by random moves and age-feasible repair. At 12 stores, SA reaches a mean gap of 63.95 with 4/10 optima, tabu search 85.21 with 2/10, and the GA 72.02 with 2/10, while the tuned ALNS reaches 1.27 with 9/10. ALNS is better than SA on 5/10 instances, than tabu search on 8/10 and than the GA on 8/10; SA wins 1/10, tabu search 0/10 and the GA 0/10, with the remaining ties. None of the alternatives is tuned beyond its basic schedule, tenure or population, and the evaluation count is not a full operation count, so the comparison is indicative rather than a definitive ranking; it does show that the ALNS neighborhood is not trivially replaceable by generic local search or a standard evolutionary scheme.
 
+**Table 5. Alternative metaheuristics at the same solution-evaluation budget (12 stores).**
+
+| Method | Mean gap | Optimal | Better than ALNS |
+| --- | --- | --- | --- |
+| ALNS (destroy 4–6) | 1.27 | 9/10 | — |
+| SA (geometric cooling) | 63.95 | 4/10 | 1/10 |
+| Tabu (tenure 7) | 85.21 | 2/10 | 0/10 |
+| GA (population 20) | 72.02 | 2/10 | 0/10 |
+
 ![Figure 2](../../results/experiments/mlor-figures-20261028/mlor_figures/alns_ablation.png)
 
 *Figure 2. ALNS ablation at 12 stores: mean gap to the exact optimum for greedy, no-unserved-retry, and full ALNS.*
