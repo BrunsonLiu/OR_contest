@@ -15,3 +15,4 @@
 2026-10-31 新增 [定位备忘录](MLOR_POSITIONING.md)：现有证据适合应用/扩展论文（AOR/ITOR/CIE 一类），不适合 EJOR Theory & Methodology；EJOR 级贡献需补多项式特例/结构定理/两层多周期/真实数据。
 2026-10-31 新增 LaTeX 投稿稿：[MLOR_MANUSCRIPT.tex](MLOR_MANUSCRIPT.tex) 与编译后的 [PDF](MLOR_MANUSCRIPT.pdf)（elsarticle，18 页，4 表 2 图）；图在 `figures/`。
 2026-10-31 新增 [CIE cover letter](MLOR_COVER_LETTER.md)：问题、方法、证据、定位、合规声明；作者/日期为占位。
+2026-10-31 新增 [CIE submission checklist](CIE_CHECKLIST.md)：逐条标注满足/受限/未满足，列出投稿前最高风险项。
