@@ -65,3 +65,16 @@
 1. 接受路 A，还是坚持 EJOR 并进入路 B？
 2. 若路 A，目标期刊优先级（AOR / ITOR / CIE）。
 3. 是否愿意把真实需求/两层作为下一篇，而不是这一篇。
+
+## 七、期刊适配的初步证据（2026-10-31）
+
+官方 aims & scope 页面在本环境 403（ScienceDirect/Elsevier），Wikipedia/DuckDuckGo 也失败。用 OpenAlex 按 source ISSN + title/abstract 检索，得到发文结构：
+
+| 期刊 | “location routing” | “perishable inventory routing” | 观察 |
+| --- | --- | --- | --- |
+| CIE（0360-8352） | 168 篇 | 8 篇 | 含模拟退火、GA、ALNS 类应用；LRP 应用稿多 |
+| EJOR（0377-2217） | 276 篇 | 3 篇 | 同主题更偏 branch-and-cut、formulations、stochastic policies |
+
+说明：计数是关键词检索，不是官方 scope，也不是接收率；只能说明“CIE 对 LRP/易腐 IRP 的启发式应用更常见”。官方 scope 仍需在能访问 ScienceDirect 时核对。
+
+结论修正：之前“CIE 更匹配”是推断；现在有发文结构支持，但仍不是“CIE 就能中”。
