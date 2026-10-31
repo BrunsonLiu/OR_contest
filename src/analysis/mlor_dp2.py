@@ -36,6 +36,9 @@ def route_cost(warehouse_index, order, stores, age_mode):
         if SHELF_LIFE - age - t < stores[store]["mlor"] - 1e-9:
             infeasible += 1
         previous = (stores[store]["x"], stores[store]["y"])
+    if order:
+        leg = distance(previous, warehouse["point"]) / KM_PER_DAY
+        cost += leg * KM_PER_DAY * COST_PER_KM
     return cost, infeasible
 
 
@@ -80,14 +83,15 @@ def solve(routes):
                     if candidate < dp.get(key, INF) - 1e-9:
                         dp[key] = candidate
                         choice[key] = (mask, open_mask, warehouse_index, subset)
-    best_open = None
+    best_key = None
     best_cost = INF
     for (mask, open_mask), value in dp.items():
-        if mask == FULL and value < best_cost:
-            best_cost = value
-            best_open = open_mask
+        total = value + PENALTY * (N_STORES - bin(mask).count("1"))
+        if total < best_cost:
+            best_cost = total
+            best_key = (mask, open_mask)
     chosen = []
-    key = (FULL, best_open)
+    key = best_key
     while key in choice:
         mask, open_mask, warehouse_index, subset = choice[key]
         chosen.append((warehouse_index, subset))

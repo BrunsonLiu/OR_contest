@@ -58,6 +58,9 @@ def route_eval(warehouse_index, order, stores, age_mode):
         if SHELF_LIFE - age - t < stores[store]["mlor"] - 1e-9:
             infeasible += 1
         previous = (stores[store]["x"], stores[store]["y"])
+    if order:
+        leg = distance(previous, warehouse["point"]) / KM_PER_DAY
+        cost += leg * KM_PER_DAY * COST_PER_KM
     return cost, infeasible
 
 

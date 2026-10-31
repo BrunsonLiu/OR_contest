@@ -44,6 +44,9 @@ def route_cost(warehouse_index, order, stores, ages, age_actual, use_mlor):
         if SHELF_LIFE - age - t < threshold - 1e-9:
             infeasible += 1
         previous = (stores[store]["x"], stores[store]["y"])
+    if order:
+        leg = distance(previous, WAREHOUSES[warehouse_index]["point"]) / KM_PER_DAY
+        cost += leg * KM_PER_DAY * COST_PER_KM
     return cost, infeasible
 
 
