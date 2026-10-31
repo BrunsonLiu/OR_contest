@@ -12,6 +12,7 @@ Legend: ✅ satisfied; ⚠️ satisfied with a stated limitation; ❌ not satisf
 | Related work by scientific category | ✅ | §2: perishable IRP, two-echelon IRP/LRP, MLOR |
 | Problem gap vs method gap separated | ✅ | §2.4 |
 | Model section with assumptions and notation | ✅ | §3.1, Tables 1–2 |
+| Parameter provenance | ⚠️ | normalized/illustrative; audit in `PARAMETER_AUDIT.md`; several values are not real-scale |
 | Method section tied to problem structure | ✅ | §4.2 explains cross-warehouse reassignment |
 | Computational section organized by claims | ✅ | §5.1–5.9 |
 | Managerial implications only where supported | ✅ | §5.9, every point marked conditional |

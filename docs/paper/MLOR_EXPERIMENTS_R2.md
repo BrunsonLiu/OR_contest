@@ -14,6 +14,14 @@ illustration uses three contest regional warehouses (Guangzhou, Dongguan, Chengd
 nearest contest cities and the contest last-leg rate of 1.45 per ton-km; it is an illustration
 on real geography, not a case study.
 
+**Parameter provenance.** The numerical values are normalized and illustrative, not
+calibrated to a firm. The age-dependent shelf-life structure follows Coelho and Laporte
+(2014) and Crama et al. (2018); the two-echelon perishable setting follows Rohmer et al.
+(2019) and Govindan et al. (2014); the MLOR definition follows Singh and Kuthambalayan
+(2022). These papers support the model structure, not the magnitudes. Capacity is
+expressed in normalized demand units, costs are cost units, and speed is normalized; the
+values must not be read as yuan, km or tons. A full audit is in `PARAMETER_AUDIT.md`.
+
 **Computing environment.** Python 3.12, single process, no parallelization. Gurobi 13.0.1 with
 an academic licence is used for the MILP, one thread and a 30 s limit. The exact DP and all
 heuristics are pure Python.
